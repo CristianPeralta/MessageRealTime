@@ -1,5 +1,6 @@
 let webpack = require('webpack');
 let path = require('path');
+var vueloader = require('vue-loader');
 
 module.exports = {
   entry:{
@@ -17,6 +18,10 @@ module.exports = {
         test:/\.js$/,
         exclude:/node_modules/,
         loader:'babel-loader'
+      },
+      {
+        test: /\.vue$/,
+        loader: "vue-loader"
       }
     ]
   },
