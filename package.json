@@ -1,0 +1,30 @@
+{
+  "name": "MessageRealTime",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CristianPeralta/MessageRealTime.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CristianPeralta/MessageRealTime/issues"
+  },
+  "homepage": "https://github.com/CristianPeralta/MessageRealTime#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.5",
+    "nodemon": "^1.14.12",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.3"
+  }
+}
