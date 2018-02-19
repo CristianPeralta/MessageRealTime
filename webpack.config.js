@@ -1,11 +1,14 @@
 let webpack = require('webpack');
 let path = require('path');
-var vueloader = require('vue-loader');
+
+function resolve (dir) {
+  return path.join(__dirname, '.', dir)
+}
 
 module.exports = {
   entry:{
-    app:'./resources/assets/js/app.js',
-    vendor:['vue','axios']
+    app:'./src/main.js',
+    vendor:['vue', 'vue-router']
   },
   output:{
     path:path.resolve(__dirname,'public/js'),
@@ -26,8 +29,10 @@ module.exports = {
     ]
   },
   resolve: {
+    extensions: ['.js', '.jsx', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.common.js' // 'vue/dist/vue.common.js' for webpack 1
+      'vue$': 'vue/dist/vue.common.js', // 'vue/dist/vue.common.js' for webpack 1
+      '@': resolve('src'),
     }
   },
   plugins:[

@@ -1,20 +1,21 @@
 <template>
 <div class="notification">
-  <h1>{{message}}</h1>
+  <h1>{{data}}</h1>
 </div>
 </template>
 
 <script>
   export default {
+    name: 'Notification',
     data(){
       return {
-        message: 'Hello World'
+        data: 'This is a component Notification'
       }
     }
   }
 </script>
 <style lang="scss">
   .notification{
-    background: red;
+    background: green;
   }
 </style>

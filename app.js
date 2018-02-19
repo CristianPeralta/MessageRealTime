@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var ejs = require("ejs").__express;
 
 var app = express();
 var server = require('http').Server(app);
@@ -14,15 +15,13 @@ io.on('connection', function(socket) {
 
 var index = require('./routes/index');
 
-mongoose.connect('mongodb://localhost:27017/multiloginexpressDB', function(err, res) {
+mongoose.connect('mongodb://localhost:27017/messageDb', function(err, res) {
   if(err) throw err;
   console.log('Conectado con éxito a la BD');
 });
 
 
-server.listen(3000, function() {
-	console.log('Servidor corriendo en http://localhost:3000');
-});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,6 +53,9 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+server.listen(5000, function() {
+	console.log('Servidor corriendo en http://localhost:3000');
 });
 
 module.exports = app;
