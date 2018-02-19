@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules",
-    "production": "cross-env NODE_ENV=production && webpack --hide-modules"
+    "production": "set NODE_ENV=production&& webpack --hide-modules"
   },
   "repository": {
     "type": "git",
