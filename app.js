@@ -20,7 +20,14 @@ mongoose.connect('mongodb://localhost:27017/messageDb', function(err, res) {
   console.log('Conectado con éxito a la BD');
 });
 
+io.on('connection', function(socket) {
 
+	console.log('A client has connected');
+
+  socket.on('disconnect', function(){
+          console.log(' has disconnected'); 
+    });
+});
 
 
 // view engine setup
