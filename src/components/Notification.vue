@@ -16,6 +16,6 @@
 </script>
 <style lang="scss">
   .notification{
-    background: green;
+    background: yellow;
   }
 </style>

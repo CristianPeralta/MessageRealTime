@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import App from '@/App';
-import Message from '@/components/Message';
 import router from './router';
+
+Vue.config.productionTip = false
 
 var vm = new Vue({
     el: '#app',
-    components: {
-      App
-    }
+    router,
+    components: { App },
+    template: '<App></App>'
 });

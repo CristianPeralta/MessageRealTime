@@ -435,6 +435,8 @@ function normalizeComponent (
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'App',
@@ -555,18 +557,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__App__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Message__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router__ = __webpack_require__(22);
 
 
 
 
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.productionTip = false;
 
 var vm = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#app',
-    components: {
-        App: __WEBPACK_IMPORTED_MODULE_1__App__["a" /* default */]
-    }
+    router: __WEBPACK_IMPORTED_MODULE_2__router__["a" /* default */],
+    components: { App: __WEBPACK_IMPORTED_MODULE_1__App__["a" /* default */] },
+    template: '<App></App>'
 });
 
 /***/ }),
@@ -716,7 +718,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "app" } }, [_c("router-view")], 1)
+  return _c("div", { attrs: { id: "app" } }, [
+    _c("div", { staticClass: "container" }, [_c("router-view")], 1)
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -780,7 +784,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "app" } }, [_c("router-view")], 1)
+  return _c("div", { staticClass: "notification" }, [
+    _c("h1", [_vm._v(_vm._s(_vm.message))])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -809,7 +815,7 @@ if (false) {
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
 
-/* unused harmony default export */ var _unused_webpack_default_export = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
+/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
   routes: [{
     path: '/',
     name: 'Message',
@@ -915,7 +921,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.notification {\n  background: green;\n}\n", ""]);
+exports.push([module.i, "\n.notification {\n  background: yellow;\n}\n", ""]);
 
 // exports
 

@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div class="notification">
+    <h1>{{message}}</h1>
   </div>
 </template>
 
