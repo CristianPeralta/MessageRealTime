@@ -1,7 +1,6 @@
 <template>
   <div class="notification">
-    <h1>{{message}}</h1>
-    <h2>Hello </h2>
+    <h2>Hello {{user.username}}</h2>
   </div>
 </template>
 
@@ -12,6 +11,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
 
   export default {
     name: 'Message',
+    props: [
+      'user'
+    ],
     data(){
       return {
         message: 'Hello World'
@@ -29,6 +31,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
 </script>
 <style lang="scss">
   .notification{
-    background: red;
+    background: yellow;
   }
 </style>

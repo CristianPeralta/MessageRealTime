@@ -22,7 +22,8 @@ export default new Router({
     {
       path: '/message',
       name: 'Message',
-      component: Message
+      component: Message,
+      props: true
     },
     {
       path: '/notification',

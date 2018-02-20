@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -34,6 +35,22 @@ io.on('connection', function(socket) {
 	});
 });
 
+
+app.use(session({
+    // When there is nothing on the session, do not save it
+    saveUninitialized: false,
+    // Update session if it changes
+    resave: true,
+    // Set cookie
+    cookie: {
+        secure: false,
+        maxAge: 10 * 60 * 1000
+    },
+    // Name of your cookie
+    name: 'testCookie',
+    // Secret of your cookie
+    secret: 'thisIsSecret'
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

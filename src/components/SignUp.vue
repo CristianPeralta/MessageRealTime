@@ -65,9 +65,9 @@ export default {
           email: this.email,
           password: this.password
         };
-        ChatServices.SignUp(data).then(() => {
-              console.log('Registered');
-              this.$router.push({ name: 'Message' })
+        ChatServices.SignUp(data).then((response) => {
+              let user = response.data;
+              this.$router.push({ name: 'Message', params: {'user':user} })
             })
       } else{
         alert('Password doesnt match');
