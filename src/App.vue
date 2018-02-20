@@ -8,15 +8,14 @@
 
 <script>
   export default {
-    name: 'App',
-    data(){
-      return {
-        message: 'Hello World'
-      }
-    }
+    name: 'App'
   }
 </script>
 <style lang="scss">
+  .container{
+    margin:0;
+    padding: 0;
+  }
   .notification{
     background: red;
   }

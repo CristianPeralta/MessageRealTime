@@ -24,9 +24,14 @@ io.on('connection', function(socket) {
 
 	console.log('A client has connected');
 
+	socket.on('SignUp', function(data){
+		console.log('sending registration');
+		console.log(data);
+	});
+
   socket.on('disconnect', function(){
-          console.log(' has disconnected'); 
-    });
+		console.log(' has disconnected');
+	});
 });
 
 

@@ -8,7 +8,7 @@ function resolve (dir) {
 module.exports = {
   entry:{
     app:'./src/main.js',
-    vendor:['vue', 'vue-router']
+    vendor:['vue', 'vue-router', 'vue-socket.io', 'axios']
   },
   output:{
     path:path.resolve(__dirname,'public/js'),
