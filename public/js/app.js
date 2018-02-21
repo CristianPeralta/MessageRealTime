@@ -628,6 +628,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
       username: '',
       email: '',
       photo: {},
+      preview: 'https://image.flaticon.com/icons/svg/179/179948.svg',
       password: '',
       confirmPassword: ''
     };
@@ -636,6 +637,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
   methods: {
     processFile: function processFile(e) {
       this.photo = e.target.files[0];
+      this.preview = URL.createObjectURL(e.target.files[0]);
     },
     sendForm: function sendForm() {
       var _this = this;
@@ -1528,11 +1530,7 @@ var render = function() {
           _c("div", { staticClass: "box" }, [
             _c("figure", { staticClass: "avatar" }, [
               _c("img", {
-                attrs: {
-                  height: "128",
-                  width: "128",
-                  src: "https://image.flaticon.com/icons/svg/179/179948.svg"
-                }
+                attrs: { height: "128", width: "128", src: _vm.preview }
               }),
               _vm._v(" "),
               _c("div", { staticClass: "file is-centered" }, [

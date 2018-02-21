@@ -6,7 +6,7 @@
           <h3 class="title has-text-grey">Sign Up</h3>
           <div class="box">
             <figure class="avatar">
-              <img height="128" width="128" src='https://image.flaticon.com/icons/svg/179/179948.svg'>
+              <img height="128" width="128" :src='preview'>
               <div class="file is-centered">
                 <label class="file-label">
                   <input class="file-input" type="file" @change="processFile($event)">
@@ -67,6 +67,7 @@ export default {
       username: '',
       email: '',
       photo: {},
+      preview: 'https://image.flaticon.com/icons/svg/179/179948.svg',
       password: '',
       confirmPassword: ''
     }
@@ -74,6 +75,7 @@ export default {
   methods: {
     processFile (e) {
       this.photo = e.target.files[0];
+      this.preview = URL.createObjectURL(e.target.files[0]);
     },
     sendForm () {
       if (this.password === this.confirmPassword) {
