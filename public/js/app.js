@@ -512,6 +512,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__ = __webpack_require__(45);
 //
 //
 //
@@ -549,8 +550,30 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["a"] = ({
-  name: 'Login'
+  name: 'Login',
+  data: function data() {
+    return {
+      email: '',
+      password: ''
+    };
+  },
+
+  methods: {
+    login: function login() {
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__["a" /* default */].login({
+        email: this.email,
+        password: this.password
+      }).then(function (response) {
+        var user = response.data;
+        _this.$router.push({ name: 'Message', params: { 'user': user } });
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -650,7 +673,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
         form.append('password', this.password);
         form.append('photo', this.photo);
 
-        __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__["a" /* default */].SignUp(form).then(function (response) {
+        __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__["a" /* default */].signup(form).then(function (response) {
           var user = response.data;
           _this.$router.push({ name: 'Message', params: { 'user': user } });
         });
@@ -1270,7 +1293,78 @@ var render = function() {
               _vm._v("Please login to proceed.")
             ]),
             _vm._v(" "),
-            _vm._m(0),
+            _c("div", { staticClass: "box" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.email,
+                        expression: "email"
+                      }
+                    ],
+                    staticClass: "input is-large",
+                    attrs: {
+                      type: "email",
+                      placeholder: "Your Email",
+                      autofocus: ""
+                    },
+                    domProps: { value: _vm.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.email = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field" }, [
+                _c("div", { staticClass: "control" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password,
+                        expression: "password"
+                      }
+                    ],
+                    staticClass: "input is-large",
+                    attrs: { type: "password", placeholder: "Your Password" },
+                    domProps: { value: _vm.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.password = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "button is-block is-info is-large is-fullwidth",
+                  on: {
+                    click: function($event) {
+                      _vm.login()
+                    }
+                  }
+                },
+                [_vm._v("Login")]
+              )
+            ]),
             _vm._v(" "),
             _c(
               "p",
@@ -1296,40 +1390,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box" }, [
-      _c("figure", { staticClass: "avatar" }, [
-        _c("img", {
-          attrs: {
-            height: "128",
-            width: "128",
-            src: "https://www.viniloscasa.com/img/message.png"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            staticClass: "input is-large",
-            attrs: { type: "email", placeholder: "Your Email", autofocus: "" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            staticClass: "input is-large",
-            attrs: { type: "password", placeholder: "Your Password" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "button is-block is-info is-large is-fullwidth" },
-        [_vm._v("Login")]
-      )
+    return _c("figure", { staticClass: "avatar" }, [
+      _c("img", {
+        attrs: {
+          height: "128",
+          width: "128",
+          src: "https://www.viniloscasa.com/img/message.png"
+        }
+      })
     ])
   }
 ]
@@ -1452,24 +1520,15 @@ exports.push([module.i, "\nhtml,body {\r\n    font-family: 'Open Sans', serif;\r
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  SignUp: function SignUp(params) {
+  signup: function signup(params) {
     return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('signup', params, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     });
   },
-  fetchPosts: function fetchPosts() {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().get('posts');
-  },
-  addPost: function addPost(params) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('posts', params);
-  },
-  updatePost: function updatePost(params) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().put('post', params);
-  },
-  deletePost: function deletePost(id) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().delete('post/' + id);
+  login: function login(params) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('login', params);
   }
 });
 

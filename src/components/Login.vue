@@ -11,16 +11,16 @@
             </figure>
               <div class="field">
                 <div class="control">
-                  <input class="input is-large" type="email" placeholder="Your Email" autofocus="">
+                  <input class="input is-large" v-model="email" type="email" placeholder="Your Email" autofocus="">
                 </div>
               </div>
 
               <div class="field">
                 <div class="control">
-                  <input class="input is-large" type="password" placeholder="Your Password">
+                  <input class="input is-large" v-model="password" type="password" placeholder="Your Password">
                 </div>
               </div>
-              <button class="button is-block is-info is-large is-fullwidth">Login</button>
+              <button class="button is-block is-info is-large is-fullwidth" @click="login()">Login</button>
           </div>
           <p class="has-text-grey">
             <router-link to="/signup" exact>
@@ -35,8 +35,27 @@
 </template>
 
 <script>
+import ChatServices from '@/services/ChatServices'
+
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    login () {
+      ChatServices.login({
+        email: this.email,
+        password: this.password
+      }).then((response) =>{
+        let user = response.data;
+        this.$router.push({ name: 'Message', params: {'user':user} })
+      })
+    }
+  }
 }
 </script>
 

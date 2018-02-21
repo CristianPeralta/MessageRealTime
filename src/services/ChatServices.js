@@ -1,7 +1,7 @@
 import Api from '@/services/Api'
 
 export default {
-  SignUp (params) {
+  signup (params) {
     return Api().post('signup', params, {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -9,16 +9,7 @@ export default {
       }
     )
   },
-  fetchPosts () {
-    return Api().get('posts')
-  },
-  addPost (params) {
-    return Api().post('posts', params)
-  },
-  updatePost (params) {
-    return Api().put('post', params)
-  },
-  deletePost (id) {
-    return Api().delete('post/' + id)
+  login (params) {
+    return Api().post('login', params);
   }
 }

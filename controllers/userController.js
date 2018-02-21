@@ -7,15 +7,21 @@ const randomstring = require("randomstring");
 var User = require('../models/User');
 
 
-module.exports.register = function (req,res) {
+module.exports.login = function (req,res) {
   let data = req.body;
   console.log(data);
-  let newUser = new User(data);
-  newUser.save(function (err, user) {
-    if (err) return res.status(500).send(err);
-    req.session.user = user;
-    let currentUser = req.session.user;
-    return res.json(currentUser);
+  User.findOne({email:data.email}).then((user, err) => {
+    if(err){
+      console.log(err);
+      return res.sendStatus(503)
+    }
+    console.log('Logged');
+    if (bcrypt.compareSync(data.password, user.password)) {
+      req.session.user = user;
+      let currentUser = req.session.user;
+      return res.json(currentUser);
+    }
+
   })
 }
 
