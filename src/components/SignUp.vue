@@ -7,6 +7,7 @@
           <div class="box">
             <figure class="avatar">
               <img height="128" width="128" src='https://image.flaticon.com/icons/svg/179/179948.svg'>
+              <input type="file" @change="processFile($event)">
             </figure>
               <div class="field">
                 <div class="control">
@@ -53,19 +54,26 @@ export default {
     return {
       username: '',
       email: '',
+      photo: {},
       password: '',
       confirmPassword: ''
     }
   },
   methods: {
+    processFile (e) {
+      this.photo = e.target.files[0];
+    },
     sendForm () {
       if (this.password === this.confirmPassword) {
-        let data = {
-          username: this.username,
-          email: this.email,
-          password: this.password
-        };
-        ChatServices.SignUp(data).then((response) => {
+
+        let form = new FormData();
+        form.append('username', this.username);
+        form.append('email', this.email);
+        form.append('password', this.password);
+        form.append('photo', this.photo);
+        console.log(form.get('photo'));
+
+        ChatServices.SignUp(form).then((response) => {
               let user = response.data;
               this.$router.push({ name: 'Message', params: {'user':user} })
             })

@@ -2,7 +2,12 @@ import Api from '@/services/Api'
 
 export default {
   SignUp (params) {
-    return Api().post('signup', params)
+    return Api().post('signup', params, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    )
   },
   fetchPosts () {
     return Api().get('posts')
