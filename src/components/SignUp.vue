@@ -71,8 +71,7 @@ export default {
         form.append('email', this.email);
         form.append('password', this.password);
         form.append('photo', this.photo);
-        console.log(form.get('photo'));
-
+        
         ChatServices.SignUp(form).then((response) => {
               let user = response.data;
               this.$router.push({ name: 'Message', params: {'user':user} })

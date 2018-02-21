@@ -1,5 +1,6 @@
 <template>
   <div class="notification">
+    <img height="128" width="128" :src="user.photo" alt="">
     <h2>Hello {{user.username}}</h2>
   </div>
 </template>

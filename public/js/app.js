@@ -460,6 +460,7 @@ function normalizeComponent (
 //
 //
 //
+//
 
 
 
@@ -634,7 +635,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
         form.append('email', this.email);
         form.append('password', this.password);
         form.append('photo', this.photo);
-        console.log(form.get('photo'));
 
         __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__["a" /* default */].SignUp(form).then(function (response) {
           var user = response.data;
@@ -990,6 +990,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "notification" }, [
+    _c("img", {
+      attrs: { height: "128", width: "128", src: _vm.user.photo, alt: "" }
+    }),
+    _vm._v(" "),
     _c("h2", [_vm._v("Hello " + _vm._s(_vm.user.username))])
   ])
 }
