@@ -7,7 +7,19 @@
           <div class="box">
             <figure class="avatar">
               <img height="128" width="128" src='https://image.flaticon.com/icons/svg/179/179948.svg'>
-              <input type="file" @change="processFile($event)">
+              <div class="file is-centered">
+                <label class="file-label">
+                  <input class="file-input" type="file" @change="processFile($event)">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose a file…
+                    </span>
+                  </span>
+                </label>
+              </div>
             </figure>
               <div class="field">
                 <div class="control">
@@ -71,7 +83,7 @@ export default {
         form.append('email', this.email);
         form.append('password', this.password);
         form.append('photo', this.photo);
-        
+
         ChatServices.SignUp(form).then((response) => {
               let user = response.data;
               this.$router.push({ name: 'Message', params: {'user':user} })

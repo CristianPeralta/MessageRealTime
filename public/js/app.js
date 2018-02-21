@@ -606,6 +606,18 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1523,14 +1535,21 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("input", {
-                attrs: { type: "file" },
-                on: {
-                  change: function($event) {
-                    _vm.processFile($event)
-                  }
-                }
-              })
+              _c("div", { staticClass: "file is-centered" }, [
+                _c("label", { staticClass: "file-label" }, [
+                  _c("input", {
+                    staticClass: "file-input",
+                    attrs: { type: "file" },
+                    on: {
+                      change: function($event) {
+                        _vm.processFile($event)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(0)
+                ])
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "field" }, [
@@ -1673,7 +1692,22 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "file-cta" }, [
+      _c("span", { staticClass: "file-icon" }, [
+        _c("i", { staticClass: "fas fa-upload" })
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "file-label" }, [
+        _vm._v("\n                    Choose a file…\n                  ")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 if (false) {
