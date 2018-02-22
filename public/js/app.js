@@ -452,6 +452,9 @@ function normalizeComponent (
   },
   getMessages: function getMessages() {
     return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().get('messages');
+  },
+  addMessage: function addMessage(params) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('message', params);
   }
 });
 
@@ -1931,6 +1934,8 @@ if (false) {
 //
 //
 //
+//
+//
 
 
 
@@ -1995,8 +2000,13 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     addMessage: function addMessage() {
       var _this4 = this;
 
-      __WEBPACK_IMPORTED_MODULE_2__services_ChatServices__["a" /* default */].addMessage().then(function (response) {
+      __WEBPACK_IMPORTED_MODULE_2__services_ChatServices__["a" /* default */].addMessage({
+        user: this.user._id,
+        text: this.text
+      }).then(function (response) {
+        console.log(response.data);
         _this4.messages.push(response.data);
+        _this4.$router.go();
       });
     }
   }
@@ -2184,9 +2194,17 @@ var render = function() {
               "div",
               { staticClass: "box content" },
               [
-                _c("Message", { attrs: { user: _vm.user } }, [
-                  _vm._v("\n            This is my first message\n          ")
-                ]),
+                _vm._l(_vm.messages, function(message, index) {
+                  return [
+                    _c("Message", { attrs: { user: _vm.user } }, [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(message.text) +
+                          "\n            "
+                      )
+                    ])
+                  ]
+                }),
                 _vm._v(" "),
                 _c("article", { staticClass: "post" }, [
                   _c("div", { staticClass: "media" }, [
@@ -2250,7 +2268,7 @@ var render = function() {
                   ])
                 ])
               ],
-              1
+              2
             )
           ])
         ]

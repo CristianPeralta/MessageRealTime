@@ -48,10 +48,12 @@
         <div class="column is-9">
           <div class="box content">
 
-            
-            <Message :user="user">
-              This is my first message
-            </Message>
+            <template v-for="(message,index) in messages">
+              <Message :user="user">
+                {{message.text}}
+              </Message>
+            </template>
+
             <article class="post">
               <div class="media">
                 <div class="media-left">
@@ -156,8 +158,13 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         })
       },
       addMessage () {
-        ChatServices.addMessage().then((response) => {
+        ChatServices.addMessage({
+          user: this.user._id,
+          text: this.text
+        }).then((response) => {
+          console.log(response.data);
           this.messages.push(response.data);
+          this.$router.go();
         })
       }
     }

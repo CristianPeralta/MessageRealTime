@@ -20,5 +20,8 @@ export default {
   },
   getMessages () {
     return Api().get('messages');
+  },
+  addMessage (params) {
+    return Api().post('message', params);
   }
 }

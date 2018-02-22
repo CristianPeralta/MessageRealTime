@@ -17,4 +17,6 @@ router.get('/user',userController.getUser);
 
 router.get('/messages',messageController.getAll);
 
+router.post('/message',messageController.create);
+
 module.exports = router;

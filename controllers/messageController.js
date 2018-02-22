@@ -1,5 +1,6 @@
 var User = require('../models/User');
 var Message = require('../models/Message');
+var mongoose = require("mongoose");
 
 
 module.exports.create = function (req,res) {
@@ -7,9 +8,16 @@ module.exports.create = function (req,res) {
   console.log(data);
 
   let message = new Message();
-  User.findOne({_id:data._id}).then( (user, err)=>{
-    message.userId = user._id;
-    message.text = data.message;
+  User.findOne({_id:data.user}).then( (user, err)=>{
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+    if (!user) {
+      console.log('user not found');
+    }
+    message.userId = mongoose.Types.ObjectId(user._id);
+    message.text = data.text;
     message.save(function (err, message) {
         if(err){
           console.log(err);
@@ -22,11 +30,12 @@ module.exports.create = function (req,res) {
 
 module.exports.getAll = function (req,res) {
 
-  Message.find({}).then( (messages, err)=>{
+  Message.find({}).populate('user').then( (messages, err) => {
       if (err) {
         console.log(err);
         res.sendStatus(500)
       }
+      console.log(messages);
       return res.json(messages);
     });
 }
