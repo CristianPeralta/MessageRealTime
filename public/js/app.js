@@ -449,6 +449,9 @@ function normalizeComponent (
   },
   logout: function logout() {
     return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('logout');
+  },
+  getMessages: function getMessages() {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().get('messages');
   }
 });
 
@@ -477,6 +480,7 @@ function normalizeComponent (
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__ = __webpack_require__(7);
 //
 //
 //
@@ -497,6 +501,8 @@ function normalizeComponent (
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'Message',
@@ -1041,7 +1047,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -1925,38 +1931,6 @@ if (false) {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1969,8 +1943,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
   data: function data() {
     return {
       message: 'Hello World',
+      messages: [],
       user: {},
-      menu: false
+      menu: false,
+      text: ''
     };
   },
 
@@ -1987,6 +1963,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
   },
   created: function created() {
     this.getUser();
+    this.getMessages();
   },
 
   methods: {
@@ -2007,6 +1984,20 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     },
     menuActive: function menuActive() {
       this.menu = !this.menu;
+    },
+    getMessages: function getMessages() {
+      var _this3 = this;
+
+      __WEBPACK_IMPORTED_MODULE_2__services_ChatServices__["a" /* default */].getMessages().then(function (response) {
+        _this3.messages = response.data;
+      });
+    },
+    addMessage: function addMessage() {
+      var _this4 = this;
+
+      __WEBPACK_IMPORTED_MODULE_2__services_ChatServices__["a" /* default */].addMessage().then(function (response) {
+        _this4.messages.push(response.data);
+      });
     }
   }
 });
@@ -2193,10 +2184,6 @@ var render = function() {
               "div",
               { staticClass: "box content" },
               [
-                _vm._m(2),
-                _vm._v(" "),
-                _vm._m(3),
-                _vm._v(" "),
                 _c("Message", { attrs: { user: _vm.user } }, [
                   _vm._v("\n            This is my first message\n          ")
                 ]),
@@ -2221,9 +2208,46 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(4),
+                  _c("div", { staticClass: "field" }, [
+                    _c("div", { staticClass: "control" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.text,
+                            expression: "text"
+                          }
+                        ],
+                        staticClass: "textarea is-large",
+                        attrs: { type: "text", placeholder: "Your message" },
+                        domProps: { value: _vm.text },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.text = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _vm._m(5)
+                  _c("div", { staticClass: "control" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button is-primary",
+                        on: {
+                          click: function($event) {
+                            _vm.addMessage()
+                          }
+                        }
+                      },
+                      [_vm._v("Submit")]
+                    )
+                  ])
                 ])
               ],
               1
@@ -2233,7 +2257,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm._m(6)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -2271,87 +2295,6 @@ var staticRenderFns = [
           _c("li", [_c("a", [_vm._v("IT")])])
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("article", { staticClass: "post" }, [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-left" }, [
-          _c("p", { staticClass: "image is-32x32" }, [
-            _c("img", {
-              attrs: {
-                src:
-                  "http://api.ning.com/files/4qC6IxZw6coW7mUAhW-EKAZCoX5am7ZInUpgDcnIryjDDypUMgccQe9WaMbCmVQwmod9BEraCpUKvFhG8DDzw2C3xKf0j2L5/Pictures_0328.jpg?width=32&height=32&crop=1%3A1"
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media-content" }, [
-          _c("div", { staticClass: "content" }, [
-            _c("p", [
-              _c("a", { attrs: { href: "#" } }, [_vm._v("Hannah Rooser")]),
-              _vm._v(" 5 minutes ago   \n                  ")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h4", [_vm._v("Hello Guys :D")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("article", { staticClass: "post" }, [
-      _c("div", { staticClass: "media" }, [
-        _c("div", { staticClass: "media-left" }, [
-          _c("p", { staticClass: "image is-32x32" }, [
-            _c("img", {
-              attrs: {
-                src:
-                  "https://yt3.ggpht.com/-fwIKW9Sy0-A/AAAAAAAAAAI/AAAAAAAAAAA/NhRCHRmu9Yo/s32-c-k-no-mo-rj-c0xffffff/photo.jpg"
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media-content" }, [
-          _c("div", { staticClass: "content" }, [
-            _c("p", [
-              _c("a", { attrs: { href: "#" } }, [_vm._v("John Connor")]),
-              _vm._v(" 2 minutes ago   \n                  ")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h4", [_vm._v("Hello Hannah")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("div", { staticClass: "control" }, [
-        _c("textarea", {
-          staticClass: "textarea is-large",
-          attrs: { type: "text", placeholder: "Your message" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "control" }, [
-      _c("button", { staticClass: "button is-primary" }, [_vm._v("Submit")])
     ])
   },
   function() {

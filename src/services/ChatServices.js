@@ -17,5 +17,8 @@ export default {
   },
   logout () {
     return Api().post('logout');
+  },
+  getMessages () {
+    return Api().get('messages');
   }
 }

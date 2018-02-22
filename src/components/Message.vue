@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import ChatServices from '@/services/ChatServices'
+
 export default {
   name:'Message',
   props:['user']

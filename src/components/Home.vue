@@ -47,40 +47,8 @@
         </div>
         <div class="column is-9">
           <div class="box content">
-            <article class="post">
-              <div class="media">
-                <div class="media-left">
-                  <p class="image is-32x32">
-                    <img src="http://api.ning.com/files/4qC6IxZw6coW7mUAhW-EKAZCoX5am7ZInUpgDcnIryjDDypUMgccQe9WaMbCmVQwmod9BEraCpUKvFhG8DDzw2C3xKf0j2L5/Pictures_0328.jpg?width=32&height=32&crop=1%3A1">
-                  </p>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <a href="#">Hannah Rooser</a> 5 minutes ago  &nbsp;
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <h4>Hello Guys :D</h4>
-            </article>
-            <article class="post">
-              <div class="media">
-                <div class="media-left">
-                  <p class="image is-32x32">
-                    <img src="https://yt3.ggpht.com/-fwIKW9Sy0-A/AAAAAAAAAAI/AAAAAAAAAAA/NhRCHRmu9Yo/s32-c-k-no-mo-rj-c0xffffff/photo.jpg">
-                  </p>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <a href="#">John Connor</a> 2 minutes ago  &nbsp;
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <h4>Hello Hannah</h4>
-            </article>
+
+            
             <Message :user="user">
               This is my first message
             </Message>
@@ -101,11 +69,11 @@
               </div>
               <div class="field">
                 <div class="control">
-                  <textarea class="textarea is-large" type="text" placeholder="Your message"></textarea>
+                  <textarea v-model="text" class="textarea is-large" type="text" placeholder="Your message"></textarea>
                 </div>
               </div>
               <div class="control">
-                <button class="button is-primary">Submit</button>
+                <button @click="addMessage()" class="button is-primary">Submit</button>
               </div>
             </article>
 
@@ -146,8 +114,10 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     data(){
       return {
         message: 'Hello World',
+        messages: [],
         user: {},
-        menu: false
+        menu: false,
+        text: ''
       }
     },
     components:{
@@ -162,7 +132,8 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     created () {
-      this.getUser()
+      this.getUser();
+      this.getMessages()
     },
     methods: {
       getUser () {
@@ -178,6 +149,16 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       menuActive() {
         this.menu = !this.menu
+      },
+      getMessages () {
+        ChatServices.getMessages().then((response) => {
+          this.messages = response.data;
+        })
+      },
+      addMessage () {
+        ChatServices.addMessage().then((response) => {
+          this.messages.push(response.data);
+        })
       }
     }
   }
