@@ -24,6 +24,20 @@ module.exports.login = function (req,res) {
 
   })
 }
+module.exports.getUser = function (req,res) {
+    let user = req.session.user;
+    return res.json(user);
+}
+module.exports.logout= function (req,res) {
+    req.session.destroy(function(err) {
+      // cannot access session here
+      if(err){
+        console.log(err);
+        return res.sendStatus(503)
+      }
+      return res.sendStatus(200);
+    })
+}
 
 
 module.exports.create = function (req,res) {

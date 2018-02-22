@@ -19,28 +19,24 @@
               Home
             </a>
           </div>
-
           <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="field is-grouped">
-                <p class="control">
-                  <a class="button is-small">
-                    <span class="icon">
-                      <i class="fa fa-user-plus"></i>
-                    </span>
-                    <span>
-                      Register
-                    </span>
-                  </a>
-                </p>
-                <p class="control">
-                  <a class="button is-small is-info is-outlined">
-                    <span class="icon">
-                      <i class="fa fa-user"></i>
-                    </span>
-                    <span>Login</span>
-                  </a>
-                </p>
+            <div @click="menuActive()" class="navbar-item has-dropdown" :class="{'is-active':menu}">
+              <a class="navbar-link">
+                <img height="40" width="40" :src="user.photo">
+                {{user.username}}
+              </a>
+
+              <div class="navbar-dropdown is-right">
+                <a class="navbar-item">
+                  Profile
+                </a>
+                <a @click="logout()" class="navbar-item">
+                  Logut
+                </a>
+                <hr class="navbar-divider">
+                <div class="navbar-item">
+                  :D
+                </div>
               </div>
             </div>
           </div>
@@ -240,16 +236,16 @@
 <script>
 import Vue from 'vue'
 import VueSocketio from 'vue-socket.io'
+import ChatServices from '@/services/ChatServices'
 Vue.use(VueSocketio, 'ws://localhost:5000')
 
   export default {
     name: 'Message',
-    props: [
-      'user'
-    ],
     data(){
       return {
-        message: 'Hello World'
+        message: 'Hello World',
+        user: {},
+        menu: false
       }
     },
     sockets: {
@@ -258,6 +254,25 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       customEmit (val) {
         console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+      }
+    },
+    created () {
+      this.getUser()
+    },
+    methods: {
+      getUser () {
+        ChatServices.user().then((response) => {
+          console.log(response);
+          this.user = response.data;
+        });
+      },
+      logout() {
+        ChatServices.logout() .then((response) => {
+          this.$router.push({ name: 'Login'});
+        });
+      },
+      menuActive() {
+        this.menu = !this.menu
       }
     }
   }

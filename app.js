@@ -44,7 +44,7 @@ app.use(session({
     // Set cookie
     cookie: {
         secure: false,
-        maxAge: 10 * 60 * 1000
+        maxAge: 365 * 24 * 60 * 60 * 1000
     },
     // Name of your cookie
     name: 'testCookie',

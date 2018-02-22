@@ -4,6 +4,7 @@
       <div class="container has-text-centered">
         <div class="column is-4 is-offset-4">
           <h3 class="title has-text-grey">Login</h3>
+          <p v-model="session.username"></p>
           <p class="subtitle has-text-grey">Please login to proceed.</p>
           <div class="box">
             <figure class="avatar">
@@ -42,8 +43,12 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      session: {}
     }
+  },
+  created () {
+    this.getUser()
   },
   methods: {
     login () {
@@ -52,9 +57,15 @@ export default {
         password: this.password
       }).then((response) =>{
         let user = response.data;
-        this.$router.push({ name: 'Message', params: {'user':user} })
+        this.$router.push({ name: 'Message' })
       })
-    }
+    },
+    getUser () {
+      ChatServices.user().then((response) => {
+        console.log(response);
+        this.session = response.data;
+      });
+    },
   }
 }
 </script>

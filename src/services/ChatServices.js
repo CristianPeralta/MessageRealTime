@@ -11,5 +11,11 @@ export default {
   },
   login (params) {
     return Api().post('login', params);
+  },
+  user () {
+    return Api().get('user');
+  },
+  logout () {
+    return Api().post('logout');
   }
 }

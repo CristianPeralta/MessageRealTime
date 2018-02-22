@@ -426,8 +426,35 @@ function normalizeComponent (
 /***/ }),
 /* 5 */,
 /* 6 */,
-/* 7 */,
-/* 8 */
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_Api__ = __webpack_require__(34);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  signup: function signup(params) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('signup', params, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  },
+  login: function login(params) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('login', params);
+  },
+  user: function user() {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().get('user');
+  },
+  logout: function logout() {
+    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('logout');
+  }
+});
+
+/***/ }),
+/* 8 */,
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -445,15 +472,16 @@ function normalizeComponent (
 });
 
 /***/ }),
-/* 9 */,
-/* 10 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_socket_io__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_socket_io__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_socket_io__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_ChatServices__ = __webpack_require__(7);
 //
 //
 //
@@ -689,10 +717,7 @@ function normalizeComponent (
 //
 //
 //
-//
-//
-//
-//
+
 
 
 
@@ -700,10 +725,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'Message',
-  props: ['user'],
   data: function data() {
     return {
-      message: 'Hello World'
+      message: 'Hello World',
+      user: {},
+      menu: false
     };
   },
 
@@ -714,12 +740,42 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     customEmit: function customEmit(val) {
       console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)');
     }
+  },
+  created: function created() {
+    this.getUser();
+  },
+
+  methods: {
+    getUser: function getUser() {
+      var _this = this;
+
+      __WEBPACK_IMPORTED_MODULE_2__services_ChatServices__["a" /* default */].user().then(function (response) {
+        console.log(response);
+        _this.user = response.data;
+      });
+    },
+    logout: function logout() {
+      var _this2 = this;
+
+      __WEBPACK_IMPORTED_MODULE_2__services_ChatServices__["a" /* default */].logout().then(function (response) {
+        _this2.$router.push({ name: 'Login' });
+      });
+    },
+    menuActive: function menuActive() {
+      this.menu = !this.menu;
+    }
   }
 });
 
 /***/ }),
-/* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -740,11 +796,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 });
 
 /***/ }),
-/* 13 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__ = __webpack_require__(7);
+//
 //
 //
 //
@@ -789,8 +846,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
   data: function data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      session: {}
     };
+  },
+  created: function created() {
+    this.getUser();
   },
 
   methods: {
@@ -802,45 +863,26 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
         password: this.password
       }).then(function (response) {
         var user = response.data;
-        _this.$router.push({ name: 'Message', params: { 'user': user } });
+        _this.$router.push({ name: 'Message' });
+      });
+    },
+    getUser: function getUser() {
+      var _this2 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__["a" /* default */].user().then(function (response) {
+        console.log(response);
+        _this2.session = response.data;
       });
     }
   }
 });
 
 /***/ }),
-/* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_Api__ = __webpack_require__(43);
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  signup: function signup(params) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('signup', params, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-  },
-  login: function login(params) {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__services_Api__["a" /* default */])().post('login', params);
-  }
-});
-
-/***/ }),
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
 /* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_ChatServices__ = __webpack_require__(7);
 //
 //
 //
@@ -973,7 +1015,7 @@ var vm = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_App_vue__ = __webpack_require__(9);
 /* unused harmony namespace reexport */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_04c2046b_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_App_vue__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(4);
@@ -1134,11 +1176,11 @@ if (false) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Message__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Notification__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Login__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SignUp__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Notification__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Login__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_SignUp__ = __webpack_require__(62);
 
 
 
@@ -1174,9 +1216,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Message_vue__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Message_vue__ = __webpack_require__(11);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_72764eb2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Message_vue__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_72764eb2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Message_vue__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(4);
 var disposed = false
 function injectStyle (context) {
@@ -1275,405 +1317,474 @@ exports.push([module.i, "\nhtml,body {\r\n  font-family: 'Open Sans', serif;\r\n
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = (function () {
+  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.create({
+    baseURL: 'http://localhost:5000'
+  });
+});
+
+/***/ }),
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", {}, [
+    _c("nav", { staticClass: "navbar is-white topNav" }, [
+      _c("div", { staticClass: "container" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "navbar-menu", attrs: { id: "topNav" } }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "navbar-end" }, [
+            _c(
+              "div",
+              {
+                staticClass: "navbar-item has-dropdown",
+                class: { "is-active": _vm.menu },
+                on: {
+                  click: function($event) {
+                    _vm.menuActive()
+                  }
+                }
+              },
+              [
+                _c("a", { staticClass: "navbar-link" }, [
+                  _c("img", {
+                    attrs: { height: "40", width: "40", src: _vm.user.photo }
+                  }),
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.user.username) +
+                      "\n            "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "navbar-dropdown is-right" }, [
+                  _c("a", { staticClass: "navbar-item" }, [
+                    _vm._v("\n                Profile\n              ")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "navbar-item",
+                      on: {
+                        click: function($event) {
+                          _vm.logout()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                Logut\n              ")]
+                  ),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "navbar-divider" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "navbar-item" }, [
+                    _vm._v("\n                :D\n              ")
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _vm._m(3),
+    _vm._v(" "),
+    _vm._m(4)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", {}, [
-      _c("nav", { staticClass: "navbar is-white topNav" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "navbar-brand" }, [
-            _c("a", { staticClass: "navbar-item", attrs: { href: "../" } }, [
-              _c("img", { attrs: { src: "", width: "112", height: "28" } })
+    return _c("div", { staticClass: "navbar-brand" }, [
+      _c("a", { staticClass: "navbar-item", attrs: { href: "../" } }, [
+        _c("img", { attrs: { src: "", width: "112", height: "28" } })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "navbar-burger burger",
+          attrs: { "data-target": "topNav" }
+        },
+        [_c("span"), _vm._v(" "), _c("span"), _vm._v(" "), _c("span")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "navbar-start" }, [
+      _c("a", { staticClass: "navbar-item", attrs: { href: "forum.html" } }, [
+        _vm._v("\n            Home\n          ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("nav", { staticClass: "navbar is-white" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "navbar-menu" }, [
+          _c("div", { staticClass: "navbar-start" }, [
+            _c(
+              "a",
+              { staticClass: "navbar-item is-active", attrs: { href: "#" } },
+              [_vm._v("Popular")]
+            ),
+            _vm._v(" "),
+            _c("a", { staticClass: "navbar-item", attrs: { href: "#" } }, [
+              _vm._v("Recent")
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "navbar-burger burger",
-                attrs: { "data-target": "topNav" }
-              },
-              [_c("span"), _vm._v(" "), _c("span"), _vm._v(" "), _c("span")]
-            )
+            _c("a", { staticClass: "navbar-item", attrs: { href: "#" } }, [
+              _vm._v("Rising")
+            ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "navbar-menu", attrs: { id: "topNav" } }, [
-            _c("div", { staticClass: "navbar-start" }, [
-              _c(
-                "a",
-                { staticClass: "navbar-item", attrs: { href: "forum.html" } },
-                [_vm._v("\n            Home\n          ")]
-              )
+          _c("div", { staticClass: "navbar-end" }, [
+            _c("div", { staticClass: "navbar-item" }, [
+              _c("input", {
+                staticClass: "input",
+                attrs: { type: "text", placeholder: "Search forum..." }
+              })
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "container" }, [
+      _c("div", { staticClass: "columns" }, [
+        _c("div", { staticClass: "column is-3" }, [
+          _c(
+            "a",
+            {
+              staticClass: "button is-primary is-block is-alt is-large",
+              attrs: { href: "#" }
+            },
+            [_vm._v("New Post")]
+          ),
+          _vm._v(" "),
+          _c("aside", { staticClass: "menu" }, [
+            _c("p", { staticClass: "menu-label" }, [
+              _vm._v("\n            Tags\n          ")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "navbar-end" }, [
-              _c("div", { staticClass: "navbar-item" }, [
-                _c("div", { staticClass: "field is-grouped" }, [
-                  _c("p", { staticClass: "control" }, [
-                    _c("a", { staticClass: "button is-small" }, [
-                      _c("span", { staticClass: "icon" }, [
-                        _c("i", { staticClass: "fa fa-user-plus" })
-                      ]),
-                      _vm._v(" "),
-                      _c("span", [
-                        _vm._v(
-                          "\n                    Register\n                  "
-                        )
-                      ])
+            _c("ul", { staticClass: "menu-list" }, [
+              _c("li", [_c("a", [_vm._v("Dashboard")])]),
+              _vm._v(" "),
+              _c("li", [_c("a", [_vm._v("Customers")])]),
+              _vm._v(" "),
+              _c("li", [_c("a", [_vm._v("Authentication")])]),
+              _vm._v(" "),
+              _c("li", [_c("a", [_vm._v("Payments")])]),
+              _vm._v(" "),
+              _c("li", [_c("a", [_vm._v("Transfers")])]),
+              _vm._v(" "),
+              _c("li", [_c("a", [_vm._v("Balance")])])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column is-9" }, [
+          _c("div", { staticClass: "box content" }, [
+            _c("article", { staticClass: "post" }, [
+              _c("h4", [_vm._v("Bulma: How do you center a button in a box?")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "media" }, [
+                _c("div", { staticClass: "media-left" }, [
+                  _c("p", { staticClass: "image is-32x32" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "http://bulma.io/images/placeholders/128x128.png"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-content" }, [
+                  _c("div", { staticClass: "content" }, [
+                    _c("p", [
+                      _c("a", { attrs: { href: "#" } }, [_vm._v("@jsmith")]),
+                      _vm._v(
+                        " replied 34 minutes ago   \n                    "
+                      ),
+                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "control" }, [
-                    _c(
-                      "a",
-                      { staticClass: "button is-small is-info is-outlined" },
-                      [
-                        _c("span", { staticClass: "icon" }, [
-                          _c("i", { staticClass: "fa fa-user" })
-                        ]),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Login")])
-                      ]
-                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-right" }, [
+                  _c("span", { staticClass: "has-text-grey-light" }, [
+                    _c("i", { staticClass: "fa fa-comments" }),
+                    _vm._v(" 1")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("article", { staticClass: "post" }, [
+              _c("h4", [
+                _vm._v("How can I make a bulma button go full width?")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "media" }, [
+                _c("div", { staticClass: "media-left" }, [
+                  _c("p", { staticClass: "image is-32x32" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "http://bulma.io/images/placeholders/128x128.png"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-content" }, [
+                  _c("div", { staticClass: "content" }, [
+                    _c("p", [
+                      _c("a", { attrs: { href: "#" } }, [_vm._v("@red")]),
+                      _vm._v(
+                        " replied 40 minutes ago   \n                    "
+                      ),
+                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-right" }, [
+                  _c("span", { staticClass: "has-text-grey-light" }, [
+                    _c("i", { staticClass: "fa fa-comments" }),
+                    _vm._v(" 0")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("article", { staticClass: "post" }, [
+              _c("h4", [
+                _vm._v(
+                  "TypeError: Data must be a string or a buffer when trying touse vue-bulma-tabs"
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "media" }, [
+                _c("div", { staticClass: "media-left" }, [
+                  _c("p", { staticClass: "image is-32x32" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "http://bulma.io/images/placeholders/128x128.png"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-content" }, [
+                  _c("div", { staticClass: "content" }, [
+                    _c("p", [
+                      _c("a", { attrs: { href: "#" } }, [_vm._v("@jsmith")]),
+                      _vm._v(
+                        " replied 53 minutes ago   \n                    "
+                      ),
+                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-right" }, [
+                  _c("span", { staticClass: "has-text-grey-light" }, [
+                    _c("i", { staticClass: "fa fa-comments" }),
+                    _vm._v(" 13")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("article", { staticClass: "post" }, [
+              _c("h4", [_vm._v("How to vertically center elements in Bulma?")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "media" }, [
+                _c("div", { staticClass: "media-left" }, [
+                  _c("p", { staticClass: "image is-32x32" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "http://bulma.io/images/placeholders/128x128.png"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-content" }, [
+                  _c("div", { staticClass: "content" }, [
+                    _c("p", [
+                      _c("a", { attrs: { href: "#" } }, [_vm._v("@brown")]),
+                      _vm._v(" replied 3 hours ago   \n                    "),
+                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-right" }, [
+                  _c("span", { staticClass: "has-text-grey-light" }, [
+                    _c("i", { staticClass: "fa fa-comments" }),
+                    _vm._v(" 2")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("article", { staticClass: "post" }, [
+              _c("h4", [
+                _vm._v(
+                  "I'm trying to use hamburger menu on bulma css, but it doesn't work. What is wrong?"
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "media" }, [
+                _c("div", { staticClass: "media-left" }, [
+                  _c("p", { staticClass: "image is-32x32" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "http://bulma.io/images/placeholders/128x128.png"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-content" }, [
+                  _c("div", { staticClass: "content" }, [
+                    _c("p", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _vm._v("@hamburgler")
+                      ]),
+                      _vm._v(" replied 5 hours ago   \n                    "),
+                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-right" }, [
+                  _c("span", { staticClass: "has-text-grey-light" }, [
+                    _c("i", { staticClass: "fa fa-comments" }),
+                    _vm._v(" 2")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("article", { staticClass: "post" }, [
+              _c("h4", [_vm._v("How to make tiles wrap with Bulma CSS?")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "media" }, [
+                _c("div", { staticClass: "media-left" }, [
+                  _c("p", { staticClass: "image is-32x32" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "http://bulma.io/images/placeholders/128x128.png"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-content" }, [
+                  _c("div", { staticClass: "content" }, [
+                    _c("p", [
+                      _c("a", { attrs: { href: "#" } }, [_vm._v("@rapper")]),
+                      _vm._v(" replied 3 hours ago   \n                    "),
+                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-right" }, [
+                  _c("span", { staticClass: "has-text-grey-light" }, [
+                    _c("i", { staticClass: "fa fa-comments" }),
+                    _vm._v(" 2")
                   ])
                 ])
               ])
             ])
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("nav", { staticClass: "navbar is-white" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "navbar-menu" }, [
-            _c("div", { staticClass: "navbar-start" }, [
-              _c(
-                "a",
-                { staticClass: "navbar-item is-active", attrs: { href: "#" } },
-                [_vm._v("Popular")]
-              ),
-              _vm._v(" "),
-              _c("a", { staticClass: "navbar-item", attrs: { href: "#" } }, [
-                _vm._v("Recent")
-              ]),
-              _vm._v(" "),
-              _c("a", { staticClass: "navbar-item", attrs: { href: "#" } }, [
-                _vm._v("Rising")
-              ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("footer", { staticClass: "footer" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "content has-text-centered" }, [
+          _c("p", [
+            _c("strong", [_vm._v("Bulma Templates")]),
+            _vm._v(" by "),
+            _c("a", { attrs: { href: "https://github.com/dansup" } }, [
+              _vm._v("Daniel Supernault")
             ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "navbar-end" }, [
-              _c("div", { staticClass: "navbar-item" }, [
-                _c("input", {
-                  staticClass: "input",
-                  attrs: { type: "text", placeholder: "Search forum..." }
-                })
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("section", { staticClass: "container" }, [
-        _c("div", { staticClass: "columns" }, [
-          _c("div", { staticClass: "column is-3" }, [
+            _vm._v(". The source code is licensed\n          "),
             _c(
               "a",
               {
-                staticClass: "button is-primary is-block is-alt is-large",
-                attrs: { href: "#" }
+                attrs: {
+                  href: "http://opensource.org/licenses/mit-license.php"
+                }
               },
-              [_vm._v("New Post")]
+              [_vm._v("MIT")]
             ),
-            _vm._v(" "),
-            _c("aside", { staticClass: "menu" }, [
-              _c("p", { staticClass: "menu-label" }, [
-                _vm._v("\n            Tags\n          ")
-              ]),
-              _vm._v(" "),
-              _c("ul", { staticClass: "menu-list" }, [
-                _c("li", [_c("a", [_vm._v("Dashboard")])]),
-                _vm._v(" "),
-                _c("li", [_c("a", [_vm._v("Customers")])]),
-                _vm._v(" "),
-                _c("li", [_c("a", [_vm._v("Authentication")])]),
-                _vm._v(" "),
-                _c("li", [_c("a", [_vm._v("Payments")])]),
-                _vm._v(" "),
-                _c("li", [_c("a", [_vm._v("Transfers")])]),
-                _vm._v(" "),
-                _c("li", [_c("a", [_vm._v("Balance")])])
-              ])
-            ])
+            _vm._v(".\n        ")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "column is-9" }, [
-            _c("div", { staticClass: "box content" }, [
-              _c("article", { staticClass: "post" }, [
-                _c("h4", [
-                  _vm._v("Bulma: How do you center a button in a box?")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media" }, [
-                  _c("div", { staticClass: "media-left" }, [
-                    _c("p", { staticClass: "image is-32x32" }, [
-                      _c("img", {
-                        attrs: {
-                          src: "http://bulma.io/images/placeholders/128x128.png"
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-content" }, [
-                    _c("div", { staticClass: "content" }, [
-                      _c("p", [
-                        _c("a", { attrs: { href: "#" } }, [_vm._v("@jsmith")]),
-                        _vm._v(
-                          " replied 34 minutes ago   \n                    "
-                        ),
-                        _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-right" }, [
-                    _c("span", { staticClass: "has-text-grey-light" }, [
-                      _c("i", { staticClass: "fa fa-comments" }),
-                      _vm._v(" 1")
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("article", { staticClass: "post" }, [
-                _c("h4", [
-                  _vm._v("How can I make a bulma button go full width?")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media" }, [
-                  _c("div", { staticClass: "media-left" }, [
-                    _c("p", { staticClass: "image is-32x32" }, [
-                      _c("img", {
-                        attrs: {
-                          src: "http://bulma.io/images/placeholders/128x128.png"
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-content" }, [
-                    _c("div", { staticClass: "content" }, [
-                      _c("p", [
-                        _c("a", { attrs: { href: "#" } }, [_vm._v("@red")]),
-                        _vm._v(
-                          " replied 40 minutes ago   \n                    "
-                        ),
-                        _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-right" }, [
-                    _c("span", { staticClass: "has-text-grey-light" }, [
-                      _c("i", { staticClass: "fa fa-comments" }),
-                      _vm._v(" 0")
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("article", { staticClass: "post" }, [
-                _c("h4", [
-                  _vm._v(
-                    "TypeError: Data must be a string or a buffer when trying touse vue-bulma-tabs"
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media" }, [
-                  _c("div", { staticClass: "media-left" }, [
-                    _c("p", { staticClass: "image is-32x32" }, [
-                      _c("img", {
-                        attrs: {
-                          src: "http://bulma.io/images/placeholders/128x128.png"
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-content" }, [
-                    _c("div", { staticClass: "content" }, [
-                      _c("p", [
-                        _c("a", { attrs: { href: "#" } }, [_vm._v("@jsmith")]),
-                        _vm._v(
-                          " replied 53 minutes ago   \n                    "
-                        ),
-                        _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-right" }, [
-                    _c("span", { staticClass: "has-text-grey-light" }, [
-                      _c("i", { staticClass: "fa fa-comments" }),
-                      _vm._v(" 13")
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("article", { staticClass: "post" }, [
-                _c("h4", [
-                  _vm._v("How to vertically center elements in Bulma?")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media" }, [
-                  _c("div", { staticClass: "media-left" }, [
-                    _c("p", { staticClass: "image is-32x32" }, [
-                      _c("img", {
-                        attrs: {
-                          src: "http://bulma.io/images/placeholders/128x128.png"
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-content" }, [
-                    _c("div", { staticClass: "content" }, [
-                      _c("p", [
-                        _c("a", { attrs: { href: "#" } }, [_vm._v("@brown")]),
-                        _vm._v(" replied 3 hours ago   \n                    "),
-                        _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-right" }, [
-                    _c("span", { staticClass: "has-text-grey-light" }, [
-                      _c("i", { staticClass: "fa fa-comments" }),
-                      _vm._v(" 2")
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("article", { staticClass: "post" }, [
-                _c("h4", [
-                  _vm._v(
-                    "I'm trying to use hamburger menu on bulma css, but it doesn't work. What is wrong?"
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media" }, [
-                  _c("div", { staticClass: "media-left" }, [
-                    _c("p", { staticClass: "image is-32x32" }, [
-                      _c("img", {
-                        attrs: {
-                          src: "http://bulma.io/images/placeholders/128x128.png"
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-content" }, [
-                    _c("div", { staticClass: "content" }, [
-                      _c("p", [
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("@hamburgler")
-                        ]),
-                        _vm._v(" replied 5 hours ago   \n                    "),
-                        _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-right" }, [
-                    _c("span", { staticClass: "has-text-grey-light" }, [
-                      _c("i", { staticClass: "fa fa-comments" }),
-                      _vm._v(" 2")
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("article", { staticClass: "post" }, [
-                _c("h4", [_vm._v("How to make tiles wrap with Bulma CSS?")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media" }, [
-                  _c("div", { staticClass: "media-left" }, [
-                    _c("p", { staticClass: "image is-32x32" }, [
-                      _c("img", {
-                        attrs: {
-                          src: "http://bulma.io/images/placeholders/128x128.png"
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-content" }, [
-                    _c("div", { staticClass: "content" }, [
-                      _c("p", [
-                        _c("a", { attrs: { href: "#" } }, [_vm._v("@rapper")]),
-                        _vm._v(" replied 3 hours ago   \n                    "),
-                        _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-right" }, [
-                    _c("span", { staticClass: "has-text-grey-light" }, [
-                      _c("i", { staticClass: "fa fa-comments" }),
-                      _vm._v(" 2")
-                    ])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("footer", { staticClass: "footer" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "content has-text-centered" }, [
-            _c("p", [
-              _c("strong", [_vm._v("Bulma Templates")]),
-              _vm._v(" by "),
-              _c("a", { attrs: { href: "https://github.com/dansup" } }, [
-                _vm._v("Daniel Supernault")
-              ]),
-              _vm._v(". The source code is licensed\n          "),
-              _c(
-                "a",
-                {
-                  attrs: {
-                    href: "http://opensource.org/licenses/mit-license.php"
-                  }
-                },
-                [_vm._v("MIT")]
-              ),
-              _vm._v(".\n        ")
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c(
-                "a",
-                {
-                  staticClass: "icon",
-                  attrs: { href: "https://github.com/dansup/bulma-templates" }
-                },
-                [_c("i", { staticClass: "fa fa-github" })]
-              )
-            ])
+          _c("p", [
+            _c(
+              "a",
+              {
+                staticClass: "icon",
+                attrs: { href: "https://github.com/dansup/bulma-templates" }
+              },
+              [_c("i", { staticClass: "fa fa-github" })]
+            )
           ])
         ])
       ])
@@ -1690,19 +1801,18 @@ if (false) {
 }
 
 /***/ }),
-/* 35 */,
-/* 36 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Notification_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Notification_vue__ = __webpack_require__(19);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3a58017b_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Notification_vue__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3a58017b_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Notification_vue__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(4);
 var disposed = false
 function injectStyle (context) {
   if (disposed) return
-  __webpack_require__(37)
+  __webpack_require__(55)
 }
 /* script */
 
@@ -1749,13 +1859,13 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 37 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(38);
+var content = __webpack_require__(56);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -1776,7 +1886,7 @@ if(false) {
 }
 
 /***/ }),
-/* 38 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -1790,7 +1900,7 @@ exports.push([module.i, "\n.notification {\n  background: yellow;\n}\n", ""]);
 
 
 /***/ }),
-/* 39 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1815,18 +1925,18 @@ if (false) {
 }
 
 /***/ }),
-/* 40 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Login_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Login_vue__ = __webpack_require__(20);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_9fcfedee_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Login_vue__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_9fcfedee_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Login_vue__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(4);
 var disposed = false
 function injectStyle (context) {
   if (disposed) return
-  __webpack_require__(41)
+  __webpack_require__(59)
 }
 /* script */
 
@@ -1873,13 +1983,13 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 41 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(42);
+var content = __webpack_require__(60);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -1900,7 +2010,7 @@ if(false) {
 }
 
 /***/ }),
-/* 42 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -1916,40 +2026,7 @@ exports.push([module.i, "\nhtml,body {\r\n    font-family: 'Open Sans', serif;\r
 
 
 /***/ }),
-/* 43 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-
-
-/* harmony default export */ __webpack_exports__["a"] = (function () {
-  return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.create({
-    baseURL: 'http://localhost:5000'
-  });
-});
-
-/***/ }),
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */,
-/* 62 */
+/* 61 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1967,6 +2044,16 @@ var render = function() {
         _c("div", { staticClass: "container has-text-centered" }, [
           _c("div", { staticClass: "column is-4 is-offset-4" }, [
             _c("h3", { staticClass: "title has-text-grey" }, [_vm._v("Login")]),
+            _vm._v(" "),
+            _c("p", {
+              model: {
+                value: _vm.session.username,
+                callback: function($$v) {
+                  _vm.$set(_vm.session, "username", $$v)
+                },
+                expression: "session.username"
+              }
+            }),
             _vm._v(" "),
             _c("p", { staticClass: "subtitle has-text-grey" }, [
               _vm._v("Please login to proceed.")
@@ -2090,18 +2177,18 @@ if (false) {
 }
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_SignUp_vue__ = __webpack_require__(21);
 /* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_68a7f148_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_SignUp_vue__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_68a7f148_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_SignUp_vue__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__(4);
 var disposed = false
 function injectStyle (context) {
   if (disposed) return
-  __webpack_require__(64)
+  __webpack_require__(63)
 }
 /* script */
 
@@ -2148,13 +2235,13 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(65);
+var content = __webpack_require__(64);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -2175,7 +2262,7 @@ if(false) {
 }
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -2191,7 +2278,7 @@ exports.push([module.i, "\nhtml,body {\r\n    font-family: 'Open Sans', serif;\r
 
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
