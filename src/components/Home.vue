@@ -22,10 +22,6 @@
                 <a @click="logout()" class="navbar-item">
                   Logut
                 </a>
-                <hr class="navbar-divider">
-                <div class="navbar-item">
-                  :D
-                </div>
               </div>
             </div>
           </div>
@@ -55,13 +51,13 @@
               <div class="media">
                 <div class="media-left">
                   <p class="image is-32x32">
-                    <img src="http://bulma.io/images/placeholders/128x128.png">
+                    <img src="http://api.ning.com/files/4qC6IxZw6coW7mUAhW-EKAZCoX5am7ZInUpgDcnIryjDDypUMgccQe9WaMbCmVQwmod9BEraCpUKvFhG8DDzw2C3xKf0j2L5/Pictures_0328.jpg?width=32&height=32&crop=1%3A1">
                   </p>
                 </div>
                 <div class="media-content">
                   <div class="content">
                     <p>
-                      <a href="#">Hannah Quispe</a> 5 minutes ago  &nbsp;
+                      <a href="#">Hannah Rooser</a> 5 minutes ago  &nbsp;
                     </p>
                   </div>
                 </div>
@@ -72,7 +68,7 @@
               <div class="media">
                 <div class="media-left">
                   <p class="image is-32x32">
-                    <img src="http://bulma.io/images/placeholders/128x128.png">
+                    <img src="https://yt3.ggpht.com/-fwIKW9Sy0-A/AAAAAAAAAAI/AAAAAAAAAAA/NhRCHRmu9Yo/s32-c-k-no-mo-rj-c0xffffff/photo.jpg">
                   </p>
                 </div>
                 <div class="media-content">
@@ -89,7 +85,7 @@
               <div class="media">
                 <div class="media-left">
                   <p class="image is-32x32">
-                    <img src="http://bulma.io/images/placeholders/128x128.png">
+                    <img :src="user.photo">
                   </p>
                 </div>
                 <div class="media-content">

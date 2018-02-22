@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Message from '@/components/Message'
+import Home from '@/components/Home'
 import Notification from '@/components/Notification'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
@@ -20,9 +20,9 @@ export default new Router({
       component: SignUp
     },
     {
-      path: '/message',
-      name: 'Message',
-      component: Message,
+      path: '/home',
+      name: 'Home',
+      component: Home,
       props: true
     },
     {

@@ -57,7 +57,7 @@ export default {
         password: this.password
       }).then((response) =>{
         let user = response.data;
-        this.$router.push({ name: 'Message' })
+        this.$router.push({ name: 'Home' })
       })
     },
     getUser () {

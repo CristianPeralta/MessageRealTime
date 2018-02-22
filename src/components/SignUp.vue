@@ -88,7 +88,7 @@ export default {
 
         ChatServices.signup(form).then((response) => {
               let user = response.data;
-              this.$router.push({ name: 'Message', params: {'user':user} })
+              this.$router.push({ name: 'Home' })
             })
       } else{
         alert('Password doesnt match');
