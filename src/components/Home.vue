@@ -1,50 +1,9 @@
 <template>
   <div class="">
-    <nav class="navbar topNav">
-      <div class="container">
-        <div id="topNav" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item">
-              Home
-            </a>
-          </div>
-          <div class="navbar-end">
-            <div @click="menuActive()" class="navbar-item has-dropdown" :class="{'is-active':menu}">
-              <a class="navbar-link">
-                <img height="40" width="40" :src="user.photo">
-                {{user.username}}
-              </a>
-
-              <div class="navbar-dropdown is-right">
-                <a class="navbar-item">
-                  Profile
-                </a>
-                <a @click="logout()" class="navbar-item">
-                  Logut
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <Navbar :user="user"></Navbar>
     <section class="container" >
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
-        <div class="column is-3">
-          <aside class="menu">
-            <p class="menu-label">
-              Channels
-            </p>
-            <ul class="menu-list">
-              <li><a>Health</a></li>
-              <li><a>Games</a></li>
-              <li><a>Sports</a></li>
-              <li><a>Music</a></li>
-              <li><a>Love</a></li>
-              <li><a>IT</a></li>
-            </ul>
-          </aside>
-        </div>
+        <MenuList></MenuList>
         <div class="column is-9">
           <div class="box content">
 
@@ -82,22 +41,7 @@
 
       </div>
     </section>
-    <footer class="footer">
-      <div class="container">
-        <div class="content has-text-centered">
-          <p>
-            <strong>Bulma Templates</strong> by <a href="https://github.com/dansup">Daniel Supernault</a>. The source code is licensed
-            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
-          </p>
-          <p>
-            <a class="icon" href="https://github.com/dansup/bulma-templates">
-              <i class="fa fa-github"></i>
-            </a>
-          </p>
-        </div>
-      </div>
-    </footer>
-
+    <Footer></Footer>
   </div>
 
 </template>
@@ -105,22 +49,27 @@
 <script>
 import Vue from 'vue'
 import VueSocketio from 'vue-socket.io'
-import ChatServices from '@/services/ChatServices'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import MenuList from '@/components/MenuList'
 import Message from '@/components/Message'
+import ChatServices from '@/services/ChatServices'
+
 Vue.use(VueSocketio, 'ws://localhost:5000')
 
   export default {
     name: 'Home',
     data(){
       return {
-        message: 'Hello World',
         messages: [],
         user: {},
-        menu: false,
         text: ''
       }
     },
     components:{
+      Navbar,
+      MenuList,
+      Footer,
       Message
     },
     sockets: {
@@ -138,17 +87,8 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     methods: {
       getUser () {
         ChatServices.user().then((response) => {
-          console.log(response);
           this.user = response.data;
         });
-      },
-      logout() {
-        ChatServices.logout() .then((response) => {
-          this.$router.push({ name: 'Login'});
-        });
-      },
-      menuActive() {
-        this.menu = !this.menu
       },
       getMessages () {
         ChatServices.getMessages().then((response) => {
@@ -160,7 +100,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           user: this.user._id,
           text: this.text
         }).then((response) => {
-          console.log(response.data);
           this.messages.push(response.data);
           this.$router.go();
         })
@@ -169,63 +108,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
   }
 </script>
 <style >
-@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
-@import 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,700';
-@import 'https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css';
-html,body {
-  font-family: 'Open Sans', serif;
-  background: #F2F6FA;
-}
-footer {
-  background-color: #F2F6FA !important;
-}
-.topNav {
-  border-top: 5px solid #3498DB;
-}
-.topNav .container {
-  border-bottom: 1px solid #E6EAEE;
-}
-.container .columns {
-  margin: 3rem 0;
-}
-.navbar-menu .navbar-item {
-  padding: 0 2rem;
-}
-aside.menu {
-  padding-top: 3rem;
-}
-aside.menu .menu-list {
-  line-height: 1.5;
-}
-aside.menu .menu-label {
-  padding-left: 10px;
-  font-weight: 700;
-}
-.button.is-primary.is-alt {
-  background: #00c6ff;
-  background: -webkit-linear-gradient(to bottom, #0072ff, #00c6ff);
-  background: linear-gradient(to bottom, #0072ff, #00c6ff);
-  font-weight: 700;
-  font-size: 14px;
-  height: 3rem;
-  line-height: 2.8;
-}
-.media-left img {
-  border-radius: 50%;
-}
-.media-content p {
-  font-size: 14px;
-  line-height: 2.3;
-  font-weight: 700;
-  color: #8F99A3;
-}
-article.post {
-  margin: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #E6EAEE;
-}
-article.post:last-child {
-  padding-bottom: 0;
-  border-bottom: none;
-}
+@import '../assets/css/styles.css';
+
 </style>

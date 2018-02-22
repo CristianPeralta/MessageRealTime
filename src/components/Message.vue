@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import ChatServices from '@/services/ChatServices'
 import moment from 'moment';
 
 export default {
