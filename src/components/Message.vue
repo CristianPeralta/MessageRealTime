@@ -1,21 +1,10 @@
 <template>
   <div class="">
-    <nav class="navbar is-white topNav">
+    <nav class="navbar topNav">
       <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="../">
-              <img src="" width="112" height="28">
-          </a>
-          <div class="navbar-burger burger" data-target="topNav">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-
         <div id="topNav" class="navbar-menu">
           <div class="navbar-start">
-            <a class="navbar-item" href="forum.html">
+            <a class="navbar-item">
               Home
             </a>
           </div>
@@ -43,46 +32,26 @@
         </div>
       </div>
     </nav>
-    <nav class="navbar is-white">
-      <div class="container">
-        <div class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item is-active" href="#">Popular</a>
-            <a class="navbar-item" href="#">Recent</a>
-            <a class="navbar-item" href="#">Rising</a>
-          </div>
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <input class="input" type="text" placeholder="Search forum...">
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-    <section class="container">
-      <div class="columns">
+    <section class="container" >
+      <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
         <div class="column is-3">
-          <a class="button is-primary is-block is-alt is-large" href="#">New Post</a>
           <aside class="menu">
             <p class="menu-label">
-              Tags
+              Channels
             </p>
             <ul class="menu-list">
-              <li><a>Dashboard</a></li>
-              <li><a>Customers</a></li>
-              <li><a>Authentication</a></li>
-              <li><a>Payments</a></li>
-              <li><a>Transfers</a></li>
-              <li><a>Balance</a></li>
+              <li><a>Health</a></li>
+              <li><a>Games</a></li>
+              <li><a>Sports</a></li>
+              <li><a>Music</a></li>
+              <li><a>Love</a></li>
+              <li><a>IT</a></li>
             </ul>
           </aside>
-
         </div>
-
         <div class="column is-9">
           <div class="box content">
             <article class="post">
-              <h4>Bulma: How do you center a button in a box?</h4>
               <div class="media">
                 <div class="media-left">
                   <p class="image is-32x32">
@@ -92,18 +61,14 @@
                 <div class="media-content">
                   <div class="content">
                     <p>
-                      <a href="#">@jsmith</a> replied 34 minutes ago  &nbsp;
-                      <span class="tag">Question</span>
+                      <a href="#">Hannah Quispe</a> 5 minutes ago  &nbsp;
                     </p>
                   </div>
                 </div>
-              <div class="media-right">
-                 <span class="has-text-grey-light"><i class="fa fa-comments"></i> 1</span>
               </div>
-              </div>
+              <h4>Hello Guys :D</h4>
             </article>
             <article class="post">
-              <h4>How can I make a bulma button go full width?</h4>
               <div class="media">
                 <div class="media-left">
                   <p class="image is-32x32">
@@ -113,18 +78,14 @@
                 <div class="media-content">
                   <div class="content">
                     <p>
-                      <a href="#">@red</a> replied 40 minutes ago  &nbsp;
-                      <span class="tag">Question</span>
+                      <a href="#">John Connor</a> 2 minutes ago  &nbsp;
                     </p>
                   </div>
                 </div>
-                <div class="media-right">
-                 <span class="has-text-grey-light"><i class="fa fa-comments"></i> 0</span>
-                </div>
               </div>
+              <h4>Hello Hannah</h4>
             </article>
             <article class="post">
-              <h4>TypeError: Data must be a string or a buffer when trying touse vue-bulma-tabs</h4>
               <div class="media">
                 <div class="media-left">
                   <p class="image is-32x32">
@@ -134,80 +95,20 @@
                 <div class="media-content">
                   <div class="content">
                     <p>
-                      <a href="#">@jsmith</a> replied 53 minutes ago  &nbsp;
-                      <span class="tag">Question</span>
+                      <a href="#">You ({{user.username}})</a> &nbsp;
                     </p>
                   </div>
                 </div>
-                <div class="media-right">
-                 <span class="has-text-grey-light"><i class="fa fa-comments"></i> 13</span>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <textarea class="textarea is-large" type="text" placeholder="Your message"></textarea>
                 </div>
               </div>
-            </article>
-            <article class="post">
-              <h4>How to vertically center elements in Bulma?</h4>
-              <div class="media">
-                <div class="media-left">
-                  <p class="image is-32x32">
-                    <img src="http://bulma.io/images/placeholders/128x128.png">
-                  </p>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <a href="#">@brown</a> replied 3 hours ago  &nbsp;
-                      <span class="tag">Question</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="media-right">
-                 <span class="has-text-grey-light"><i class="fa fa-comments"></i> 2</span>
-                </div>
+              <div class="control">
+                <button class="button is-primary">Submit</button>
               </div>
             </article>
-            <article class="post">
-              <h4>I'm trying to use hamburger menu on bulma css, but it doesn't work. What is wrong?</h4>
-              <div class="media">
-                <div class="media-left">
-                  <p class="image is-32x32">
-                    <img src="http://bulma.io/images/placeholders/128x128.png">
-                  </p>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <a href="#">@hamburgler</a> replied 5 hours ago  &nbsp;
-                      <span class="tag">Question</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="media-right">
-                 <span class="has-text-grey-light"><i class="fa fa-comments"></i> 2</span>
-                </div>
-              </div>
-            </article>
-            <article class="post">
-              <h4>How to make tiles wrap with Bulma CSS?</h4>
-              <div class="media">
-                <div class="media-left">
-                  <p class="image is-32x32">
-                    <img src="http://bulma.io/images/placeholders/128x128.png">
-                  </p>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <a href="#">@rapper</a> replied 3 hours ago  &nbsp;
-                      <span class="tag">Question</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="media-right">
-                 <span class="has-text-grey-light"><i class="fa fa-comments"></i> 2</span>
-                </div>
-              </div>
-            </article>
-
           </div>
         </div>
 

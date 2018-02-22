@@ -618,105 +618,6 @@ function normalizeComponent (
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1357,12 +1258,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
-    _c("nav", { staticClass: "navbar is-white topNav" }, [
+    _c("nav", { staticClass: "navbar topNav" }, [
       _c("div", { staticClass: "container" }, [
-        _vm._m(0),
-        _vm._v(" "),
         _c("div", { staticClass: "navbar-menu", attrs: { id: "topNav" } }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "navbar-end" }, [
             _c(
@@ -1419,11 +1318,49 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _c("section", { staticClass: "container" }, [
+      _c(
+        "div",
+        {
+          staticClass: "columns",
+          staticStyle: { "margin-left": "3rem", "margin-top": "0px" }
+        },
+        [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "column is-9" }, [
+            _c("div", { staticClass: "box content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _c("article", { staticClass: "post" }, [
+                _c("div", { staticClass: "media" }, [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "media-content" }, [
+                    _c("div", { staticClass: "content" }, [
+                      _c("p", [
+                        _c("a", { attrs: { href: "#" } }, [
+                          _vm._v("You (" + _vm._s(_vm.user.username) + ")")
+                        ]),
+                        _vm._v("  \n                  ")
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _vm._m(6)
+              ])
+            ])
+          ])
+        ]
+      )
+    ]),
     _vm._v(" "),
-    _vm._m(3),
-    _vm._v(" "),
-    _vm._m(4)
+    _vm._m(7)
   ])
 }
 var staticRenderFns = [
@@ -1431,27 +1368,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "navbar-brand" }, [
-      _c("a", { staticClass: "navbar-item", attrs: { href: "../" } }, [
-        _c("img", { attrs: { src: "", width: "112", height: "28" } })
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "navbar-burger burger",
-          attrs: { "data-target": "topNav" }
-        },
-        [_c("span"), _vm._v(" "), _c("span"), _vm._v(" "), _c("span")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "navbar-start" }, [
-      _c("a", { staticClass: "navbar-item", attrs: { href: "forum.html" } }, [
+      _c("a", { staticClass: "navbar-item" }, [
         _vm._v("\n            Home\n          ")
       ])
     ])
@@ -1460,33 +1378,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("nav", { staticClass: "navbar is-white" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "navbar-menu" }, [
-          _c("div", { staticClass: "navbar-start" }, [
-            _c(
-              "a",
-              { staticClass: "navbar-item is-active", attrs: { href: "#" } },
-              [_vm._v("Popular")]
-            ),
-            _vm._v(" "),
-            _c("a", { staticClass: "navbar-item", attrs: { href: "#" } }, [
-              _vm._v("Recent")
-            ]),
-            _vm._v(" "),
-            _c("a", { staticClass: "navbar-item", attrs: { href: "#" } }, [
-              _vm._v("Rising")
-            ])
-          ]),
+    return _c("div", { staticClass: "column is-3" }, [
+      _c("aside", { staticClass: "menu" }, [
+        _c("p", { staticClass: "menu-label" }, [
+          _vm._v("\n            Channels\n          ")
+        ]),
+        _vm._v(" "),
+        _c("ul", { staticClass: "menu-list" }, [
+          _c("li", [_c("a", [_vm._v("Health")])]),
           _vm._v(" "),
-          _c("div", { staticClass: "navbar-end" }, [
-            _c("div", { staticClass: "navbar-item" }, [
-              _c("input", {
-                staticClass: "input",
-                attrs: { type: "text", placeholder: "Search forum..." }
-              })
-            ])
-          ])
+          _c("li", [_c("a", [_vm._v("Games")])]),
+          _vm._v(" "),
+          _c("li", [_c("a", [_vm._v("Sports")])]),
+          _vm._v(" "),
+          _c("li", [_c("a", [_vm._v("Music")])]),
+          _vm._v(" "),
+          _c("li", [_c("a", [_vm._v("Love")])]),
+          _vm._v(" "),
+          _c("li", [_c("a", [_vm._v("IT")])])
         ])
       ])
     ])
@@ -1495,259 +1404,87 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "container" }, [
-      _c("div", { staticClass: "columns" }, [
-        _c("div", { staticClass: "column is-3" }, [
-          _c(
-            "a",
-            {
-              staticClass: "button is-primary is-block is-alt is-large",
-              attrs: { href: "#" }
-            },
-            [_vm._v("New Post")]
-          ),
-          _vm._v(" "),
-          _c("aside", { staticClass: "menu" }, [
-            _c("p", { staticClass: "menu-label" }, [
-              _vm._v("\n            Tags\n          ")
-            ]),
-            _vm._v(" "),
-            _c("ul", { staticClass: "menu-list" }, [
-              _c("li", [_c("a", [_vm._v("Dashboard")])]),
-              _vm._v(" "),
-              _c("li", [_c("a", [_vm._v("Customers")])]),
-              _vm._v(" "),
-              _c("li", [_c("a", [_vm._v("Authentication")])]),
-              _vm._v(" "),
-              _c("li", [_c("a", [_vm._v("Payments")])]),
-              _vm._v(" "),
-              _c("li", [_c("a", [_vm._v("Transfers")])]),
-              _vm._v(" "),
-              _c("li", [_c("a", [_vm._v("Balance")])])
-            ])
+    return _c("article", { staticClass: "post" }, [
+      _c("div", { staticClass: "media" }, [
+        _c("div", { staticClass: "media-left" }, [
+          _c("p", { staticClass: "image is-32x32" }, [
+            _c("img", {
+              attrs: { src: "http://bulma.io/images/placeholders/128x128.png" }
+            })
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "column is-9" }, [
-          _c("div", { staticClass: "box content" }, [
-            _c("article", { staticClass: "post" }, [
-              _c("h4", [_vm._v("Bulma: How do you center a button in a box?")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "media" }, [
-                _c("div", { staticClass: "media-left" }, [
-                  _c("p", { staticClass: "image is-32x32" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "http://bulma.io/images/placeholders/128x128.png"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-content" }, [
-                  _c("div", { staticClass: "content" }, [
-                    _c("p", [
-                      _c("a", { attrs: { href: "#" } }, [_vm._v("@jsmith")]),
-                      _vm._v(
-                        " replied 34 minutes ago   \n                    "
-                      ),
-                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-right" }, [
-                  _c("span", { staticClass: "has-text-grey-light" }, [
-                    _c("i", { staticClass: "fa fa-comments" }),
-                    _vm._v(" 1")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("article", { staticClass: "post" }, [
-              _c("h4", [
-                _vm._v("How can I make a bulma button go full width?")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "media" }, [
-                _c("div", { staticClass: "media-left" }, [
-                  _c("p", { staticClass: "image is-32x32" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "http://bulma.io/images/placeholders/128x128.png"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-content" }, [
-                  _c("div", { staticClass: "content" }, [
-                    _c("p", [
-                      _c("a", { attrs: { href: "#" } }, [_vm._v("@red")]),
-                      _vm._v(
-                        " replied 40 minutes ago   \n                    "
-                      ),
-                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-right" }, [
-                  _c("span", { staticClass: "has-text-grey-light" }, [
-                    _c("i", { staticClass: "fa fa-comments" }),
-                    _vm._v(" 0")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("article", { staticClass: "post" }, [
-              _c("h4", [
-                _vm._v(
-                  "TypeError: Data must be a string or a buffer when trying touse vue-bulma-tabs"
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "media" }, [
-                _c("div", { staticClass: "media-left" }, [
-                  _c("p", { staticClass: "image is-32x32" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "http://bulma.io/images/placeholders/128x128.png"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-content" }, [
-                  _c("div", { staticClass: "content" }, [
-                    _c("p", [
-                      _c("a", { attrs: { href: "#" } }, [_vm._v("@jsmith")]),
-                      _vm._v(
-                        " replied 53 minutes ago   \n                    "
-                      ),
-                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-right" }, [
-                  _c("span", { staticClass: "has-text-grey-light" }, [
-                    _c("i", { staticClass: "fa fa-comments" }),
-                    _vm._v(" 13")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("article", { staticClass: "post" }, [
-              _c("h4", [_vm._v("How to vertically center elements in Bulma?")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "media" }, [
-                _c("div", { staticClass: "media-left" }, [
-                  _c("p", { staticClass: "image is-32x32" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "http://bulma.io/images/placeholders/128x128.png"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-content" }, [
-                  _c("div", { staticClass: "content" }, [
-                    _c("p", [
-                      _c("a", { attrs: { href: "#" } }, [_vm._v("@brown")]),
-                      _vm._v(" replied 3 hours ago   \n                    "),
-                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-right" }, [
-                  _c("span", { staticClass: "has-text-grey-light" }, [
-                    _c("i", { staticClass: "fa fa-comments" }),
-                    _vm._v(" 2")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("article", { staticClass: "post" }, [
-              _c("h4", [
-                _vm._v(
-                  "I'm trying to use hamburger menu on bulma css, but it doesn't work. What is wrong?"
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "media" }, [
-                _c("div", { staticClass: "media-left" }, [
-                  _c("p", { staticClass: "image is-32x32" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "http://bulma.io/images/placeholders/128x128.png"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-content" }, [
-                  _c("div", { staticClass: "content" }, [
-                    _c("p", [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _vm._v("@hamburgler")
-                      ]),
-                      _vm._v(" replied 5 hours ago   \n                    "),
-                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-right" }, [
-                  _c("span", { staticClass: "has-text-grey-light" }, [
-                    _c("i", { staticClass: "fa fa-comments" }),
-                    _vm._v(" 2")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("article", { staticClass: "post" }, [
-              _c("h4", [_vm._v("How to make tiles wrap with Bulma CSS?")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "media" }, [
-                _c("div", { staticClass: "media-left" }, [
-                  _c("p", { staticClass: "image is-32x32" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "http://bulma.io/images/placeholders/128x128.png"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-content" }, [
-                  _c("div", { staticClass: "content" }, [
-                    _c("p", [
-                      _c("a", { attrs: { href: "#" } }, [_vm._v("@rapper")]),
-                      _vm._v(" replied 3 hours ago   \n                    "),
-                      _c("span", { staticClass: "tag" }, [_vm._v("Question")])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "media-right" }, [
-                  _c("span", { staticClass: "has-text-grey-light" }, [
-                    _c("i", { staticClass: "fa fa-comments" }),
-                    _vm._v(" 2")
-                  ])
-                ])
-              ])
+        _c("div", { staticClass: "media-content" }, [
+          _c("div", { staticClass: "content" }, [
+            _c("p", [
+              _c("a", { attrs: { href: "#" } }, [_vm._v("Hannah Quispe")]),
+              _vm._v(" 5 minutes ago   \n                  ")
             ])
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("h4", [_vm._v("Hello Guys :D")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("article", { staticClass: "post" }, [
+      _c("div", { staticClass: "media" }, [
+        _c("div", { staticClass: "media-left" }, [
+          _c("p", { staticClass: "image is-32x32" }, [
+            _c("img", {
+              attrs: { src: "http://bulma.io/images/placeholders/128x128.png" }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "media-content" }, [
+          _c("div", { staticClass: "content" }, [
+            _c("p", [
+              _c("a", { attrs: { href: "#" } }, [_vm._v("John Connor")]),
+              _vm._v(" 2 minutes ago   \n                  ")
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h4", [_vm._v("Hello Hannah")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "media-left" }, [
+      _c("p", { staticClass: "image is-32x32" }, [
+        _c("img", {
+          attrs: { src: "http://bulma.io/images/placeholders/128x128.png" }
+        })
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "field" }, [
+      _c("div", { staticClass: "control" }, [
+        _c("textarea", {
+          staticClass: "textarea is-large",
+          attrs: { type: "text", placeholder: "Your message" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "control" }, [
+      _c("button", { staticClass: "button is-primary" }, [_vm._v("Submit")])
     ])
   },
   function() {
