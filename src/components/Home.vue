@@ -81,6 +81,9 @@
               </div>
               <h4>Hello Hannah</h4>
             </article>
+            <Message :user="user">
+              This is my first message
+            </Message>
             <article class="post">
               <div class="media">
                 <div class="media-left">
@@ -105,6 +108,7 @@
                 <button class="button is-primary">Submit</button>
               </div>
             </article>
+
           </div>
         </div>
 
@@ -134,16 +138,20 @@
 import Vue from 'vue'
 import VueSocketio from 'vue-socket.io'
 import ChatServices from '@/services/ChatServices'
+import Message from '@/components/Message'
 Vue.use(VueSocketio, 'ws://localhost:5000')
 
   export default {
-    name: 'Message',
+    name: 'Home',
     data(){
       return {
         message: 'Hello World',
         user: {},
         menu: false
       }
+    },
+    components:{
+      Message
     },
     sockets: {
       connect () {
