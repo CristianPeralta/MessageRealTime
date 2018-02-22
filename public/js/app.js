@@ -1934,8 +1934,6 @@ if (false) {
 //
 //
 //
-//
-//
 
 
 
@@ -2195,15 +2193,17 @@ var render = function() {
               { staticClass: "box content" },
               [
                 _vm._l(_vm.messages, function(message, index) {
-                  return [
-                    _c("Message", { attrs: { user: _vm.user } }, [
+                  return _c(
+                    "Message",
+                    { key: index, attrs: { user: message.user } },
+                    [
                       _vm._v(
                         "\n              " +
                           _vm._s(message.text) +
-                          "\n            "
+                          "\n          "
                       )
-                    ])
-                  ]
+                    ]
+                  )
                 }),
                 _vm._v(" "),
                 _c("article", { staticClass: "post" }, [

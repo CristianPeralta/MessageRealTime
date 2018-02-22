@@ -48,11 +48,9 @@
         <div class="column is-9">
           <div class="box content">
 
-            <template v-for="(message,index) in messages">
-              <Message :user="user">
+            <Message v-for="(message,index) in messages" :user="message.user" :key="index">
                 {{message.text}}
-              </Message>
-            </template>
+            </Message>
 
             <article class="post">
               <div class="media">
