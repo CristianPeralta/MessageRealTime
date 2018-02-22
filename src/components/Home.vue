@@ -48,7 +48,7 @@
         <div class="column is-9">
           <div class="box content">
 
-            <Message v-for="(message,index) in messages" :user="message.user" :key="index">
+            <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
                 {{message.text}}
             </Message>
 

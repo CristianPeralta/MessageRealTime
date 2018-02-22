@@ -9,7 +9,7 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <a href="#">{{user.username}}</a> 5 minutes ago  &nbsp;
+            <a href="#">{{user.username}}</a> {{ from | ago}} &nbsp;
           </p>
         </div>
       </div>
@@ -20,10 +20,16 @@
 
 <script>
 import ChatServices from '@/services/ChatServices'
+import moment from 'moment';
 
 export default {
   name:'Message',
-  props:['user']
+  props:['user', 'from'],
+  filters:{
+    ago(date){
+      return moment(date).fromNow();
+    }
+  },
 }
 </script>
 
