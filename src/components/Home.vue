@@ -20,6 +20,13 @@
 
           </div>
         </div>
+        <div class="">
+          <p>Users</p>
+          <template v-if="users">
+            <li v-for="(userC,index) in users" :key="index">{{userC.username}}</li>
+          </template>
+
+        </div>
       </div>
     </section>
     <Footer></Footer>
@@ -44,6 +51,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       return {
         messages: [],
         user: {},
+        users: [],
         text: '',
         isLoad : false
       }
@@ -60,6 +68,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       customEmit (val) {
         console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+      },
+      usersConnected (response) {
+          this.users.push(response.data);
       },
       messageAdded (response) {
         if (response.ok) {
@@ -99,6 +110,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       getUser () {
         ChatServices.user().then((response) => {
           this.user = response.data;
+          this.$socket.emit('userConnected', this.user);
         });
       },
       getMessages () {
