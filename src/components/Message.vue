@@ -26,7 +26,9 @@ export default {
   props:['user', 'from'],
   filters:{
     ago(date){
-      return moment(date).fromNow();
+      if (date) {
+        return moment(date).fromNow();
+      }
     }
   },
 }

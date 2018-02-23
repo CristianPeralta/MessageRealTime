@@ -10,7 +10,7 @@
           <div class="navbar-end">
             <div @click="menuActive()" class="navbar-item has-dropdown" :class="{'is-active':menu}">
               <a class="navbar-link">
-                <img height="40" width="40" :src="user.photo">
+                <img height="32" width="32" :src="user.photo">
                 {{user.username}}
               </a>
 

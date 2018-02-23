@@ -11,34 +11,15 @@
                 {{message.text}}
             </Message>
 
-            <article class="post">
-              <div class="media">
-                <div class="media-left">
-                  <p class="image is-32x32">
-                    <img :src="user.photo">
-                  </p>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <a href="#">You ({{user.username}})</a> &nbsp;
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="field">
-                <div class="control">
-                  <textarea v-model="text" class="textarea is-large" type="text" placeholder="Your message"></textarea>
-                </div>
-              </div>
+            <Message :user="user">
+              <textarea v-model="text" class="textarea is-large" type="text" placeholder="Your message"></textarea>
               <div class="control">
                 <button @click="addMessage()" class="button is-primary">Submit</button>
               </div>
-            </article>
-
+            </Message>
+            
           </div>
         </div>
-
       </div>
     </section>
     <Footer></Footer>
@@ -49,9 +30,9 @@
 <script>
 import Vue from 'vue'
 import VueSocketio from 'vue-socket.io'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import MenuList from '@/components/MenuList'
+import Navbar from '@/components/utils/Navbar'
+import Footer from '@/components/utils/Footer'
+import MenuList from '@/components/utils/MenuList'
 import Message from '@/components/Message'
 import ChatServices from '@/services/ChatServices'
 
