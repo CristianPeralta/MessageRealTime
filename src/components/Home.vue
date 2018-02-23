@@ -1,11 +1,11 @@
 <template>
   <div class="">
     <Navbar :user="user"></Navbar>
-    <section class="container" >
+    <section class="container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
         <MenuList></MenuList>
-        <div class="column is-9">
-          <div class="box content">
+        <div class="column is-9" >
+          <div ref="chatbox" class="box content" style="overflow-y: scroll; height:530px; z-index:80;">
 
             <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
                 {{message.text}}
@@ -17,7 +17,7 @@
                 <button @click="addMessage()" class="button is-primary">Submit</button>
               </div>
             </Message>
-            
+
           </div>
         </div>
       </div>
@@ -44,7 +44,8 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       return {
         messages: [],
         user: {},
-        text: ''
+        text: '',
+        isLoad : false
       }
     },
     components:{
@@ -63,9 +64,19 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     },
     created () {
       this.getUser();
-      this.getMessages()
+      this.getMessages();
+    },
+    mounted() {
+      chatPosition();
     },
     methods: {
+      chatPosition () {
+        if (this.isLoad == true) {
+          let chat = this.$refs.chatbox;
+          console.log(this.messages);
+          chat.scrollTop = chat.scrollHeight;
+        }
+      },
       getUser () {
         ChatServices.user().then((response) => {
           this.user = response.data;
@@ -74,6 +85,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       getMessages () {
         ChatServices.getMessages().then((response) => {
           this.messages = response.data;
+          this.isLoad = true;
         })
       },
       addMessage () {

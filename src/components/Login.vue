@@ -77,8 +77,6 @@ export default {
     font-weight: 300;
   }
   .container{
-    margin:0;
-    padding: 0;
   }
   .hero.is-success {
     background: #F2F6FA;

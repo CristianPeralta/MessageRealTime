@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="column is-3">
+  <div class="column is-3" style="z-index:80;">
     <aside class="menu">
       <p class="menu-label">
         Channels

@@ -1,5 +1,5 @@
 <template lang="html">
-  <nav class="navbar topNav">
+  <nav class="navbar topNav" style="position: sticky; top:0; z-index:100;">
       <div class="container">
         <div id="topNav" class="navbar-menu">
           <div class="navbar-start">
