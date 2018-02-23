@@ -5097,6 +5097,15 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     },
     customEmit: function customEmit(val) {
       console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)');
+    },
+    messageAdded: function messageAdded(response) {
+      if (response.ok) {
+        this.messages.push(response.data);
+        this.chatPosition();
+        this.clear();
+      } else {
+        console.log(response.err);
+      }
     }
   },
   created: function created() {
@@ -5111,9 +5120,11 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
     chatPosition: function chatPosition() {
       if (this.isLoad == true) {
         var chat = this.$refs.chatbox;
-        console.log(this.messages);
         chat.scrollTop = chat.scrollHeight;
       }
+    },
+    clear: function clear() {
+      this.text = '';
     },
     getUser: function getUser() {
       var _this = this;
@@ -5139,6 +5150,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
       }).then(function (response) {
         _this3.messages.push(response.data);
         _this3.$router.go();
+      });
+    },
+    addMessageSocket: function addMessageSocket() {
+      this.$socket.emit('addMessage', {
+        user: this.user._id,
+        text: this.text
       });
     }
   }
@@ -18534,6 +18551,19 @@ var render = function() {
                   }
                 },
                 [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-primary",
+                      on: {
+                        click: function($event) {
+                          _vm.chatPosition()
+                        }
+                      }
+                    },
+                    [_vm._v("Write")]
+                  ),
+                  _vm._v(" "),
                   _vm._l(_vm.messages, function(message, index) {
                     return _c(
                       "Message",
@@ -18551,7 +18581,7 @@ var render = function() {
                     )
                   }),
                   _vm._v(" "),
-                  _c("Message", { attrs: { user: _vm.user } }, [
+                  _c("Message", { attrs: { user: _vm.user, tabindex: "0" } }, [
                     _c("textarea", {
                       directives: [
                         {
@@ -18581,7 +18611,7 @@ var render = function() {
                           staticClass: "button is-primary",
                           on: {
                             click: function($event) {
-                              _vm.addMessage()
+                              _vm.addMessageSocket()
                             }
                           }
                         },

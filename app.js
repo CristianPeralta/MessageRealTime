@@ -9,6 +9,7 @@ var ejs = require("ejs").__express;
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var messageController = require('./controllers/messageController');
 
 io.on('connection', function(socket) {
 	console.log('Un cliente se ha conectado');
@@ -28,6 +29,12 @@ io.on('connection', function(socket) {
 	socket.on('SignUp', function(data){
 		console.log('sending registration');
 		console.log(data);
+	});
+
+	socket.on('addMessage', (data) => {
+		messageController.createSocket(data, (message, err) => {
+			io.emit('messageAdded', {data:message,ok:!err,err:err});
+		})
 	});
 
   socket.on('disconnect', function(){

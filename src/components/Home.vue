@@ -6,15 +6,15 @@
         <MenuList></MenuList>
         <div class="column is-9" >
           <div ref="chatbox" class="box content" style="overflow-y: scroll; height:530px; z-index:80;">
-
+            <button @click="chatPosition()" class="button is-primary">Write</button>
             <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
                 {{message.text}}
             </Message>
 
-            <Message :user="user">
+            <Message :user="user" tabindex="0">
               <textarea v-model="text" class="textarea is-large" type="text" placeholder="Your message"></textarea>
               <div class="control">
-                <button @click="addMessage()" class="button is-primary">Submit</button>
+                <button @click="addMessageSocket()" class="button is-primary">Submit</button>
               </div>
             </Message>
 
@@ -60,6 +60,15 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       customEmit (val) {
         console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+      },
+      messageAdded (response) {
+        if (response.ok) {
+          this.messages.push(response.data);
+          this.chatPosition();
+          this.clear();
+        } else {
+          console.log(response.err);
+        }
       }
     },
     created () {
@@ -73,9 +82,11 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       chatPosition () {
         if (this.isLoad == true) {
           let chat = this.$refs.chatbox;
-          console.log(this.messages);
           chat.scrollTop = chat.scrollHeight;
         }
+      },
+      clear () {
+        this.text = '';
       },
       getUser () {
         ChatServices.user().then((response) => {
@@ -96,6 +107,12 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           this.messages.push(response.data);
           this.$router.go();
         })
+      },
+      addMessageSocket () {
+        this.$socket.emit('addMessage', {
+          user: this.user._id,
+          text: this.text
+        });
       }
     }
   }

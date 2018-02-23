@@ -28,6 +28,25 @@ module.exports.create = function (req,res) {
   })
 }
 
+module.exports.createSocket = function (data, cb) {
+  let message = new Message();
+  User.findOne({_id:data.user}).then( (user, err)=>{
+    if (err) {
+      return cb(user, err);
+    }
+    if (!user) {
+      return cb(user, err);
+    }
+    message.user = mongoose.Types.ObjectId(user._id);
+    message.text = data.text;
+    message.save(function (err, message) {
+      Message.findOne({_id:message._id}).populate('user').then( (message, err) => {
+          return cb(message, err);
+        });
+    });
+  })
+}
+
 module.exports.getAll = function (req,res) {
 
   Message.find({}).populate('user').then( (messages, err) => {
