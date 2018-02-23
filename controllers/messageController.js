@@ -58,6 +58,13 @@ module.exports.getAll = function (req,res) {
     });
 }
 
+module.exports.getAllSocket = function (cb) {
+
+  Message.find({}).populate('user').then( (messages, err) => {
+      return cb(messages, err);
+    });
+}
+
 module.exports.delete = function (req,res) {
 
   Message.remove({}, function(err) {

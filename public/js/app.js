@@ -5106,14 +5106,22 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
       } else {
         console.log(response.err);
       }
+    },
+    messagesGetted: function messagesGetted(response) {
+      if (response.ok) {
+        this.messages = response.data;
+        this.isLoad = true;
+      } else {
+        console.log(response.err);
+      }
     }
   },
   created: function created() {
     this.getUser();
-    this.getMessages();
+    this.getMessagesSocket();
   },
   mounted: function mounted() {
-    chatPosition();
+    this.chatPosition();
   },
 
   methods: {
@@ -5140,6 +5148,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
         _this2.messages = response.data;
         _this2.isLoad = true;
       });
+    },
+    getMessagesSocket: function getMessagesSocket() {
+      this.$socket.emit('getMessages');
     },
     addMessage: function addMessage() {
       var _this3 = this;

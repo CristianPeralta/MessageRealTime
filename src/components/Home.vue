@@ -69,14 +69,22 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         } else {
           console.log(response.err);
         }
+      },
+      messagesGetted (response) {
+        if (response.ok) {
+          this.messages = response.data;
+          this.isLoad = true;
+        } else {
+          console.log(response.err);
+        }
       }
     },
     created () {
       this.getUser();
-      this.getMessages();
+      this.getMessagesSocket();
     },
     mounted() {
-      chatPosition();
+      this.chatPosition();
     },
     methods: {
       chatPosition () {
@@ -98,6 +106,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           this.messages = response.data;
           this.isLoad = true;
         })
+      },
+      getMessagesSocket () {
+        this.$socket.emit('getMessages');
       },
       addMessage () {
         ChatServices.addMessage({

@@ -37,6 +37,12 @@ io.on('connection', function(socket) {
 		})
 	});
 
+	socket.on('getMessages', () => {
+		messageController.getAllSocket((messages, err) => {
+			io.emit('messagesGetted', {data:messages,ok:!err,err:err});
+		})
+	});
+
   socket.on('disconnect', function(){
 		console.log(' has disconnected');
 	});
