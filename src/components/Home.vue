@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="">
-          <p>Users</p>
+          <p>Users {{users | count}}</p>
           <template v-if="users">
             <li v-for="(userC,index) in users" :key="index">{{userC.username}}</li>
           </template>
@@ -96,6 +96,11 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     },
     mounted() {
       this.chatPosition();
+    },
+    filters: {
+      count (users) {
+        return users.length;
+      }
     },
     methods: {
       chatPosition () {
