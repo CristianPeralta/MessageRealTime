@@ -11,6 +11,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var messageController = require('./controllers/messageController');
 
+var usersOnline = [];
+
 io.on('connection', function(socket) {
 	console.log('Un cliente se ha conectado');
 });
@@ -27,7 +29,8 @@ io.on('connection', function(socket) {
 	console.log('A client has connected');
 
 	socket.on('userConnected', (data) => {
-			io.emit('usersConnected', {data:data});
+			usersOnline.push(data);
+			io.emit('usersConnected', {data:usersOnline});
 	});
 
 	socket.on('SignUp', function(data){

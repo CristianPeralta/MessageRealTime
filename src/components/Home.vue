@@ -70,7 +70,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
       },
       usersConnected (response) {
-          this.users.push(response.data);
+          this.users = response.data;
       },
       messageAdded (response) {
         if (response.ok) {
