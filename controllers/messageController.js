@@ -17,6 +17,7 @@ module.exports.create = function (req,res) {
       console.log('user not found');
     }
     message.user = mongoose.Types.ObjectId(user._id);
+    message.room = mongoose.Types.ObjectId(room._id);
     message.text = data.text;
     message.save(function (err, message) {
         if(err){
