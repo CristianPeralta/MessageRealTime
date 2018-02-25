@@ -7,16 +7,16 @@
         <div class="column is-9" >
           <div ref="chatbox" class="box content" style="overflow-y: scroll; height:530px; z-index:80;">
             <button @click="chatPosition()" class="button is-primary">Write</button>
-            <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
-                {{message.text}}
-            </Message>
-
             <Message :user="user" tabindex="0">
               <textarea v-model="text" class="textarea is-large" type="text" placeholder="Your message"></textarea>
               <div class="control">
                 <button @click="addMessageSocket()" class="button is-primary">Submit</button>
               </div>
             </Message>
+            <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
+                {{message.text}}
+            </Message>
+
 
           </div>
         </div>
@@ -70,6 +70,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
       },
       usersConnected (response) {
+        console.log(response.data);
           this.users = response.data;
       },
       messageAdded (response) {

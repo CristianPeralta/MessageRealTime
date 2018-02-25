@@ -23,15 +23,14 @@ mongoose.connect('mongodb://localhost:27017/messageDb', function(err, res) {
   if(err) throw err;
   console.log('Conectado con éxito a la BD');
 });
-
 io.on('connection', function(socket) {
-
 	console.log('A client has connected');
 
 	socket.on('userConnected', (data) => {
 			usersOnline.push(data);
 			io.emit('usersConnected', {data:usersOnline});
 	});
+	
 
 	socket.on('SignUp', function(data){
 		console.log('sending registration');
@@ -49,10 +48,9 @@ io.on('connection', function(socket) {
 			io.emit('messagesGetted', {data:messages,ok:!err,err:err});
 		})
 	});
-
-  socket.on('disconnect', function(){
-		console.log(' has disconnected');
-	});
+	socket.on('disconnect', function() {
+      console.log('Got disconnect!');
+   });
 });
 
 
