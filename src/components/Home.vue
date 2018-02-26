@@ -68,9 +68,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       connect () {
         console.log('socket connected')
       },
-      customEmit (val) {
-        console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-      },
       usersConnected (response) {
         console.log(response.data);
           this.users = response.data;
@@ -94,11 +91,10 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     created () {
-      this.getUser();
+      this.getUser(this.checkUser);
       this.getMessagesSocket();
     },
     mounted() {
-      this.chatPosition();
     },
     filters: {
       count (users) {
@@ -106,6 +102,11 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     methods: {
+      checkUser () {
+        if (!this.user.username) {
+          this.$router.push({name: 'Login'});
+        }
+      },
       chatPosition () {
         if (this.isLoad == true) {
           let chat = this.$refs.chatbox;
@@ -115,10 +116,13 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       clear () {
         this.text = '';
       },
-      getUser () {
+      getUser (cb) {
         ChatServices.user().then((response) => {
           this.user = response.data;
-          this.$socket.emit('userConnected', this.user);
+          if (this.user.username) {
+            this.$socket.emit('userConnected', this.user);
+          }
+          cb();
         });
       },
       getMessages () {

@@ -27,10 +27,16 @@ io.on('connection', function(socket) {
 	console.log('A client has connected');
 
 	socket.on('userConnected', (data) => {
-			usersOnline.push(data);
+			console.log(data);
+			let exist = usersOnline.find((user) =>{
+				return user._id == data._id;
+			});
+			if (!exist) {
+				usersOnline.push(data);
+			}
 			io.emit('usersConnected', {data:usersOnline});
 	});
-	
+
 
 	socket.on('SignUp', function(data){
 		console.log('sending registration');

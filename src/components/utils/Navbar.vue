@@ -11,7 +11,7 @@
             <div @click="menuActive()" class="navbar-item has-dropdown" :class="{'is-active':menu}">
               <a class="navbar-link">
                 <p class="image is-32x32">
-                  <img height="32" width="32" :src="user.photo">
+                  <img style="border-radius: 50%;" height="32" width="32" :src="user.photo">
                 </p>
                 {{user.username}}
               </a>

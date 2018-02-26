@@ -23,7 +23,6 @@ module.exports.getAll = function (req,res) {
         console.log(err);
         res.sendStatus(500)
       }
-      console.log(rooms);
       return res.json(rooms);
     });
 }
