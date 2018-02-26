@@ -5,12 +5,7 @@
         Channels
       </p>
       <ul class="menu-list">
-        <li><a>Health</a></li>
-        <li><a>Games</a></li>
-        <li><a>Sports</a></li>
-        <li><a>Music</a></li>
-        <li><a>Love</a></li>
-        <li><a>IT</a></li>
+        <li v-for="(room, index) in rooms" :key="index"><a>{{room.name}}</a></li>
       </ul>
     </aside>
   </div>
@@ -18,7 +13,8 @@
 
 <script>
 export default {
-  name: 'MenuList'
+  name: 'MenuList',
+  props: ['rooms']
 }
 </script>
 

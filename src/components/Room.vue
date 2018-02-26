@@ -2,7 +2,7 @@
   <div class="">
     <section class="hero is-success is-fullheight container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
-      <MenuList></MenuList>
+      <MenuList :rooms="rooms"></MenuList>
       <div class=""></div>
         <div class="container has-text-centered">
           <div class="column is-4 is-offset-4">
@@ -48,12 +48,21 @@ export default {
     MenuList,
     Footer
   },
+  created() {
+    this.getRooms()
+  },
   methods: {
     sendForm () {
       ChatServices.addRoom({
         name: this.newRoom
       }).then((response) => {
           this.rooms.push(response.data)
+      })
+    },
+    getRooms () {
+      ChatServices.getRooms().then((response) => {
+          this.rooms = response.data;
+          this.newRoom = '';
       })
     }
   }

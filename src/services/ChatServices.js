@@ -26,5 +26,8 @@ export default {
   },
   addRoom (params) {
     return Api().post('room', params);
+  },
+  getRooms () {
+    return Api().get('room');
   }
 }
