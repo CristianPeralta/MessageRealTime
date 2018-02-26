@@ -16,3 +16,13 @@ module.exports.create = function (req,res) {
         return res.json(room);
     });
 }
+
+module.exports.getAll = function (req,res) {
+  Room.find({}).then( (rooms, err) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500)
+      }
+      return res.json(rooms);
+    });
+}
