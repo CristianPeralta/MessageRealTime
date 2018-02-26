@@ -23,5 +23,8 @@ export default {
   },
   addMessage (params) {
     return Api().post('message', params);
+  },
+  addRoom (params) {
+    return Api().post('room', params);
   }
 }

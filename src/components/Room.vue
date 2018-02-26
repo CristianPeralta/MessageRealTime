@@ -1,6 +1,30 @@
 <template lang="html">
-  <div class="notification">
-    <MenuList></MenuList>
+  <div class="">
+    <section class="hero is-success is-fullheight container">
+      <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
+      <MenuList></MenuList>
+      <div class=""></div>
+        <div class="container has-text-centered">
+          <div class="column is-4 is-offset-4">
+            <h3 class="title has-text-grey">Sign Up</h3>
+            <div class="box">
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-large" type="text" v-model="newRoom" placeholder="New Room" autofocus="">
+                  </div>
+                </div>
+                <button @click="sendForm()" class="button is-block is-info is-large is-fullwidth">Add</button>
+            </div>
+            <p class="has-text-grey">
+              <router-link to="/" exact>
+                <a>Sign In</a> &nbsp;·&nbsp;
+              </router-link>
+              <a href="../">Need Help?</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -8,20 +32,34 @@
 import Navbar from '@/components/utils/Navbar'
 import Footer from '@/components/utils/Footer'
 import MenuList from '@/components/utils/MenuList'
+import ChatServices from '@/services/ChatServices'
 
 export default {
   name: 'Room',
   props: ['room'],
+  data () {
+    return {
+      newRoom: '',
+      rooms: []
+    }
+  },
   components:{
     Navbar,
     MenuList,
     Footer
+  },
+  methods: {
+    sendForm () {
+      ChatServices.addRoom({
+        name: this.newRoom
+      }).then((response) => {
+          this.rooms.push(response.data)
+      })
+    }
   }
 }
 </script>
 
 <style lang="css">
-.notification{
-  background: yellow;
-}
+@import '../assets/css/styles.css';
 </style>
