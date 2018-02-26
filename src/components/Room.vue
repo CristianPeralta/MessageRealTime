@@ -2,7 +2,7 @@
   <div class="">
     <section class="hero is-success is-fullheight container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
-      <MenuList :rooms="rooms"></MenuList>
+      <RoomList></RoomList>
       <div class=""></div>
         <div class="container has-text-centered">
           <div class="column is-4 is-offset-4">
@@ -31,7 +31,7 @@
 <script>
 import Navbar from '@/components/utils/Navbar'
 import Footer from '@/components/utils/Footer'
-import MenuList from '@/components/utils/MenuList'
+import RoomList from '@/components/utils/RoomList'
 import ChatServices from '@/services/ChatServices'
 
 export default {
@@ -45,7 +45,7 @@ export default {
   },
   components:{
     Navbar,
-    MenuList,
+    RoomList,
     Footer
   },
   created() {
@@ -57,12 +57,12 @@ export default {
         name: this.newRoom
       }).then((response) => {
           this.rooms.push(response.data)
+          this.newRoom = '';
       })
     },
     getRooms () {
       ChatServices.getRooms().then((response) => {
           this.rooms = response.data;
-          this.newRoom = '';
       })
     }
   }

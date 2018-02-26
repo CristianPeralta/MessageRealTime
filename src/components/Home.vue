@@ -3,8 +3,8 @@
     <Navbar :user="user"></Navbar>
     <section class="container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
-        <MenuList></MenuList>
-        <div class="column is-9" >
+        <RoomList></RoomList>
+        <div class="column is-7" >
           <div ref="chatbox" class="box content" style="overflow-y: scroll; height:530px; z-index:80;">
             <button @click="chatPosition()" class="button is-primary">Write</button>
             <Message :user="user" tabindex="0">
@@ -20,12 +20,14 @@
 
           </div>
         </div>
-        <div class="">
-          <p>Users {{users | count}}</p>
-          <template v-if="users">
-            <li v-for="(userC,index) in users" :key="index">{{userC.username}}</li>
-          </template>
+        <div class="column is-2">
+          <div class="box content">
+            <p>Users  ({{users | count}})</p>
+            <template v-if="users">
+              <li v-for="(userC,index) in users" :key="index">{{userC.username}}</li>
+            </template>
 
+          </div>
         </div>
       </div>
     </section>
@@ -39,7 +41,7 @@ import Vue from 'vue'
 import VueSocketio from 'vue-socket.io'
 import Navbar from '@/components/utils/Navbar'
 import Footer from '@/components/utils/Footer'
-import MenuList from '@/components/utils/MenuList'
+import RoomList from '@/components/utils/RoomList'
 import Message from '@/components/Message'
 import ChatServices from '@/services/ChatServices'
 
@@ -58,7 +60,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     },
     components:{
       Navbar,
-      MenuList,
+      RoomList,
       Footer,
       Message
     },

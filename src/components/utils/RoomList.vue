@@ -12,9 +12,25 @@
 </template>
 
 <script>
+import ChatServices from '@/services/ChatServices'
+
 export default {
   name: 'MenuList',
-  props: ['rooms']
+  data () {
+    return {
+      rooms: []
+    }
+  },
+  created () {
+    this.getRooms();
+  },
+  methods: {
+    getRooms () {
+      ChatServices.getRooms().then((response) => {
+          this.rooms = response.data;
+      })
+    }
+  }
 }
 </script>
 
