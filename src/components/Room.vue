@@ -1,13 +1,22 @@
 <template lang="html">
   <div class="notification">
-    <h1>{{room}}</h1>
+    <MenuList></MenuList>
   </div>
 </template>
 
 <script>
+import Navbar from '@/components/utils/Navbar'
+import Footer from '@/components/utils/Footer'
+import MenuList from '@/components/utils/MenuList'
+
 export default {
   name: 'Room',
-  props: ['room']
+  props: ['room'],
+  components:{
+    Navbar,
+    MenuList,
+    Footer
+  }
 }
 </script>
 
