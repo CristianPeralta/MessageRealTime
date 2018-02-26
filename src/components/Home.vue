@@ -24,7 +24,12 @@
           <div class="box content">
             <p>Users  ({{users | count}})</p>
             <template v-if="users">
-              <li v-for="(userC,index) in users" :key="index">{{userC.username}}</li>
+              <p v-for="(userC,index) in users" :key="index">
+                <span class="circle"></span>
+                <small>
+                  {{userC.username}}
+                </small>
+              </p>
             </template>
 
           </div>
@@ -154,5 +159,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
 </script>
 <style >
 @import '../assets/css/styles.css';
-
+.circle:before {
+  content: ' \25CF';
+  font-size: 20px;
+  color:#23d160;
+}
 </style>
