@@ -48,9 +48,14 @@ export default {
     }
   },
   created () {
-    this.getUser()
+    this.getUser(this.checkUser)
   },
   methods: {
+    checkUser () {
+      if (this.session.username) {
+        this.$router.push({name: 'Home'});
+      }
+    },
     login () {
       ChatServices.login({
         email: this.email,
@@ -60,10 +65,10 @@ export default {
         this.$router.push({ name: 'Home' })
       })
     },
-    getUser () {
+    getUser (cb) {
       ChatServices.user().then((response) => {
-        console.log(response);
         this.session = response.data;
+        cb();
       });
     },
   }
