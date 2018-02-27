@@ -5,11 +5,10 @@
         Channels
       </p>
       <ul class="menu-list">
-        <li v-for="(room, index) in rooms" :key="index"><a>{{room.name}}</a></li>
+        <li v-for="(room, index) in rooms" :key="index">
+          <a @click="goRoom(room.slug)">{{room.name}}</a>
+        </li>
       </ul>
-      <template v-if="newRoom" >
-        <li>newRoom</li>
-      </template>
     </aside>
   </div>
 </template>
@@ -24,7 +23,6 @@ export default {
       rooms: []
     }
   },
-  props: ['newRoom'],
   created () {
     this.getRooms();
   },
@@ -33,6 +31,9 @@ export default {
       ChatServices.getRooms().then((response) => {
           this.rooms = response.data;
       })
+    },
+    goRoom( room ){
+      this.$router.push({name: 'Home', params: {initialRoom: room}});
     }
   }
 }

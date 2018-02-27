@@ -145,7 +145,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         })
       },
       getMessagesSocket () {
-        this.$socket.emit('getMessages', this.room);
+        this.$socket.emit('getMessages', this.room.slug);
       },
       addMessage () {
         ChatServices.addMessage({
