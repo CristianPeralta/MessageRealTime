@@ -62,7 +62,7 @@ module.exports.getAll = function (req,res) {
 
 module.exports.getAllSocket = function (room, cb) {
 
-  Message.find({slug: room}).populate('user').then( (messages, err) => {
+  Message.find({room: room}).populate('user').then( (messages, err) => {
       return cb(messages, err);
     });
 }
