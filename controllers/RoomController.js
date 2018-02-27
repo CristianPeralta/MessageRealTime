@@ -2,6 +2,17 @@ var Room = require('../models/Room');
 var mongoose = require("mongoose");
 
 
+module.exports.room = function (req,res) {
+  let callroom = req.params.room;
+  Room.findOne({slug: callroom}).then( (room, err) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500)
+      }
+      return res.json(room);
+    });
+}
+
 module.exports.create = function (req,res) {
   let data = req.body;
   console.log(data);

@@ -20,7 +20,7 @@ export default new Router({
       component: SignUp
     },
     {
-      path: '/home',
+      path: '/home/:initialRoom',
       name: 'Home',
       component: Home,
       props: true

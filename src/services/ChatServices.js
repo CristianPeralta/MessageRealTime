@@ -1,6 +1,9 @@
 import Api from '@/services/Api'
 
 export default {
+  room (params) {
+    return Api().get('room/'+ params);
+  },
   signup (params) {
     return Api().post('signup', params, {
         headers: {

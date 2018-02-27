@@ -9,6 +9,8 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/room/:room', roomController.room);
+
 router.post('/signup', userController.create);
 
 router.post('/login', userController.login);

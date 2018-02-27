@@ -40,6 +40,7 @@ module.exports.createSocket = function (data, cb) {
     }
     message.user = mongoose.Types.ObjectId(user._id);
     message.text = data.text;
+    message.room = data.room;
     message.save(function (err, message) {
       Message.findOne({_id:message._id}).populate('user').then( (message, err) => {
           return cb(message, err);
@@ -59,9 +60,9 @@ module.exports.getAll = function (req,res) {
     });
 }
 
-module.exports.getAllSocket = function (cb) {
+module.exports.getAllSocket = function (room, cb) {
 
-  Message.find({}).populate('user').then( (messages, err) => {
+  Message.find({slug: room}).populate('user').then( (messages, err) => {
       return cb(messages, err);
     });
 }

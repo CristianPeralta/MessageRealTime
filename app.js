@@ -49,8 +49,8 @@ io.on('connection', function(socket) {
 		})
 	});
 
-	socket.on('getMessages', () => {
-		messageController.getAllSocket((messages, err) => {
+	socket.on('getMessages', (room) => {
+		messageController.getAllSocket(room, (messages, err) => {
 			io.emit('messagesGetted', {data:messages,ok:!err,err:err});
 		})
 	});

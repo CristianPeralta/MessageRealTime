@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <Navbar :user="user"></Navbar>
+    <Navbar :room="room.name" :user="user"></Navbar>
     <section class="container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
         <RoomList></RoomList>
@@ -54,9 +54,10 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
 
   export default {
     name: 'Home',
-    props: ['room'],
+    props: ['initialRoom'],
     data(){
       return {
+        room: {},
         messages: [],
         user: {},
         users: [],
@@ -97,6 +98,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     created () {
+      this.saveRoom();
       this.getUser(this.checkUser);
       this.getMessagesSocket();
     },
@@ -108,6 +110,11 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     methods: {
+      saveRoom () {
+        ChatServices.room(this.initialRoom).then((response) => {
+          this.room = response.data;
+        })
+      },
       checkUser () {
         if (!this.user.username) {
           this.$router.push({name: 'Login'});
@@ -138,7 +145,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         })
       },
       getMessagesSocket () {
-        this.$socket.emit('getMessages', this.room._id);
+        this.$socket.emit('getMessages', this.room);
       },
       addMessage () {
         ChatServices.addMessage({
@@ -151,6 +158,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       addMessageSocket () {
         this.$socket.emit('addMessage', {
+          room: this.room.slug,
           user: this.user._id,
           text: this.text
         });

@@ -8,7 +8,7 @@ var MessageSchema = new Schema({
         ref: 'User'
     },
   room: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Room'
     },
   createdAt:{ type: Date, default: Date.now}

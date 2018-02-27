@@ -4,7 +4,7 @@
         <div id="topNav" class="navbar-menu">
           <div class="navbar-start">
             <a class="navbar-item">
-              Home
+              {{room}}
             </a>
           </div>
           <div class="navbar-end">
@@ -35,7 +35,7 @@
 import ChatServices from '@/services/ChatServices'
 export default {
   name: 'Navbar',
-  props: ['user'],
+  props: ['user', 'room'],
   data () {
     return {
       menu: false

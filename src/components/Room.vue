@@ -2,7 +2,7 @@
   <div class="">
     <section class="container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
-      <RoomList :newRoom="newRoom"></RoomList>
+      <RoomList></RoomList>
         <div class="container has-text-centered">
           <div class="column is-4 is-offset-4">
             <h3 class="title has-text-grey" style="margin-top : 40px;" >Sign Up</h3>
@@ -28,7 +28,7 @@ import RoomList from '@/components/utils/RoomList'
 import ChatServices from '@/services/ChatServices'
 
 export default {
-  name: 'Room',
+  name: 'RoomExample',
   props: ['room'],
   data () {
     return {
