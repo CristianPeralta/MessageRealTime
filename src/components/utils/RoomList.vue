@@ -7,6 +7,9 @@
       <ul class="menu-list">
         <li v-for="(room, index) in rooms" :key="index"><a>{{room.name}}</a></li>
       </ul>
+      <template v-if="newRoom" >
+        <li>newRoom</li>
+      </template>
     </aside>
   </div>
 </template>
@@ -15,12 +18,13 @@
 import ChatServices from '@/services/ChatServices'
 
 export default {
-  name: 'MenuList',
+  name: 'RoomList',
   data () {
     return {
       rooms: []
     }
   },
+  props: ['newRoom'],
   created () {
     this.getRooms();
   },

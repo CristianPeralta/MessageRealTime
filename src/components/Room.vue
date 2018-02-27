@@ -1,12 +1,11 @@
 <template lang="html">
   <div class="">
-    <section class="hero is-success is-fullheight container">
+    <section class="container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
-      <RoomList></RoomList>
-      <div class=""></div>
+      <RoomList :newRoom="newRoom"></RoomList>
         <div class="container has-text-centered">
           <div class="column is-4 is-offset-4">
-            <h3 class="title has-text-grey">Sign Up</h3>
+            <h3 class="title has-text-grey" style="margin-top : 40px;" >Sign Up</h3>
             <div class="box">
                 <div class="field">
                   <div class="control">
@@ -15,12 +14,6 @@
                 </div>
                 <button @click="sendForm()" class="button is-block is-info is-large is-fullwidth">Add</button>
             </div>
-            <p class="has-text-grey">
-              <router-link to="/" exact>
-                <a>Sign In</a> &nbsp;·&nbsp;
-              </router-link>
-              <a href="../">Need Help?</a>
-            </p>
           </div>
         </div>
       </div>
@@ -49,7 +42,7 @@ export default {
     Footer
   },
   created() {
-    this.getRooms()
+    this.getRooms();
   },
   methods: {
     sendForm () {
@@ -57,6 +50,7 @@ export default {
         name: this.newRoom
       }).then((response) => {
           this.rooms.push(response.data)
+          console.log(response.data);
           this.newRoom = '';
       })
     },
@@ -71,4 +65,5 @@ export default {
 
 <style lang="css">
 @import '../assets/css/styles.css';
+
 </style>

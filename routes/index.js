@@ -22,5 +22,6 @@ router.get('/message/delete', messageController.delete);
 
 router.get('/room',roomController.getAll);
 router.post('/room',roomController.create);
+router.get('/room/delete',roomController.delete);
 
 module.exports = router;

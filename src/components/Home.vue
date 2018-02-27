@@ -54,6 +54,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
 
   export default {
     name: 'Home',
+    props: ['room'],
     data(){
       return {
         messages: [],
@@ -137,7 +138,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         })
       },
       getMessagesSocket () {
-        this.$socket.emit('getMessages');
+        this.$socket.emit('getMessages', this.room._id);
       },
       addMessage () {
         ChatServices.addMessage({
