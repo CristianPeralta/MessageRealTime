@@ -98,9 +98,8 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     created () {
-      this.saveRoom();
+      this.saveRoom(this.getMessagesSocket);
       this.getUser(this.checkUser);
-      this.getMessagesSocket();
     },
     mounted() {
     },
@@ -110,9 +109,10 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     methods: {
-      saveRoom () {
+      saveRoom (cb) {
         ChatServices.room(this.initialRoom).then((response) => {
           this.room = response.data;
+          cb();
         })
       },
       checkUser () {
