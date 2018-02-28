@@ -33,7 +33,7 @@ export default {
       })
     },
     goRoom( room ){
-      this.$router.push({name: 'Home', params: {initialRoom: room}});
+      this.$router.push({name: 'Room', params: {initialRoom: room}});
     }
   }
 }

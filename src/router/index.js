@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
 import Notification from '@/components/Notification'
 import Room from '@/components/Room'
+import NewRoom from '@/components/NewRoom'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 
@@ -20,15 +20,15 @@ export default new Router({
       component: SignUp
     },
     {
-      path: '/home/:initialRoom',
-      name: 'Home',
-      component: Home,
+      path: '/room/:initialRoom',
+      name: 'Room',
+      component: Room,
       props: true
     },
     {
-      path: '/room/:room',
-      name: 'Room',
-      component: Room,
+      path: '/newroom/:room',
+      name: 'NewRoom',
+      component: NewRoom,
       props: true
     },
     {

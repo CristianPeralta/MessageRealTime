@@ -53,7 +53,7 @@ export default {
   methods: {
     checkUser () {
       if (this.session.username) {
-        this.$router.push({name: 'Home', params: {initialRoom: 'home'}});
+        this.$router.push({name: 'Room', params: {initialRoom: 'home'}});
       }
     },
     login () {
@@ -62,7 +62,7 @@ export default {
         password: this.password
       }).then((response) =>{
         let user = response.data;
-        this.$router.push({ name: 'Home', params: {initialRoom: 'home'}})
+        this.$router.push({ name: 'Room', params: {initialRoom: 'home'}})
       })
     },
     getUser (cb) {
