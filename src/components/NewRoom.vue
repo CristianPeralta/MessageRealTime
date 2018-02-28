@@ -1,11 +1,10 @@
 <template lang="html">
   <div class="">
     <section class="container">
-      <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
-      <RoomList></RoomList>
+      <div class="columns" style="margin-left : 3rem; margin-top : 0px;">>
         <div class="container has-text-centered">
           <div class="column is-4 is-offset-4">
-            <h3 class="title has-text-grey" style="margin-top : 40px;" >Sign Up</h3>
+            <h3 class="title has-text-grey" style="margin-top : 40px;" >NewRoom</h3>
             <div class="box">
                 <div class="field">
                   <div class="control">
@@ -22,9 +21,6 @@
 </template>
 
 <script>
-import Navbar from '@/components/utils/Navbar'
-import Footer from '@/components/utils/Footer'
-import RoomList from '@/components/utils/RoomList'
 import ChatServices from '@/services/ChatServices'
 
 export default {
@@ -36,14 +32,6 @@ export default {
       rooms: []
     }
   },
-  components:{
-    Navbar,
-    RoomList,
-    Footer
-  },
-  created() {
-    this.getRooms();
-  },
   methods: {
     sendForm () {
       ChatServices.addRoom({
@@ -53,17 +41,10 @@ export default {
           console.log(response.data);
           this.newRoom = '';
       })
-    },
-    getRooms () {
-      ChatServices.getRooms().then((response) => {
-          this.rooms = response.data;
-      })
     }
   }
 }
 </script>
 
 <style lang="css">
-@import '../assets/css/styles.css';
-
 </style>

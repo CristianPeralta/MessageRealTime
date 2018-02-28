@@ -9,6 +9,13 @@
           <a @click="goRoom(room.slug)">{{room.name}}</a>
         </li>
       </ul>
+      <p class="menu-label">
+        New Room
+      </p>
+      <ul class="menu-list">
+        <input class="input" type="text" v-model="newRoom" placeholder="New Room" autofocus="">
+        <button @click="sendForm()" class="button is-block is-info is-fullwidth">Add</button>
+      </ul>
     </aside>
   </div>
 </template>
@@ -20,13 +27,24 @@ export default {
   name: 'RoomList',
   data () {
     return {
+      newRoom: '',
       rooms: []
     }
   },
   created () {
     this.getRooms();
   },
+
   methods: {
+    sendForm () {
+      ChatServices.addRoom({
+        name: this.newRoom
+      }).then((response) => {
+          this.rooms.push(response.data)
+          console.log(response.data);
+          this.newRoom = '';
+      })
+    },
     getRooms () {
       ChatServices.getRooms().then((response) => {
           this.rooms = response.data;
