@@ -32,5 +32,8 @@ export default {
   },
   getRooms () {
     return Api().get('room');
+  },
+  upload (params) {
+    return Api().post('upload', params);
   }
 }

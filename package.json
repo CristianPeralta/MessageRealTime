@@ -31,6 +31,7 @@
     "nodemon": "^1.14.12",
     "randomstring": "^1.1.5",
     "socket.io": "^2.0.4",
+    "socketio-file-upload": "^0.6.0",
     "vue": "^2.5.13",
     "vue-loader": "^14.1.1",
     "vue-socket.io": "^2.1.1-b"

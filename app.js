@@ -8,14 +8,10 @@ var ejs = require("ejs").__express;
 
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
+global.io = require('socket.io')(server);
 var messageController = require('./controllers/messageController');
 
 var usersOnline = [];
-
-io.on('connection', function(socket) {
-	console.log('Un cliente se ha conectado');
-});
 
 var index = require('./routes/index');
 
@@ -45,7 +41,8 @@ io.on('connection', function(socket) {
 
 	socket.on('addMessage', (data) => {
 		messageController.createSocket(data, (message, err) => {
-			io.emit('messageAdded', {data:message,ok:!err,err:err});
+			//io.emit('messageAdded', {data:message,ok:!err,err:err});
+			console.log('success');
 		})
 	});
 
@@ -111,4 +108,6 @@ server.listen(5000, function() {
 	console.log('Servidor corriendo en http://localhost:3000');
 });
 
-module.exports = app;
+module.exports = {
+	io:'hola'
+};

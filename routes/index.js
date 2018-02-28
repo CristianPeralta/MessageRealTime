@@ -20,6 +20,7 @@ router.get('/user', userController.getUser);
 
 router.get('/messages', messageController.getAll);
 router.post('/message', messageController.create);
+router.post('/upload', messageController.upload);
 router.get('/message/delete', messageController.delete);
 
 router.get('/room',roomController.getAll);
