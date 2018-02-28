@@ -101,11 +101,19 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       this.saveRoom(this.getMessagesSocket);
       this.getUser(this.checkUser);
     },
+    afterRouteUpdate() {
+      this.getMessagesSocket();
+    },
     mounted() {
     },
     filters: {
       count (users) {
         return users.length;
+      }
+    },
+    watch: {
+      initialRoom () {
+        this.saveRoom(this.getMessagesSocket);
       }
     },
     methods: {
