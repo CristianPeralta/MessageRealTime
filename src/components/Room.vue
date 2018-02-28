@@ -11,10 +11,33 @@
               <textarea v-model="text" class="textarea is-large" type="text" placeholder="Your message"></textarea>
               <div class="control">
                 <button @click="addMessageSocket()" class="button is-primary">Submit</button>
+                <div class="field">
+                  <div class="file is-info">
+                    <label class="file-label has-name">
+                      <input @change="processFile($event)" class="file-input" type="file" name="resume">
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fa fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                          File…
+                        </span>
+                        <span class="file-name">
+                          Screen Shot 2017-07-29 at 15.54.25.png
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </Message>
             <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
-                {{message.text}}
+                <template v-if="message.photo">
+                  <img :src="message.photo" alt="">
+                </template>
+                <template v-else>
+                  {{message.text}}
+                </template>
             </Message>
 
 
@@ -62,6 +85,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         user: {},
         users: [],
         text: '',
+        photo: {},
         isLoad : false
       }
     },
@@ -117,6 +141,16 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     methods: {
+      processFile (e) {
+        this.photo = e.target.files[0];
+        let form = new FormData();
+        form.append('photo', this.photo);
+        form.append('room', this.room.slug);
+        form.append('user' , this.user._id);
+        ChatServices.upload(form).then((response) => {
+              console.log('success upload');
+            })
+      },
       saveRoom (cb) {
         ChatServices.room(this.initialRoom).then((response) => {
           this.room = response.data;

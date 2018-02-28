@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var MessageSchema = new Schema({
   text: {type:String},
+  photo: {type:String},
   user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
