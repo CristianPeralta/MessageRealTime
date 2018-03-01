@@ -25,10 +25,9 @@ io.on('connection', function(socket) {
 	socket.on('userConnected', (data) => {
       console.log('room => ');
       console.log(data.room);
-      socket.room = data.room;
-      getUsersOfRoom(data,(usersRoom) => {
-        io.emit('usersConnected', {data:usersRoom});
-      });
+      addUserinRoom(data, () => {
+        io.emit('usersConnected', {data:usersOnline});
+      })
 	});
 
 
@@ -46,21 +45,18 @@ io.on('connection', function(socket) {
 
 	socket.on('getMessages', (room) => {
 		messageController.getAllSocket(room, (messages, err) => {
-			io.emit('messagesGetted', {data:messages,ok:!err,err:err});
+			socket.emit('messagesGetted', {data:messages,ok:!err,err:err});
 		})
 	});
 
   socket.on('userDisconnect', function(data) {
-    console.log('user disconencnetin');
-      console.log(data);
-      console.log(usersOnline);
-      let index = usersOnline.findIndex((element, idx) => {
-        return (element.user._id == data.user._id) && (element.room == data.room);
+      usersOnline.map((element, idx) => {
+        if (element.user._id == data.user._id) {
+          usersOnline.splice(idx,1);
+        }
       });
-      usersOnline.splice(index,1);
-      getUsersOfRoom({room:data.room}, (usersRoom) => {
-            io.emit('usersConnected', {data:usersRoom});
-          });
+      usersOnline = usersOnline.filter(function(n){ return n != undefined })
+      io.emit('usersConnected', {data:usersOnline});
    });
   //
 	// socket.on('disconnect', function() {
@@ -72,7 +68,7 @@ io.on('connection', function(socket) {
   //  });
 });
 
-function getUsersOfRoom(data, cb) {
+function addUserinRoom(data, cb) {
   if (data.user!=null) {
     let exist=false;
     if (usersOnline.length!=0) {
@@ -82,17 +78,11 @@ function getUsersOfRoom(data, cb) {
     }
     if (!exist) {
       usersOnline.push(data);
+      usersOnline = usersOnline.filter(function(n){ return n != undefined })
     }
+    cb();
   }
-  let usersRoom = usersOnline.map((element) => {
-    if (element.room == data.room) {
-      return element
-    }
-  })
-  console.log(usersRoom);
-  cb(usersRoom);
 }
-
 app.use(session({
     // When there is nothing on the session, do not save it
     saveUninitialized: false,
