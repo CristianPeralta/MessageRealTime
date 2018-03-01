@@ -26,6 +26,7 @@ io.on('connection', function(socket) {
       console.log('room => ');
       console.log(data.room);
       addUserinRoom(data, () => {
+        console.log(usersOnline);
         io.emit('usersConnected', {data:usersOnline});
       })
 	});
@@ -55,6 +56,7 @@ io.on('connection', function(socket) {
           usersOnline.splice(idx,1);
         }
       });
+      console.log(usersOnline);
       usersOnline = usersOnline.filter(function(n){ return n != undefined })
       io.emit('usersConnected', {data:usersOnline});
    });
@@ -67,6 +69,17 @@ io.on('connection', function(socket) {
   //     })
   //  });
 });
+//
+// function getUsersOfRoom(data, cb) {
+//   let usersRoom = usersOnline.map((element) => {
+//     if (element.room == data.room) {
+//       return element
+//     }
+//   })
+//   usersRoom = usersRoom.filter(function(n){ return n != undefined })
+//   console.log(usersRoom);
+//   cb(usersRoom);
+// }
 
 function addUserinRoom(data, cb) {
   if (data.user!=null) {
@@ -78,8 +91,8 @@ function addUserinRoom(data, cb) {
     }
     if (!exist) {
       usersOnline.push(data);
-      usersOnline = usersOnline.filter(function(n){ return n != undefined })
     }
+    usersOnline = usersOnline.filter(function(n){ return n != undefined })
     cb();
   }
 }

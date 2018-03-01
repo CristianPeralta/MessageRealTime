@@ -101,8 +101,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log('socket connected')
       },
       usersConnected (response) {
-        console.log(response.data);
-          this.users = response.data;
+          console.log(response.data);
+          let usersRoom = response.data.map((element) => {
+            if (element.room == this.room.slug) {
+              return element
+            }
+          })
+          usersRoom = usersRoom.filter(function(n){ return n != undefined })
+          this.users = usersRoom;
       },
       messageAdded (response) {
         if (response.ok) {
