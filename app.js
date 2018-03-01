@@ -23,14 +23,12 @@ io.on('connection', function(socket) {
 	console.log('A client has connected');
 
 	socket.on('userConnected', (data) => {
-			console.log(data);
-			let exist = usersOnline.find((user) =>{
-				return user._id == data._id;
-			});
-			if (!exist) {
-				usersOnline.push(data);
-			}
-			io.emit('usersConnected', {data:usersOnline});
+      console.log('room => ');
+      console.log(data.room);
+      socket.room = data.room;
+      getUsersOfRoom(data,(usersRoom) => {
+        io.emit('usersConnected', {data:usersRoom});
+      });
 	});
 
 
@@ -51,11 +49,41 @@ io.on('connection', function(socket) {
 			io.emit('messagesGetted', {data:messages,ok:!err,err:err});
 		})
 	});
+
+  socket.on('userDisconnect', function(data) {
+    console.log('user disconencnetin');
+      console.log(data);
+   });
+
 	socket.on('disconnect', function() {
       console.log('Got disconnect!');
+      usersOnline = usersOnline.filter(function(n){ return n != undefined })
+      getUsersOfRoom({room:socket.room}, (usersRoom) => {
+        io.emit('usersConnected', {data:usersRoom});
+      })
    });
 });
 
+function getUsersOfRoom(data, cb) {
+  if (data.user!=null) {
+    let exist=false;
+    if (usersOnline.length!=0) {
+      exist = usersOnline.find((element) =>{
+        return (element.user._id == data.user._id) && (element.room == data.room);
+      });
+    }
+    if (!exist) {
+      usersOnline.push(data);
+    }
+  }
+  let usersRoom = usersOnline.map((element) => {
+    if (element.room == data.room) {
+      return element
+    }
+  })
+  console.log(usersRoom);
+  cb(usersRoom);
+}
 
 app.use(session({
     // When there is nothing on the session, do not save it

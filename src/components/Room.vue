@@ -7,6 +7,16 @@
         <div class="column is-7" >
           <div ref="chatbox" class="box content" style="overflow-y: scroll; height:530px; z-index:80;">
             <button @click="chatPosition()" class="button is-primary">Write</button>
+
+            <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
+                <template v-if="message.photo">
+                  <img :src="message.photo" alt="">
+                </template>
+                <template v-else>
+                  {{message.text}}
+                </template>
+            </Message>
+
             <Message :user="user" tabindex="0">
               <textarea v-model="text" class="textarea is-large" type="text" placeholder="Your message"></textarea>
               <div class="control">
@@ -31,26 +41,17 @@
                 </div>
               </div>
             </Message>
-            <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
-                <template v-if="message.photo">
-                  <img :src="message.photo" alt="">
-                </template>
-                <template v-else>
-                  {{message.text}}
-                </template>
-            </Message>
-
 
           </div>
         </div>
         <div class="column is-2">
           <div class="box content">
             <p>Users  ({{users | count}})</p>
-            <template v-if="users">
+            <template v-if="users.length!=0">
               <p v-for="(userC,index) in users" :key="index">
                 <span class="circle"></span>
                 <small>
-                  {{userC.username}}
+                  {{userC.user.username}}
                 </small>
               </p>
             </template>
@@ -122,8 +123,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     created () {
-      this.saveRoom(this.getMessagesSocket);
-      this.getUser(this.checkUser);
+      this.saveRoom(this.getMessagesSocket, this.getUser, this.checkUser);
     },
     afterRouteUpdate() {
       this.getMessagesSocket();
@@ -137,7 +137,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     },
     watch: {
       initialRoom () {
-        this.saveRoom(this.getMessagesSocket);
+        this.saveRoom(this.getMessagesSocket, this.getUser, this.checkUser);
       }
     },
     methods: {
@@ -151,10 +151,13 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
               console.log('success upload');
             })
       },
-      saveRoom (cb) {
+      saveRoom (message, user, check) {
         ChatServices.room(this.initialRoom).then((response) => {
           this.room = response.data;
-          cb();
+          message();
+
+        }).then(() => {
+          user(check);
         })
       },
       checkUser () {
@@ -175,7 +178,10 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         ChatServices.user().then((response) => {
           this.user = response.data;
           if (this.user.username) {
-            this.$socket.emit('userConnected', this.user);
+            this.$socket.emit('userConnected', {
+              user: this.user,
+              room: this.room.slug
+            });
           }
           cb();
         });

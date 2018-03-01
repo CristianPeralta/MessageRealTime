@@ -47,6 +47,10 @@ export default {
     },
     logout() {
       ChatServices.logout() .then((response) => {
+        this.$parent.$socket.emit('userDisconnect', {
+          user: this.$parent.user,
+          room: this.$parent.room.slug
+        });
         this.$router.push({ name: 'Login'});
       });
     }
