@@ -53,15 +53,23 @@ io.on('connection', function(socket) {
   socket.on('userDisconnect', function(data) {
     console.log('user disconencnetin');
       console.log(data);
+      console.log(usersOnline);
+      let index = usersOnline.findIndex((element, idx) => {
+        return (element.user._id == data.user._id) && (element.room == data.room);
+      });
+      usersOnline.splice(index,1);
+      getUsersOfRoom({room:data.room}, (usersRoom) => {
+            io.emit('usersConnected', {data:usersRoom});
+          });
    });
-
-	socket.on('disconnect', function() {
-      console.log('Got disconnect!');
-      usersOnline = usersOnline.filter(function(n){ return n != undefined })
-      getUsersOfRoom({room:socket.room}, (usersRoom) => {
-        io.emit('usersConnected', {data:usersRoom});
-      })
-   });
+  //
+	// socket.on('disconnect', function() {
+  //     console.log('Got disconnect!');
+  //     usersOnline = usersOnline.filter(function(n){ return n != undefined })
+  //     getUsersOfRoom({room:socket.room}, (usersRoom) => {
+  //       io.emit('usersConnected', {data:usersRoom});
+  //     })
+  //  });
 });
 
 function getUsersOfRoom(data, cb) {
