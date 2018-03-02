@@ -5,8 +5,8 @@
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
         <RoomList></RoomList>
         <div class="column is-7" >
+          <button @click="chatPosition()" class="button is-primary">Write</button>
           <div ref="chatbox" class="box content" style="overflow-y: scroll; height:530px; z-index:80;">
-            <button @click="chatPosition()" class="button is-primary">Write</button>
 
             <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
                 <template v-if="message.photo">
@@ -18,7 +18,7 @@
             </Message>
 
             <Message :user="user" tabindex="0">
-              <textarea v-model="text" class="textarea is-large" type="text" placeholder="Your message"></textarea>
+              <textarea ref="chatmessage" v-model="text" class="textarea is-large" type="text" placeholder="Your message" autofocus=""></textarea>
               <div class="control">
                 <button @click="addMessageSocket()" class="button is-primary">Submit</button>
                 <div class="field">
@@ -31,9 +31,6 @@
                         </span>
                         <span class="file-label">
                           File…
-                        </span>
-                        <span class="file-name">
-                          Screen Shot 2017-07-29 at 15.54.25.png
                         </span>
                       </span>
                     </label>
@@ -113,7 +110,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       messageAdded (response) {
         if (response.ok) {
           this.messages.push(response.data);
-          this.chatPosition();
+
           this.clear();
         } else {
           console.log(response.err);
@@ -123,6 +120,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         if (response.ok) {
           this.messages = response.data;
           this.isLoad = true;
+          this.chatPosition();
         } else {
           console.log(response.err);
         }
@@ -135,6 +133,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       this.getMessagesSocket();
     },
     mounted() {
+
     },
     filters: {
       count (users) {
@@ -163,6 +162,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           message();
 
         }).then(() => {
+          this.chatPosition();
           user(check);
         })
       },
@@ -175,6 +175,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         if (this.isLoad == true) {
           let chat = this.$refs.chatbox;
           chat.scrollTop = chat.scrollHeight;
+          this.$refs.chatmessage.focus();
         }
       },
       clear () {

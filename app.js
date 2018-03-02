@@ -56,7 +56,6 @@ io.on('connection', function(socket) {
           usersOnline.splice(idx,1);
         }
       });
-      console.log(usersOnline);
       usersOnline = usersOnline.filter(function(n){ return n != undefined })
       io.emit('usersConnected', {data:usersOnline});
    });

@@ -13,7 +13,7 @@
         New Room
       </p>
       <ul class="menu-list">
-        <input class="input" type="text" v-model="newRoom" placeholder="New Room" autofocus="">
+        <input class="input" type="text" v-model="newRoom" placeholder="New Room">
         <button @click="sendForm()" class="button is-block is-info is-fullwidth">Add</button>
       </ul>
     </aside>
