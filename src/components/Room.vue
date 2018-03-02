@@ -4,14 +4,9 @@
     <section class="container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
         <RoomList>
-          <div ref="chatbox" class="box content" style="overflow-y: scroll; height:250px; z-index:80;">
-            <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
-                <template v-if="message.photo">
-                  <img :src="message.photo" alt="">
-                </template>
-                <template v-else>
+          <div class="box content" style="overflow-y: scroll; height:250px; z-index:80;">
+            <Message v-for="(message,index) in messageprivated" :user="message.user" :key="index">
                   {{message.text}}
-                </template>
             </Message>
           </div>
         </RoomList>
@@ -58,8 +53,8 @@
             <template v-if="users.length!=0">
               <p v-for="(userC,index) in users" :key="index">
                 <span class="circle"></span>
-                <small @click="addPrivateUser(userC.id)">
-                  {{userC.user.username}}
+                <small>
+                  <a @click="addPrivateUser(userC.id)">{{userC.user.username}}</a>
                 </small>
               </p>
             </template>
@@ -134,6 +129,11 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         } else {
           console.log(response.err);
         }
+      },
+      addMessagePrivated (data) {
+        console.log('received');
+        console.log(data);
+        this.messageprivated.push(data);
       },
       messagesGetted (response) {
         if (response.ok) {
@@ -242,8 +242,8 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       addMessagePrivateSocket () {
         this.$socket.emit('addMessagePrivated', {
-          to: this.to,
-          user: this.user._id,
+          to: this.userPrivated,
+          user: this.user,
           text: this.textprivated
         });
       }
