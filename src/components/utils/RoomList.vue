@@ -16,6 +16,7 @@
         <input class="input" type="text" v-model="newRoom" placeholder="New Room">
         <button @click="sendForm()" class="button is-block is-info is-fullwidth">Add</button>
       </ul>
+      <slot></slot>
     </aside>
   </div>
 </template>

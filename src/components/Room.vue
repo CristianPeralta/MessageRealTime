@@ -3,7 +3,18 @@
     <Navbar :room="room.name" :user="user"></Navbar>
     <section class="container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
-        <RoomList></RoomList>
+        <RoomList>
+          <div ref="chatbox" class="box content" style="overflow-y: scroll; height:250px; z-index:80;">
+            <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
+                <template v-if="message.photo">
+                  <img :src="message.photo" alt="">
+                </template>
+                <template v-else>
+                  {{message.text}}
+                </template>
+            </Message>
+          </div>
+        </RoomList>
         <div class="column is-7" >
           <button @click="chatPosition()" class="button is-primary">Write</button>
           <div ref="chatbox" class="box content" style="overflow-y: scroll; height:530px; z-index:80;">
@@ -52,7 +63,27 @@
                 </small>
               </p>
             </template>
-
+            <Message :user="user" tabindex="0">
+              <textarea ref="chatmessage" v-model="text" class="textarea" type="text" placeholder="Your message" autofocus=""></textarea>
+              <div class="control">
+                <button @click="addMessageSocket()" class="button is-primary">Submit</button>
+                <div class="field">
+                  <div class="file is-info">
+                    <label class="file-label has-name">
+                      <input @change="processFile($event)" class="file-input" type="file" name="resume">
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fa fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                          File…
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </Message>
           </div>
         </div>
       </div>
@@ -80,6 +111,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       return {
         room: {},
         messages: [],
+        messageprivated: [],
         user: {},
         users: [],
         text: '',
