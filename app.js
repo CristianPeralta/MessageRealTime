@@ -23,8 +23,8 @@ io.on('connection', function(socket) {
 	console.log('A client has connected');
   console.log(socket.id);
 	socket.on('userConnected', (data) => {
-      console.log('room => ');
-      console.log(data.room);
+      data.id = socket.id;
+      console.log(data);
       addUserinRoom(data, () => {
         console.log(usersOnline);
         io.emit('usersConnected', {data:usersOnline});
@@ -42,6 +42,11 @@ io.on('connection', function(socket) {
 			//io.emit('messageAdded', {data:message,ok:!err,err:err});
 			console.log('success');
 		})
+	});
+
+  socket.on('addMessagePrivated', (data) => {
+		console.log(data);
+    io.sockets.connected[data.to].emit('addMessagePrivate', {message:data.message, from:data.user});
 	});
 
 	socket.on('getMessages', (room) => {

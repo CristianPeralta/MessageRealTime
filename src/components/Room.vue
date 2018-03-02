@@ -58,30 +58,15 @@
             <template v-if="users.length!=0">
               <p v-for="(userC,index) in users" :key="index">
                 <span class="circle"></span>
-                <small>
+                <small @click="addPrivateUser(userC.id)">
                   {{userC.user.username}}
                 </small>
               </p>
             </template>
             <Message :user="user" tabindex="0">
-              <textarea ref="chatmessage" v-model="text" class="textarea" type="text" placeholder="Your message" autofocus=""></textarea>
+              <textarea ref="chatmessage" v-model="textprivated" class="textarea" type="text" placeholder="Your message" autofocus=""></textarea>
               <div class="control">
-                <button @click="addMessageSocket()" class="button is-primary">Submit</button>
-                <div class="field">
-                  <div class="file is-info">
-                    <label class="file-label has-name">
-                      <input @change="processFile($event)" class="file-input" type="file" name="resume">
-                      <span class="file-cta">
-                        <span class="file-icon">
-                          <i class="fa fa-upload"></i>
-                        </span>
-                        <span class="file-label">
-                          File…
-                        </span>
-                      </span>
-                    </label>
-                  </div>
-                </div>
+                <button @click="addMessagePrivateSocket()" class="button is-primary">Submit</button>
               </div>
             </Message>
           </div>
@@ -115,6 +100,8 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         user: {},
         users: [],
         text: '',
+        textprivated: '',
+        userPrivated: '',
         photo: {},
         isLoad : false
       }
@@ -213,6 +200,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       clear () {
         this.text = '';
       },
+      addPrivateUser (to) {
+        this.userPrivated = to;
+      },
       getUser (cb) {
         ChatServices.user().then((response) => {
           this.user = response.data;
@@ -248,6 +238,13 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           room: this.room.slug,
           user: this.user._id,
           text: this.text
+        });
+      },
+      addMessagePrivateSocket () {
+        this.$socket.emit('addMessagePrivated', {
+          to: this.to,
+          user: this.user._id,
+          text: this.textprivated
         });
       }
     }
