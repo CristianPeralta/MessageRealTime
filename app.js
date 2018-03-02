@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost:27017/messageDb', function(err, res) {
 });
 io.on('connection', function(socket) {
 	console.log('A client has connected');
-
+  console.log(socket.id);
 	socket.on('userConnected', (data) => {
       console.log('room => ');
       console.log(data.room);
@@ -56,6 +56,8 @@ io.on('connection', function(socket) {
           usersOnline.splice(idx,1);
         }
       });
+      socket.disconnect();
+      console.log(io.eio.clients);
       usersOnline = usersOnline.filter(function(n){ return n != undefined })
       io.emit('usersConnected', {data:usersOnline});
    });
