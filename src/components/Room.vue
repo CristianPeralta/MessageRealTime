@@ -137,6 +137,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log('received');
         console.log(data);
         this.messageprivated.push(data);
+        this.textprivated = '';
       },
       messagesGetted (response) {
         if (response.ok) {

@@ -47,6 +47,7 @@ io.on('connection', function(socket) {
   socket.on('addMessagePrivated', (data) => {
 		console.log(data);
     io.to(data.to).emit('addMessagePrivated', {text:data.text, user:data.user});
+    io.to(socket.id).emit('addMessagePrivated', {text:data.text, user:data.user});
 	});
 
 	socket.on('getMessages', (room) => {
