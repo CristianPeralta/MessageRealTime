@@ -5,8 +5,11 @@
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
         <RoomList>
           <div class="box content" style="overflow-y: scroll; height:250px; z-index:80;">
-            <Message v-for="(message,index) in messageprivated" :user="message.user" :key="index">
-                  {{message.text}}
+            <Message :user="user">
+                  Waiting...
+            </Message>
+            <Message v-for="(mprivate,index) in messageprivated" :user="mprivate.user" :key="index">
+                  {{mprivate.text}}
             </Message>
           </div>
         </RoomList>

@@ -46,7 +46,7 @@ io.on('connection', function(socket) {
 
   socket.on('addMessagePrivated', (data) => {
 		console.log(data);
-    io.to(data.to).emit('addMessagePrivate', {text:data.text, user:data.user});
+    io.to(data.to).emit('addMessagePrivated', {text:data.text, user:data.user});
 	});
 
 	socket.on('getMessages', (room) => {
@@ -66,14 +66,10 @@ io.on('connection', function(socket) {
       usersOnline = usersOnline.filter(function(n){ return n != undefined })
       io.emit('usersConnected', {data:usersOnline});
    });
-  //
-	// socket.on('disconnect', function() {
-  //     console.log('Got disconnect!');
-  //     usersOnline = usersOnline.filter(function(n){ return n != undefined })
-  //     getUsersOfRoom({room:socket.room}, (usersRoom) => {
-  //       io.emit('usersConnected', {data:usersRoom});
-  //     })
-  //  });
+
+	socket.on('disconnect', function() {
+      console.log('Got disconnect!');
+   });
 });
 //
 // function getUsersOfRoom(data, cb) {
