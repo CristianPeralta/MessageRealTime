@@ -57,7 +57,7 @@
               <p v-for="(userC,index) in users" :key="index">
                 <span class="circle"></span>
                 <small>
-                  <a @click="addPrivateUser(userC.id)">{{userC.user.username}}</a>
+                  <a @click="addPrivateUser(userC)">{{userC.user.username}}</a>
                 </small>
               </p>
             </template>
@@ -99,7 +99,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         users: [],
         text: '',
         textprivated: '',
-        userPrivated: '',
+        userPrivated: {},
         photo: {},
         isLoad : false
       }
