@@ -133,11 +133,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           console.log(response.err);
         }
       },
-      addMessagePrivated (data) {
+      addMessagePrivated (response) {
         console.log('received');
-        console.log(data);
-        this.messageprivated.push(data);
-        this.textprivated = '';
+        if (response.ok) {
+          this.messageprivated.push(response.data);
+          this.textprivated = '';
+        } else {
+          console.log(response.err);
+        }
       },
       messagesGetted (response) {
         if (response.ok) {

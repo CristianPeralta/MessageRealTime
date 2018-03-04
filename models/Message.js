@@ -5,7 +5,10 @@ var MessageSchema = new Schema({
   text: {type:String},
   photo: {type:String},
   type: {type:String},
-  to: {type:String},
+  to: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

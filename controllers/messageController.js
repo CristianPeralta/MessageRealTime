@@ -41,13 +41,20 @@ module.exports.createSocket = function (data, cb) {
     if (!user) {
       return cb(user, err);
     }
+    console.log('dating');
+    console.log(data);
+    message.type = 'general';
+    if (data.to) {
+      console.log('here');
+      message.type = 'private';
+      message.to = mongoose.Types.ObjectId(data.user._id);
+    }
     message.user = mongoose.Types.ObjectId(user._id);
     message.room = data.room;
     message.text = data.text;
     message.save(function (err, message) {
       Message.findOne({_id:message._id}).populate('user').then( (message, err) => {
-          //return cb(message, err);
-          io.emit('messageAdded', {data:message,ok:!err,err:err});
+          return cb(message, err);
         });
     });
   })

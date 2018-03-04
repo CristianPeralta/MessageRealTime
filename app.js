@@ -39,15 +39,16 @@ io.on('connection', function(socket) {
 
 	socket.on('addMessage', (data) => {
 		messageController.createSocket(data, (message, err) => {
-			//io.emit('messageAdded', {data:message,ok:!err,err:err});
-			console.log('success');
+			io.emit('messageAdded', {data:message,ok:!err,err:err});
 		})
 	});
 
   socket.on('addMessagePrivated', (data) => {
-		console.log(data);
-    io.to(data.to).emit('addMessagePrivated', {text:data.text, user:data.user});
-    io.to(socket.id).emit('addMessagePrivated', {text:data.text, user:data.user});
+    messageController.createSocket(data, (message, err) => {
+      console.log(message);
+      io.to(data.to.id).emit('addMessagePrivated', {data:message, ok:!err,err:err});
+      io.to(socket.id).emit('addMessagePrivated', {data:message, ok:!err,err:err});
+		})
 	});
 
 	socket.on('getMessages', (room) => {
