@@ -24,6 +24,33 @@ module.exports.login = function (req,res) {
 
   })
 }
+
+module.exports.addFriend = function (req,res) {
+  let data = req.body;
+  console.log(data);
+  User.findOne({_id:data.user._id}).then((user, err) => {
+    if(err){
+      console.log(err);
+      return res.sendStatus(503)
+    }
+    User.findOne({_id:data.friend._id}).then((friend, err) => {
+      if(err){
+        console.log(err);
+        return res.sendStatus(503)
+      }
+      user.friends.push(mongoose.Types.ObjectId(friend._id));
+      user.save(function (err,user) {
+          if(err){
+            console.log(err);
+            return res.sendStatus(503)
+          }
+          return res.json(user);
+      });
+    })
+
+  })
+}
+
 module.exports.getUser = function (req,res) {
     let user = req.session.user;
     return res.json(user);

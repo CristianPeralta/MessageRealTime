@@ -6,6 +6,10 @@ var UserSchema = new Schema({
   email: {type:String, unique: true, required:'Email is required'},
   password: {type:String, required:'Password is required'},
   photo: {type:String},
+  friends: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   createdAt:{ type: Date, default: Date.now}
 });
 
