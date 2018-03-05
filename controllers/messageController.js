@@ -123,7 +123,16 @@ module.exports.getAll = function (req,res) {
     });
 }
 
-
+module.exports.getSpecificUser = function (req,res) {
+  let data = req.body;
+  Message.find({user:data.user,to:data.to}).populate('user').populate('to').then( (messages, err) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500)
+      }
+      return res.json(messages);
+    });
+}
 
 module.exports.getAllSocket = function (room, cb) {
   console.log(room);
