@@ -123,6 +123,8 @@ module.exports.getAll = function (req,res) {
     });
 }
 
+
+
 module.exports.getAllSocket = function (room, cb) {
   console.log(room);
   Message.find({room: room}).populate('user').then( (messages, err) => {

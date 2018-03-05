@@ -104,6 +104,11 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         isLoad : false
       }
     },
+    computed: {
+      userPri (to) {
+        return to;
+      }
+    },
     components:{
       Navbar,
       RoomList,
@@ -207,8 +212,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       clear () {
         this.text = '';
       },
+
       addPrivateUser (to) {
-        this.userPrivated = to;
+        this.userPrivated = this.userPri(to);
       },
       getUser (cb) {
         ChatServices.user().then((response) => {
