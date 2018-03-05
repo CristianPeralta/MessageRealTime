@@ -63,7 +63,6 @@ module.exports.geFriends = function (req,res) {
       return res.sendStatus(503)
     }
     return res.json(user);
-
   })
 }
 
