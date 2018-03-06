@@ -35,5 +35,8 @@ export default {
   },
   upload (params) {
     return Api().post('upload', params);
+  },
+  addFriend (params) {
+    return Api().post('friend', params);
   }
 }

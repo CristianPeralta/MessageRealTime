@@ -27,4 +27,6 @@ router.get('/room',roomController.getAll);
 router.post('/room',roomController.create);
 router.get('/room/delete',roomController.delete);
 
+router.post('/friend', userController.addFriend);
+
 module.exports = router;

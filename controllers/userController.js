@@ -2,6 +2,7 @@ const formidable = require("formidable");
 const fs = require("fs-extra");
 const bcrypt = require("bcrypt");
 const path = require("path");
+var mongoose = require("mongoose");
 const randomstring = require("randomstring");
 
 var User = require('../models/User');

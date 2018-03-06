@@ -58,6 +58,9 @@
                 <span class="circle"></span>
                 <small>
                   <a @click="addPrivateUser(userC)">{{userC.user.username}}</a>
+                  <a @click="addFriend(userC)">
+                    <i class="fa fa-user-plus"></i>
+                  </a>
                 </small>
               </p>
             </template>
@@ -215,6 +218,16 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
 
       addPrivateUser (to) {
         this.userPrivated = this.userPri(to);
+      },
+
+      addFriend (friend) {
+        ChatServices.addFriend({
+          user: this.user,
+          friend: friend.user         
+        }).then((response) => {
+          console.log('Friend Added');
+          console.log(response.data);
+        })
       },
       getUser (cb) {
         ChatServices.user().then((response) => {
