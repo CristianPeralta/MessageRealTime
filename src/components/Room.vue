@@ -70,6 +70,14 @@
                 <button @click="addMessagePrivateSocket()" class="button is-primary">Submit</button>
               </div>
             </Message>
+            <p>Friends</p>
+            <template>
+              <p v-for="(friend, index) in friends" :key="index">
+                <small>
+                  <a @click="addPrivateUser(userC)">{{friend.username}}</a>
+                </small>
+              </p>
+            </template>
           </div>
         </div>
       </div>
@@ -171,12 +179,17 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     },
     filters: {
       count (users) {
-        return users.length;
+        return users.length - 1;
       }
     },
     watch: {
       initialRoom () {
         this.saveRoom(this.getMessagesSocket, this.getUser, this.checkUser);
+      }
+    },
+    computed: {
+      friends () {
+        return this.user.friends
       }
     },
     methods: {

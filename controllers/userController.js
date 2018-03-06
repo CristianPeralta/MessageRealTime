@@ -18,9 +18,18 @@ module.exports.login = function (req,res) {
     }
     console.log('Logged');
     if (bcrypt.compareSync(data.password, user.password)) {
-      req.session.user = user;
-      let currentUser = req.session.user;
-      return res.json(currentUser);
+      User.findOne({_id:user._id}).populate({
+        path: 'friends',
+        populate: {path: 'friends'}
+      }).then((user, err) => {
+        if(err){
+          console.log(err);
+          return res.sendStatus(503)
+        }
+        req.session.user = user;
+        let currentUser = req.session.user;
+        return res.json(currentUser);
+      })
     }
 
   })
