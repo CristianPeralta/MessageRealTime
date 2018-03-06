@@ -54,7 +54,7 @@
           <div class="box content">
             <p>Users  ({{users | count}})</p>
             <template v-if="users.length!=0">
-              <p v-for="(userC,index) in users" :key="index">
+              <p v-if="userC.user._id!=user._id" v-for="(userC,index) in users" :key="index">
                 <span class="circle"></span>
                 <small>
                   <a @click="addPrivateUser(userC)">{{userC.user.username}}</a>
@@ -223,7 +223,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       addFriend (friend) {
         ChatServices.addFriend({
           user: this.user,
-          friend: friend.user         
+          friend: friend.user
         }).then((response) => {
           console.log('Friend Added');
           console.log(response.data);
