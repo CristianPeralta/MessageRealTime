@@ -48,14 +48,17 @@ module.exports.addFriend = function (req,res) {
         console.log(err);
         return res.sendStatus(503)
       }
-      user.friends.push(mongoose.Types.ObjectId(friend._id));
-      user.save(function (err,user) {
+      if (user.friends.indexOf(mongoose.Types.ObjectId(friend._id)) == -1) {
+        user.friends.push(mongoose.Types.ObjectId(friend._id));
+        user.save(function (err,user) {
           if(err){
             console.log(err);
             return res.sendStatus(503)
           }
           return res.json(user);
-      });
+        });
+      }
+
     })
 
   })
