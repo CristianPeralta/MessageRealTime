@@ -76,6 +76,9 @@
                 <small>
                   <a @click="addPrivateUser(userC)">{{friend.username}}</a>
                 </small>
+                <a @click="deleteFriend(friend)">
+                  <i class="fa fa-user-times"></i>
+                </a>
               </p>
             </template>
           </div>
@@ -237,6 +240,16 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         ChatServices.addFriend({
           user: this.user,
           friend: friend.user
+        }).then((response) => {
+          console.log('Friend Added');
+          console.log(response.data);
+        })
+      },
+
+      deleteFriend (friend) {
+        ChatServices.deleteFriend({
+          user: this.user,
+          friend: friend
         }).then((response) => {
           console.log('Friend Added');
           console.log(response.data);

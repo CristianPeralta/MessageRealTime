@@ -38,5 +38,8 @@ export default {
   },
   addFriend (params) {
     return Api().post('friend', params);
+  },
+  deleteFriend (params) {
+    return Api().post('friend/delete', params);
   }
 }

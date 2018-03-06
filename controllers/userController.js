@@ -64,6 +64,24 @@ module.exports.addFriend = function (req,res) {
   })
 }
 
+module.exports.deleteFriend = function (req,res) {
+  let data = req.body;
+  console.log('deletbn');
+  console.log(data);
+  User.findOne({_id:data.user._id}).then((user, err) => {
+    if(err){
+      console.log(err);
+      return res.sendStatus(503)
+    }
+    idx = user.friends.indexOf(mongoose.Types.ObjectId(data.friend._id));
+    if (idx != -1) {
+      user.friends.splice(idx, 1);
+      return res.json(user);
+    }
+
+  })
+}
+
 module.exports.geFriends = function (req,res) {
   let data = req.body;
   console.log(data);
