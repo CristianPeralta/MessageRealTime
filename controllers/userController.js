@@ -55,7 +55,18 @@ module.exports.addFriend = function (req,res) {
             console.log(err);
             return res.sendStatus(503)
           }
-          return res.json(user);
+          User.findOne({_id:user._id}).populate({
+            path: 'friends',
+            populate: {path: 'friends'}
+          }).then((user, err) => {
+            if(err){
+              console.log(err);
+              return res.sendStatus(503)
+            }
+            req.session.user = user;
+            let currentUser = req.session.user;
+            return res.json(currentUser);
+          })
         });
       }
 

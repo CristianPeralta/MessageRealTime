@@ -246,6 +246,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         }).then((response) => {
           console.log('Friend Added');
           console.log(response.data);
+          this.user = response.data;
         })
       },
 
