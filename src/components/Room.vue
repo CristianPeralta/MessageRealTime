@@ -85,7 +85,11 @@
         </div>
       </div>
     </section>
-    <Imbox></Imbox>
+    <template v-if="inboxs.length!=0" v-for="(inbox, index) in inboxs">
+
+      <Inbox :user=inbox.user></Inbox>
+    </template>
+
     <Footer></Footer>
   </div>
 
@@ -98,7 +102,7 @@ import Navbar from '@/components/utils/Navbar'
 import Footer from '@/components/utils/Footer'
 import RoomList from '@/components/utils/RoomList'
 import Message from '@/components/Message'
-import Imbox from '@/components/Imbox'
+import Inbox from '@/components/Inbox'
 import ChatServices from '@/services/ChatServices'
 
 Vue.use(VueSocketio, 'ws://localhost:5000')
@@ -117,6 +121,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         textprivated: '',
         userPrivated: {},
         photo: {},
+        inboxs:[],
         isLoad : false
       }
     },
@@ -130,7 +135,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       RoomList,
       Footer,
       Message,
-      Imbox
+      Inbox
     },
     sockets: {
       connect () {
@@ -239,7 +244,8 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
 
       addPrivateUser (to) {
-        this.userPrivated = this.userPri(to);
+        this.userPrivated = to;
+        this.inboxs.push(this.userPrivated);
       },
 
       addFriend (friend) {

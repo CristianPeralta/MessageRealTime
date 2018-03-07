@@ -3,9 +3,9 @@
 
 		<header @click="minimize" class="clearfix">
 
-			<a @click="close" class="chat-close">x</a>
+			<a @click="close($event)" class="chat-close">x</a>
 
-			<h4>John Doe</h4>
+			<h4>{{user.username}}</h4>
 
 			<span ref="counter" class="chat-message-counter">3</span>
 
@@ -98,11 +98,13 @@ export default {
       initHeight: 0
     }
   },
+  props: ['user'],
   methods: {
     minimize () {
       this.slideToggle(this.$refs.chat);
     },
-    close () {
+    close (e) {
+      e.preventDefault();
       this.fadeOut(this.$refs.allbox);
     },
     slideToggle(el) {
