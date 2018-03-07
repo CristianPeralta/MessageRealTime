@@ -47,6 +47,7 @@
                 </div>
               </div>
             </Message>
+            <Imbox></Imbox>
 
           </div>
         </div>
@@ -97,6 +98,7 @@ import Navbar from '@/components/utils/Navbar'
 import Footer from '@/components/utils/Footer'
 import RoomList from '@/components/utils/RoomList'
 import Message from '@/components/Message'
+import Imbox from '@/components/Imbox'
 import ChatServices from '@/services/ChatServices'
 
 Vue.use(VueSocketio, 'ws://localhost:5000')
@@ -127,7 +129,8 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       Navbar,
       RoomList,
       Footer,
-      Message
+      Message,
+      Imbox
     },
     sockets: {
       connect () {
