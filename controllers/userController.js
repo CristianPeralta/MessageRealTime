@@ -76,7 +76,24 @@ module.exports.deleteFriend = function (req,res) {
     idx = user.friends.indexOf(mongoose.Types.ObjectId(data.friend._id));
     if (idx != -1) {
       user.friends.splice(idx, 1);
-      return res.json(user);
+      user.save(function (err,user) {
+        if(err){
+          console.log(err);
+          return res.sendStatus(503)
+        }
+        User.findOne({_id:user._id}).populate({
+          path: 'friends',
+          populate: {path: 'friends'}
+        }).then((user, err) => {
+          if(err){
+            console.log(err);
+            return res.sendStatus(503)
+          }
+          req.session.user = user;
+          let currentUser = req.session.user;
+          return res.json(currentUser);
+        })
+      });
     }
 
   })
@@ -93,6 +110,7 @@ module.exports.geFriends = function (req,res) {
       console.log(err);
       return res.sendStatus(503)
     }
+    req.session.user = user;
     return res.json(user);
   })
 }

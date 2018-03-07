@@ -188,6 +188,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     watch: {
       initialRoom () {
         this.saveRoom(this.getMessagesSocket, this.getUser, this.checkUser);
+      },
+      user (val) {
+        this.user = val
       }
     },
     computed: {
@@ -251,8 +254,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           user: this.user,
           friend: friend
         }).then((response) => {
-          console.log('Friend Added');
+          console.log('Friend deleted');
           console.log(response.data);
+          this.user = response.data;
         })
       },
       getUser (cb) {
