@@ -47,7 +47,6 @@
                 </div>
               </div>
             </Message>
-            <Imbox></Imbox>
 
           </div>
         </div>
@@ -86,6 +85,7 @@
         </div>
       </div>
     </section>
+    <Imbox></Imbox>
     <Footer></Footer>
   </div>
 

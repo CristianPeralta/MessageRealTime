@@ -1,5 +1,5 @@
 <template lang="html">
-	<div id="live-chat">
+	<div ref="allbox" id="live-chat">
 
 		<header @click="minimize" class="clearfix">
 
@@ -103,7 +103,7 @@ export default {
       this.slideToggle(this.$refs.chat);
     },
     close () {
-      this.fadeOut(this.$refs.chat);
+      this.fadeOut(this.$refs.allbox);
     },
     slideToggle(el) {
       if(!this.heightChecked) {
@@ -119,19 +119,13 @@ export default {
           el.style.height = this.initHeight + 'px';
       }
     },
-    fadeOut (el)
-    {
-      el.style.opacity=1;
-      (function fade(){
-        if((el.style.opacity-=.1)<0)
-        {
-          el.style.display="none";
+    fadeOut(el) {
+        el.style.opacity = 1 / 100;
+        el.style.filter = 'alpha(opacity=' + opacity + ')';
+        if (opacity == 1) {
+            el.style.display = 'none';
+            done = true;
         }
-        else
-        {
-          requestAnimationFrame(fade);
-        }
-      })();
     }
   }
 }
