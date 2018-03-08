@@ -5,7 +5,7 @@
 
 			<a @click="close($event)" class="chat-close">x</a>
 
-			<h4>{{user.username}}</h4>
+			<h4>{{user.user.username}}</h4>
 
 			<span ref="counter" class="chat-message-counter">3</span>
 

@@ -89,7 +89,7 @@
       </div>
     </section>
 
-    <Inbox v-if="inboxs.length!=0" v-for="(inbox, index) in inboxs" :user="inbox.user" :key="index"></Inbox>
+    <Inbox v-if="inboxs.length!=0" v-for="(inbox, index) in inboxs" :user="inbox" :key="index"></Inbox>
 
     <Footer></Footer>
   </div>
