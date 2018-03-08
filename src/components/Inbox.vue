@@ -14,75 +14,36 @@
 		<div ref="chat" class="chat">
 
 			<div class="chat-history">
+				<template>
+					<div class="chat-message clearfix">
 
-				<div class="chat-message clearfix">
+						<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
 
-					<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
+						<div class="chat-message-content clearfix">
 
-					<div class="chat-message-content clearfix">
+							<span class="chat-time">13:35</span>
 
-						<span class="chat-time">13:35</span>
+							<h5>John Doe</h5>
 
-						<h5>John Doe</h5>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, explicabo quasi ratione odio dolorum harum.</p>
 
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, explicabo quasi ratione odio dolorum harum.</p>
+						</div> <!-- end chat-message-content -->
 
-					</div> <!-- end chat-message-content -->
+					</div> <!-- end chat-message -->
 
-				</div> <!-- end chat-message -->
-
-				<hr>
-
-				<div class="chat-message clearfix">
-
-					<img src="http://gravatar.com/avatar/2c0ad52fc5943b78d6abe069cc08f320?s=32" alt="" width="32" height="32">
-
-					<div class="chat-message-content clearfix">
-
-						<span class="chat-time">13:37</span>
-
-						<h5>Marco Biedermann</h5>
-
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis, nulla accusamus magni vel debitis numquam qui tempora rem voluptatem delectus!</p>
-
-					</div> <!-- end chat-message-content -->
-
-				</div> <!-- end chat-message -->
-
-				<hr>
-
-				<div class="chat-message clearfix">
-
-					<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
-
-					<div class="chat-message-content clearfix">
-
-						<span class="chat-time">13:38</span>
-
-						<h5>John Doe</h5>
-
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-
-					</div> <!-- end chat-message-content -->
-
-				</div> <!-- end chat-message -->
-
-				<hr>
+					<hr>
+				</template>
 
 			</div> <!-- end chat-history -->
 
 			<p class="chat-feedback">Your partner is typing…</p>
 
-			<form action="#" method="post">
-
 				<fieldset>
 
-					<input type="text" placeholder="Type your message…" autofocus>
+					<input type="text" placeholder="Type your message…" v-model="text" autofocus>
 					<input type="hidden">
-
+					<button type="button" @click="addMessage" name="button">Send</button>
 				</fieldset>
-
-			</form>
 
 		</div> <!-- end chat -->
 
@@ -95,11 +56,19 @@ export default {
     return {
       open: true,
       heightChecked: false,
-      initHeight: 0
+      initHeight: 0,
+			message: [],
     }
   },
   props: ['user'],
   methods: {
+		addMessage () {
+			this.$parent.$socket.emit('addMessagePrivated', {
+				to: this.user,
+				user: this.$parent.user,
+				text: this.text
+			});
+		},
     minimize () {
       this.slideToggle(this.$refs.chat);
     },
