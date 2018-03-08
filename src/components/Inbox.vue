@@ -123,10 +123,9 @@ export default {
     },
     fadeOut(el) {
         el.style.opacity = 1 / 100;
-        el.style.filter = 'alpha(opacity=' + opacity + ')';
-        if (opacity == 1) {
+        el.style.filter = 'alpha(opacity=' + 1 + ')';
+        if (1 == 1) {
             el.style.display = 'none';
-            done = true;
         }
     }
   }

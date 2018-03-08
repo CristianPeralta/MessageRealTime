@@ -5,28 +5,29 @@
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
         <RoomList>
           <div class="box content" style="overflow-y: scroll; height:250px; z-index:80;">
-            <Message :user="user">
-                  Waiting...
-            </Message>
-            <Message v-for="(mprivate,index) in messageprivated" :user="mprivate.user" :key="index">
-                  {{mprivate.text}}
-            </Message>
+            <template v-for="(mprivate,index) in messageprivated">
+              <Message :user="mprivate.user">
+                {{mprivate.text}}
+              </Message>
+            </template>
           </div>
         </RoomList>
         <div class="column is-7" >
           <button @click="chatPosition()" class="button is-primary">Write</button>
           <div ref="chatbox" class="box content" style="overflow-y: scroll; height:530px; z-index:80;">
+            <template v-for="(message,index) in messages">
+              <Message :user="message.user" :from="message.createdAt">
+                  <template v-if="message.photo">
+                    <img :src="message.photo" alt="">
+                  </template>
+                  <template v-else>
+                    {{message.text}}
+                  </template>
+              </Message>
+            </template>
 
-            <Message v-for="(message,index) in messages" :user="message.user" :from="message.createdAt"  :key="index">
-                <template v-if="message.photo">
-                  <img :src="message.photo" alt="">
-                </template>
-                <template v-else>
-                  {{message.text}}
-                </template>
-            </Message>
 
-            <Message :user="user" tabindex="0">
+            <Message :user="user">
               <textarea ref="chatmessage" v-model="text" class="textarea is-large" type="text" placeholder="Your message" autofocus=""></textarea>
               <div class="control">
                 <button @click="addMessageSocket()" class="button is-primary">Submit</button>
@@ -54,25 +55,27 @@
           <div class="box content">
             <p>Users  ({{users | count}})</p>
             <template v-if="users.length!=0">
-              <p v-if="userC.user._id!=user._id" v-for="(userC,index) in users" :key="index">
-                <span class="circle"></span>
-                <small>
-                  <a @click="addPrivateUser(userC)">{{userC.user.username}}</a>
-                  <a @click="addFriend(userC)">
-                    <i class="fa fa-user-plus"></i>
-                  </a>
-                </small>
-              </p>
+              <template v-if="userC.user._id!=user._id" v-for="(userC,index) in users">
+                <p>
+                  <span class="circle"></span>
+                  <small>
+                    <a @click="addPrivateUser(userC)">{{userC.user.username}}</a>
+                    <a @click="addFriend(userC)">
+                      <i class="fa fa-user-plus"></i>
+                    </a>
+                  </small>
+                </p>
+              </template>
             </template>
-            <Message :user="user" tabindex="0">
+            <Message :user="user">
               <textarea ref="chatmessage" v-model="textprivated" class="textarea" type="text" placeholder="Your message" autofocus=""></textarea>
               <div class="control">
                 <button @click="addMessagePrivateSocket()" class="button is-primary">Submit</button>
               </div>
             </Message>
             <p>Friends</p>
-            <template>
-              <p v-for="(friend, index) in friends" :key="index">
+            <template v-for="(friend, index) in friends">
+              <p>
                 <small>
                   <a @click="addPrivateUser(userC)">{{friend.username}}</a>
                 </small>
@@ -85,10 +88,8 @@
         </div>
       </div>
     </section>
-    <template v-if="inboxs.length!=0" v-for="(inbox, index) in inboxs">
 
-      <Inbox :user=inbox.user></Inbox>
-    </template>
+    <Inbox v-if="inboxs.length!=0" v-for="(inbox, index) in inboxs" :user="inbox.user" :key="index"></Inbox>
 
     <Footer></Footer>
   </div>
