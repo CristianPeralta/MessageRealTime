@@ -44,7 +44,9 @@ io.on('connection', function(socket) {
 	});
 
   socket.on('addMessagePrivated', (data) => {
+    console.log('message privated');
     messageController.createSocket(data, (message, err) => {
+      console.log('message created');
       console.log(message);
       io.to(data.to.id).emit('addMessagePrivated', {data:message, ok:!err,err:err});
       io.to(socket.id).emit('addMessagePrivated', {data:message, ok:!err,err:err});

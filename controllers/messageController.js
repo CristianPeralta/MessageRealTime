@@ -47,7 +47,7 @@ module.exports.createSocket = function (data, cb) {
     if (data.to) {
       console.log('here');
       message.type = 'private';
-      message.to = mongoose.Types.ObjectId(data.user._id);
+      message.to = mongoose.Types.ObjectId(data.to._id);
     }
     message.user = mongoose.Types.ObjectId(user._id);
     message.room = data.room;

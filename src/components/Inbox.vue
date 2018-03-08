@@ -58,11 +58,17 @@ export default {
       heightChecked: false,
       initHeight: 0,
 			message: [],
+			text:""
     }
   },
   props: ['user'],
   methods: {
 		addMessage () {
+			console.log({
+				to: this.user,
+				user: this.$parent.user,
+				text: this.text
+			});
 			this.$parent.$socket.emit('addMessagePrivated', {
 				to: this.user,
 				user: this.$parent.user,
