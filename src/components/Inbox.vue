@@ -33,6 +33,7 @@
 
 					<hr>
 				</template>
+				<slot></slot>
 
 			</div> <!-- end chat-history -->
 

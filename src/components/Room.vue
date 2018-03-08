@@ -89,7 +89,13 @@
       </div>
     </section>
 
-    <Inbox v-if="inboxs.length!=0" v-for="(inbox, index) in inboxs" :user="inbox" :key="index"></Inbox>
+    <Inbox v-if="inboxs.length!=0" v-for="(inbox, index) in inboxs" :user="inbox" :key="index">
+      <template v-for="(mprivate,index) in messageprivated">
+        <Message :user="mprivate.user">
+          {{mprivate.text}}
+        </Message>
+      </template>
+    </Inbox>
 
     <Footer></Footer>
   </div>
