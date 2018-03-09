@@ -17,6 +17,7 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 
 router.get('/user', userController.getUser);
+router.get('/profile', userController.getProfile);
 
 router.get('/messages', messageController.getAll);
 router.post('/message', messageController.create);

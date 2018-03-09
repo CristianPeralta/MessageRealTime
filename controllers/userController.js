@@ -130,6 +130,18 @@ module.exports.getUser = function (req,res) {
     let user = req.session.user;
     return res.json(user);
 }
+
+module.exports.getProfile = function (req,res) {
+    let user = req.query.id;
+    User.findOne({_id:user}).then((user, err) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(503);
+      }
+      return res.json(user);
+    })
+}
+
 module.exports.logout= function (req,res) {
     req.session.destroy(function(err) {
       // cannot access session here
