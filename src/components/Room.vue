@@ -4,13 +4,6 @@
     <section class="container">
       <div class="columns" style="margin-left : 3rem; margin-top : 0px;">
         <RoomList>
-          <div class="box content" style="overflow-y: scroll; height:250px; z-index:80;">
-            <template v-for="(mprivate,index) in messageprivated">
-              <Message :user="mprivate.user">
-                {{mprivate.text}}
-              </Message>
-            </template>
-          </div>
         </RoomList>
         <div class="column is-7" >
           <button @click="chatPosition()" class="button is-primary">Write</button>
@@ -67,17 +60,11 @@
                 </p>
               </template>
             </template>
-            <Message :user="user">
-              <textarea ref="chatmessage" v-model="textprivated" class="textarea" type="text" placeholder="Your message" autofocus=""></textarea>
-              <div class="control">
-                <button @click="addMessagePrivateSocket()" class="button is-primary">Submit</button>
-              </div>
-            </Message>
             <p>Friends</p>
             <template v-for="(friend, index) in friends">
               <p>
 
-                <span v-if="!isOnline(friend)" class="circle"></span>
+                <span v-if="isOnline(friend)" class="circle"></span>
                 <small>
                   <a @click="addPrivateUser(userC)">{{friend.username}}</a>
                 </small>
@@ -214,13 +201,13 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       friends () {
         return this.user.friends
       },
-      usersUnk () {
+      async usersUnk () {
         let friends = this.user.friends.map((user) => {
           return user._id
         })
         console.log('friends');
         console.log(friends);
-        return this.users.map((el) => {
+        return await this.users.map((el) => {
           console.log('ele');
           console.log(el);
           if (friends.indexOf(el.user._id)==-1) {
