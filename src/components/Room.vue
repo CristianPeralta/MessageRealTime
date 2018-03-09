@@ -55,7 +55,7 @@
           <div class="box content">
             <p>Users  ({{users | count}})</p>
             <template v-if="users.length!=0">
-              <template v-if="userC.user._id!=user._id" v-for="(userC,index) in users">
+              <template v-if="userC.user._id!=user._id" v-for="(userC,index) in usersUnk">
                 <p>
                   <span class="circle"></span>
                   <small>
@@ -76,6 +76,8 @@
             <p>Friends</p>
             <template v-for="(friend, index) in friends">
               <p>
+
+                <span v-if="!isOnline(friend)" class="circle"></span>
                 <small>
                   <a @click="addPrivateUser(userC)">{{friend.username}}</a>
                 </small>
@@ -211,6 +213,20 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     computed: {
       friends () {
         return this.user.friends
+      },
+      usersUnk () {
+        let friends = this.user.friends.map((user) => {
+          return user._id
+        })
+        console.log('friends');
+        console.log(friends);
+        return this.users.map((el) => {
+          console.log('ele');
+          console.log(el);
+          if (friends.indexOf(el.user._id)==-1) {
+            return el
+          }
+        })
       }
     },
     methods: {
@@ -275,6 +291,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           console.log(response.data);
           this.user = response.data;
         })
+      },
+
+      async isOnline (user) {
+        let users = await this.users.map((el) => {
+          return el.user._id
+        })
+        console.log(users.indexOf(user._id)>=0);
+        return (users.indexOf(user._id)>=0)
       },
       getUser (cb) {
         ChatServices.user().then((response) => {
