@@ -133,7 +133,10 @@ module.exports.getUser = function (req,res) {
 
 module.exports.getProfile = function (req,res) {
     let user = req.query.id;
-    User.findOne({_id:user}).then((user, err) => {
+    User.findOne({_id:user}).populate({
+      path: 'friends',
+      populate: {path: 'friends'}
+    }).then((user, err) => {
       if (err) {
         console.log(err);
         return res.sendStatus(503);
@@ -141,6 +144,7 @@ module.exports.getProfile = function (req,res) {
       return res.json(user);
     })
 }
+
 
 module.exports.logout= function (req,res) {
     req.session.destroy(function(err) {
@@ -177,6 +181,64 @@ module.exports.create = function (req,res) {
             let currentUser = req.session.user;
             return res.json(currentUser);
         });
+
+  });
+  form.on("error", function(err) {
+    return res.send(null, 500);
+  });
+
+  form.on("fileBegin", function(name, file) {
+    let rdName = randomstring.generate();
+    rdName = rdName.replace("/", "");
+    let originalName = file.name;
+    file.name = rdName + path.extname(originalName);
+  });
+
+  form.on("end", function(fields, files) {
+    const temp_path = this.openedFiles[0].path;
+    const file_name = this.openedFiles[0].name;
+    const new_location = path.join(__dirname, "../public/uploads/", file_name);
+
+    fs.copy(temp_path, new_location, function(err) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("success!")
+      }
+    });
+  });
+}
+
+
+module.exports.edit = function (req,res) {
+  let user = req.body.id;
+  let form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    let data = fields;
+    User.findOne({_id:user}).populate({
+      path: 'friends',
+      populate: {path: 'friends'}
+    }).then((user, err) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(503);
+      }
+      data.photo = path.join("uploads/", files.photo.name);
+      console.log(data);
+
+      user.username = data.username;
+      user.email = data.email;
+      user.photo = data.photo;
+      user.save(function (err,user) {
+          if(err){
+            console.log(err);
+            return res.sendStatus(503)
+          }
+          req.session.user = user;
+          let currentUser = req.session.user;
+          return res.json(currentUser);
+      });
+    })
 
   });
   form.on("error", function(err) {
