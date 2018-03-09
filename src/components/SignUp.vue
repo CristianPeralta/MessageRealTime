@@ -44,6 +44,15 @@
                   <input class="input is-large" type="password" v-model="confirmPassword" placeholder="Confirm Password">
                 </div>
               </div>
+
+              <div class="field">
+                <div class="control">
+                  <select class="input select" v-model="gender" placeholder="Gender">
+                    <option selected value="M">Male</option>
+                    <option value="F">Female</option>
+                  </select>
+                </div>
+              </div>
               <button @click="sendForm()" class="button is-block is-info is-large is-fullwidth">Sign Me Up</button>
           </div>
           <p class="has-text-grey">
@@ -68,6 +77,7 @@ export default {
       photo: {},
       preview: 'https://image.flaticon.com/icons/svg/179/179948.svg',
       password: '',
+      gender: '',
       confirmPassword: ''
     }
   },
@@ -84,6 +94,7 @@ export default {
         form.append('email', this.email);
         form.append('password', this.password);
         form.append('photo', this.photo);
+        form.append('gender', this.gender);
 
         ChatServices.signup(form).then((response) => {
               let user = response.data;

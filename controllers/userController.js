@@ -170,6 +170,7 @@ module.exports.create = function (req,res) {
         user.username = data.username;
         user.email = data.email;
         user.photo = data.photo;
+        user.gender = data.gender;
         user.password = bcrypt.hashSync(data.password, 10);
 
         user.save(function (err,user) {
@@ -229,6 +230,7 @@ module.exports.edit = function (req,res) {
       user.username = data.username;
       user.email = data.email;
       user.photo = data.photo;
+      user.gender = data.gender;
       user.save(function (err,user) {
           if(err){
             console.log(err);
