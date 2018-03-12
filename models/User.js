@@ -11,9 +11,9 @@ var UserSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }],
-  solicitude: [{
+  solicitudes: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Solicitude'
   }],
   createdAt:{ type: Date, default: Date.now}
 });

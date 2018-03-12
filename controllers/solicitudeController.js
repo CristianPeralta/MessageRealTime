@@ -11,10 +11,10 @@ var Solicitude = require('../models/Solicitude');
 module.exports.create = function (req, res) {
   let data = req.body;
   console.log(data);
-
+  console.log('solicitudes');
   let solicitude = new Solicitude();
-  solicitude.from = mongoose.Types.ObjectId(data.from);
-  solicitude.to = mongoose.Types.ObjectId(data.to);
+  solicitude.from = mongoose.Types.ObjectId(data.user._id);
+  solicitude.to = mongoose.Types.ObjectId(data.friend._id);
 
   solicitude.save(function (err, solicitude) {
         if(err){
@@ -22,7 +22,34 @@ module.exports.create = function (req, res) {
           return res.sendStatus(503)
         }
         console.log(solicitude);
-        return res.sendStatus(200);
+        User.findOne({_id:solicitude.from}).then((user, err) => {
+          if(err){
+            console.log(err);
+            return res.sendStatus(503)
+          }
+          user.solicitudes.push(mongoose.Types.ObjectId(solicitude._id));
+          user.save((err, user) => {
+            if(err){
+              console.log(err);
+              return res.sendStatus(503)
+            }
+            User.findOne({_id:user._id}).populate({
+              path: 'friends',
+              populate: {path: 'friends'}
+            }).populate({
+              path: 'solicitudes',
+              populate: {path: 'solicitudes'}
+            }).then((user, err) => {
+              if(err){
+                console.log(err);
+                return res.sendStatus(503)
+              }
+              req.session.user = user;
+              let currentUser = req.session.user;
+              return res.json(currentUser);
+            })
+          })
+        })
     });
 }
 

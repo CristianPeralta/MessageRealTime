@@ -272,7 +272,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           user: this.user,
           friend: friend.user
         }).then((response) => {
-          console.log('Friend Added');
+          console.log('Solicitude sent');
           console.log(response.data);
           this.user = response.data;
         })

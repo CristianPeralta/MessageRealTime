@@ -37,7 +37,7 @@ export default {
     return Api().post('upload', params);
   },
   addFriend (params) {
-    return Api().post('friend', params);
+    return Api().post('solicitude', params);
   },
   deleteFriend (params) {
     return Api().post('friend/delete', params);

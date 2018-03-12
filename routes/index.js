@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var userController = require('../controllers/userController');
 var messageController = require('../controllers/messageController');
+var solicitudeController = require('../controllers/solicitudeController');
 var roomController = require('../controllers/roomController');
 
 /* GET home page. */
@@ -29,7 +30,7 @@ router.get('/room',roomController.getAll);
 router.post('/room',roomController.create);
 router.get('/room/delete',roomController.delete);
 
-router.post('/friend', userController.addFriend);
+router.post('/solicitude', solicitudeController.create);
 router.post('/friend/delete', userController.deleteFriend);
 
 module.exports = router;
