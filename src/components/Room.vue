@@ -258,6 +258,12 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       addPrivateUser (to) {
         this.userPrivated = to;
         this.inboxs.push(this.userPrivated);
+        this.getHistorial(this.user._id, to.user._id);
+      },
+      getHistorial(user, to) {
+        ChatServices.getHistorial(user, to).then((response) => {
+          this.messages = response.data;
+        })
       },
 
       addFriend (friend) {
