@@ -73,11 +73,11 @@
                 </a>
               </p>
             </template>
-            <p>Solicitudes</p>
+            <p>Solicitudes Enviadas</p>
             <template v-for="(solicitud, index) in user.solicitudes">
               <p>
                 <small>
-                  <a>{{solicitud.from.username}}</a>
+                  <a>{{solicitud.to.username}}</a>
                 </small>
                 <a @click="deleteFriend(friend)">
                   <i class="fa fa-user-times"></i>
