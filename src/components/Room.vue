@@ -84,6 +84,17 @@
                 </a>
               </p>
             </template>
+            <p>Solicitudes Recibidas</p>
+            <template v-for="(solicitud, index) in solicitudes">
+              <p>
+                <small>
+                  <a>{{solicitud.from.username}}</a>
+                </small>
+                <a @click="deleteFriend(friend)">
+                  <i class="fa fa-user-times"></i>
+                </a>
+              </p>
+            </template>
           </div>
         </div>
       </div>
@@ -127,6 +138,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         text: '',
         textprivated: '',
         userPrivated: {},
+        solicitudes: [],
         photo: {},
         inboxs:[],
         isLoad : false
@@ -187,13 +199,13 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     created () {
-      this.saveRoom(this.getMessagesSocket, this.getUser, this.checkUser);
+
     },
     afterRouteUpdate() {
       this.getMessagesSocket();
     },
     mounted() {
-
+      this.saveRoom(this.getMessagesSocket, this.getUser, this.checkUser);
     },
     filters: {
       count (users) {
@@ -224,6 +236,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           return el;
           if (friends.indexOf(el.user._id)<0) {
             return el
+          }
+        })
+        return data;
+      },
+      async solicitudesMe () {
+        let data = await this.user.solicitudes.map((solicitud)=> {
+          if (solicitud.from._id != this.user._id) {
+            return solicitud
           }
         })
         return data;
@@ -310,6 +330,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       getUser (cb) {
         ChatServices.user().then((response) => {
           this.user = response.data;
+          this.solicitudes = this.user.solicitudes;
           if (this.user.username) {
             this.$socket.emit('userConnected', {
               user: this.user,

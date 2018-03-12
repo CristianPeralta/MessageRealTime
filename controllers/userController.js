@@ -23,8 +23,10 @@ module.exports.login = function (req,res) {
         populate: {path: 'friends'}
       }).populate({
         path: 'solicitudes',
-        populate: {path: 'from'},
-        populate: {path: 'to'}
+        populate: [
+          {path: 'from'},
+          {path: 'to'}
+        ],
       }).then((user, err) => {
         if(err){
           console.log(err);
@@ -64,8 +66,10 @@ module.exports.addFriend = function (req,res) {
             populate: {path: 'friends'}
           }).populate({
             path: 'solicitudes',
-            populate: {path: 'from'},
-            populate: {path: 'to'}
+            populate: [
+              {path: 'from'},
+              {path: 'to'}
+            ],
           }).then((user, err) => {
             if(err){
               console.log(err);
@@ -105,8 +109,10 @@ module.exports.deleteFriend = function (req,res) {
           populate: {path: 'friends'}
         }).populate({
           path: 'solicitudes',
-          populate: {path: 'from'},
-          populate: {path: 'to'}
+          populate: [
+            {path: 'from'},
+            {path: 'to'}
+          ],
         }).then((user, err) => {
           if(err){
             console.log(err);
@@ -130,8 +136,10 @@ module.exports.geFriends = function (req,res) {
     populate: {path: 'friends'}
   }).populate({
     path: 'solicitudes',
-    populate: {path: 'from'},
-    populate: {path: 'to'}
+    populate: [
+      {path: 'from'},
+      {path: 'to'}
+    ],
   }).then((user, err) => {
     if(err){
       console.log(err);
@@ -243,8 +251,10 @@ module.exports.edit = function (req,res) {
       populate: {path: 'friends'}
     }).populate({
       path: 'solicitudes',
-      populate: {path: 'from'},
-      populate: {path: 'to'}
+      populate: [
+        {path: 'from'},
+        {path: 'to'}
+      ],
     }).then((user, err) => {
       if (err) {
         console.log(err);
