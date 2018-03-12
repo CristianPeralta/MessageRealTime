@@ -48,7 +48,7 @@
           <div class="box content">
             <p>Users  ({{users | count}})</p>
             <template v-if="users.length!=0">
-              <template v-if="userC.user._id!=user._id" v-for="(userC,index) in usersUnk">
+              <template v-if="userC.user._id!=user._id" v-for="(userC,index) in users">
                 <p>
                   <span class="circle"></span>
                   <small>
@@ -202,18 +202,20 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         return this.user.friends
       },
       async usersUnk () {
-        let friends = this.user.friends.map((user) => {
+        let friends = await this.user.friends.map((user) => {
           return user._id
         })
         console.log('friends');
         console.log(friends);
-        return await this.users.map((el) => {
+        let data = this.users.map((el) => {
           console.log('ele');
           console.log(el);
-          if (friends.indexOf(el.user._id)==-1) {
+          return el;
+          if (friends.indexOf(el.user._id)<0) {
             return el
           }
         })
+        return data;
       }
     },
     methods: {
