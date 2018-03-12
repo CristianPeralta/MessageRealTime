@@ -261,8 +261,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         this.getHistorial(this.user._id, to.user._id);
       },
       getHistorial(user, to) {
+        console.log('dot dot');
         ChatServices.getHistorial(user, to).then((response) => {
-          this.messages = response.data;
+          this.messageprivated = response.data;
         })
       },
 
