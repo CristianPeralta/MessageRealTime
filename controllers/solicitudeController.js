@@ -38,7 +38,7 @@ module.exports.create = function (req, res) {
               populate: {path: 'friends'}
             }).populate({
               path: 'solicitudes',
-              populate: {path: 'solicitudes'}
+              populate: {path: 'from'}
             }).then((user, err) => {
               if(err){
                 console.log(err);

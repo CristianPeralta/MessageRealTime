@@ -21,6 +21,9 @@ module.exports.login = function (req,res) {
       User.findOne({_id:user._id}).populate({
         path: 'friends',
         populate: {path: 'friends'}
+      }).populate({
+        path: 'solicitudes',
+        populate: {path: 'from'}
       }).then((user, err) => {
         if(err){
           console.log(err);
@@ -58,6 +61,9 @@ module.exports.addFriend = function (req,res) {
           User.findOne({_id:user._id}).populate({
             path: 'friends',
             populate: {path: 'friends'}
+          }).populate({
+            path: 'solicitudes',
+            populate: {path: 'from'}
           }).then((user, err) => {
             if(err){
               console.log(err);
@@ -95,6 +101,9 @@ module.exports.deleteFriend = function (req,res) {
         User.findOne({_id:user._id}).populate({
           path: 'friends',
           populate: {path: 'friends'}
+        }).populate({
+          path: 'solicitudes',
+          populate: {path: 'from'}
         }).then((user, err) => {
           if(err){
             console.log(err);
@@ -116,6 +125,9 @@ module.exports.geFriends = function (req,res) {
   User.findOne({_id:data.user._id}).populate({
     path: 'friends',
     populate: {path: 'friends'}
+  }).populate({
+    path: 'solicitudes',
+    populate: {path: 'from'}
   }).then((user, err) => {
     if(err){
       console.log(err);
@@ -136,6 +148,9 @@ module.exports.getProfile = function (req,res) {
     User.findOne({_id:user}).populate({
       path: 'friends',
       populate: {path: 'friends'}
+    }).populate({
+      path: 'solicitudes',
+      populate: {path: 'from'}
     }).then((user, err) => {
       if (err) {
         console.log(err);
@@ -219,6 +234,9 @@ module.exports.edit = function (req,res) {
     User.findOne({_id:user}).populate({
       path: 'friends',
       populate: {path: 'friends'}
+    }).populate({
+      path: 'solicitudes',
+      populate: {path: 'from'}
     }).then((user, err) => {
       if (err) {
         console.log(err);
