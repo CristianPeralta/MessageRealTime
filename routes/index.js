@@ -23,6 +23,7 @@ router.get('/messages', messageController.getAll);
 router.post('/message', messageController.create);
 router.post('/upload', messageController.upload);
 router.get('/message/delete', messageController.delete);
+router.get('/historial/:user/:to', messageController.getHistorialSpecificUser);
 
 router.get('/room',roomController.getAll);
 router.post('/room',roomController.create);

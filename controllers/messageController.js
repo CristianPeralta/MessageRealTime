@@ -134,6 +134,20 @@ module.exports.getSpecificUser = function (req,res) {
     });
 }
 
+
+module.exports.getHistorialSpecificUser = function (req,res) {
+  let user = req.params.user;
+  let to = req.params.to
+  Message.find({user:user,to:to}).populate('user').populate('to').limit(10).then( (messages, err) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500)
+      }
+      return res.json(messages);
+    });
+}
+
+
 module.exports.getAllSocket = function (room, cb) {
   console.log(room);
   Message.find({room: room}).populate('user').then( (messages, err) => {

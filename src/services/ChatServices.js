@@ -41,5 +41,8 @@ export default {
   },
   deleteFriend (params) {
     return Api().post('friend/delete', params);
+  },
+  getHistorial (user, to) {
+    return Api().get('historial/' + user+'/'+ to);
   }
 }
