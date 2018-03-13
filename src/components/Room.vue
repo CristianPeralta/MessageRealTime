@@ -192,7 +192,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       solicitudeAccepted (response) {
         if (response.ok) {
-
+          console.log(response.data);
+          let index = this.user.solicitudes.indexOf(response.data._id);
+          this.user.solicitudes.splice(index, 1);
         } else {
           console.log(response.err);
         }

@@ -184,6 +184,21 @@ module.exports.acceptSolicitude = function (req,res) {
     });
 }
 
+
+
+module.exports.acceptSocket = function (data, cb) {
+  Solicitude.findOne({_id:data.id}).then( (solicitude, err) => {
+      if (err) {
+        console.log(err);
+        return cb(solicitude, err)
+      }
+      solicitude.status = 'Accept';
+      solicitude.save(function (err, solicitude) {
+          return cb(solicitude, err)
+        });
+    });
+}
+
 module.exports.declineSolicitud = function (req,res) {
   let data= req.body;
   Solicitude.findOne({from:data.from, to:data.to, status:'Sent'}).then( (solicitude, err) => {

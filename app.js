@@ -54,8 +54,8 @@ io.on('connection', function(socket) {
   });
 
   socket.on('acceptSolicitude', (data) => {
-    solicitudeController.acceptSocket(data, (err) => {
-      io.to(socket.id).emit('solicitudeAccepted', {data:data, ok:!err,err:err});
+    solicitudeController.acceptSocket(data, (solicitude, err) => {
+      io.to(socket.id).emit('solicitudeAccepted', {data:solicitude, ok:!err,err:err});
     })
   });
 
