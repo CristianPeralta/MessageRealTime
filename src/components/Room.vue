@@ -79,7 +79,7 @@
                 <small>
                   <a>{{solicitud.to.username}}</a>
                 </small>
-                <a @click="deleteFriend(friend)">
+                <a @click="deleteSolicitude(solicitud._id)">
                   <i class="fa fa-user-times"></i>
                 </a>
               </p>
@@ -317,6 +317,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           console.log('Friend deleted');
           console.log(response.data);
           this.user = response.data;
+        })
+      },
+
+      deleteSolicitude (id) {
+        ChatServices.deleteSolicitude({
+          id: id
+        }).then((response) => {
+          console.log('solicitude deleted');
         })
       },
 

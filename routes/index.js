@@ -31,6 +31,7 @@ router.post('/room',roomController.create);
 router.get('/room/delete',roomController.delete);
 
 router.post('/solicitude', solicitudeController.create);
+router.post('/solicitude/delete', solicitudeController.delete);
 router.post('/friend/delete', userController.deleteFriend);
 
 module.exports = router;

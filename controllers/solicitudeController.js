@@ -47,9 +47,31 @@ module.exports.create = function (req, res) {
                 console.log(err);
                 return res.sendStatus(503)
               }
-              req.session.user = user;
-              let currentUser = req.session.user;
-              return res.json(currentUser);
+              User.findOne({_id:data.friend._id}).populate({
+                path: 'friends',
+                populate: {path: 'friends'}
+              }).populate({
+                path: 'solicitudes',
+                populate: [
+                  {path: 'from'},
+                  {path: 'to'}
+                ],
+              }).then((friend, err) => {
+                if(err){
+                  console.log(err);
+                  return res.sendStatus(503)
+                }
+                friend.solicitudes.push(mongoose.Types.ObjectId(solicitude._id));
+                friend.save((err, friend) => {
+                  if(err){
+                    console.log(err);
+                    return res.sendStatus(503)
+                  }
+                  req.session.user = user;
+                  let currentUser = req.session.user;
+                  return res.json(currentUser);
+                })
+              })
             })
           })
         })
@@ -115,9 +137,10 @@ module.exports.declineSolicitud = function (req,res) {
 }
 
 module.exports.delete = function (req,res) {
+  console.log('deleting solicitude' );
   let data = req.body;
-  Solicitude.remove({from:data.from, to:data.to}, function(err) {
-      if (!err) {
+  Solicitude.remove({_id:data.id}, function(err) {
+      if (err) {
         console.log(err);
       }
       console.log(
