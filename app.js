@@ -47,6 +47,12 @@ io.on('connection', function(socket) {
 		})
 	});
 
+  socket.on('deleteSolicitude', (data) => {
+    solicitudeController.deleteSocket(data, (err) => {
+      io.to(socket.id).emit('solicitudeDeleted', {data:data, ok:!err,err:err});
+    })
+  });
+
 	socket.on('addMessage', (data) => {
 		messageController.createSocket(data, (message, err) => {
 			io.emit('messageAdded', {data:message,ok:!err,err:err});

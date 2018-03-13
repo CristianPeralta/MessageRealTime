@@ -187,6 +187,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           console.log(response.err);
         }
       },
+      solicitudeDeleted (response) {
+        if (response.ok) {
+          let index = this.user.solicitudes.indexOf(response.data.id);
+          this.user.solicitudes.splice(index, 1);
+        } else {
+          console.log(response.err);
+        }
+      },
       addMessagePrivated (response) {
         console.log('received');
         if (response.ok) {
@@ -334,11 +342,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
 
       deleteSolicitude (id) {
-        ChatServices.deleteSolicitude({
-          id: id
-        }).then((response) => {
-          console.log('solicitude deleted');
-        })
+        this.$socket.emit('deleteSolicitude', {
+          id:id
+        });
+        // ChatServices.deleteSolicitude({
+        //   id: id
+        // }).then((response) => {
+        //   console.log('solicitude deleted');
+        // })
       },
 
       async isOnline (user) {

@@ -215,3 +215,10 @@ module.exports.delete = function (req,res) {
       res.sendStatus(200);
   });
 }
+
+module.exports.deleteSocket = function (data, cb) {
+  console.log('deleting solicitude' );
+  Solicitude.remove({_id:data.id}, function(err) {
+      return cb(err);
+  });
+}
