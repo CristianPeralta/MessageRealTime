@@ -90,6 +90,9 @@
                 <small>
                   <a>{{solicitud.from.username}}</a>
                 </small>
+                <a @click="acceptSolicitude(solicitud._id)">
+                  <i class="fa fa-user-plus"></i>
+                </a>
                 <a @click="deleteFriend(friend)">
                   <i class="fa fa-user-times"></i>
                 </a>
@@ -183,6 +186,13 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         if (response.ok) {
           console.log(response.data);
           this.user.solicitudes.push(response.data);
+        } else {
+          console.log(response.err);
+        }
+      },
+      solicitudeAccepted (response) {
+        if (response.ok) {
+
         } else {
           console.log(response.err);
         }
@@ -339,6 +349,17 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           console.log(response.data);
           this.user = response.data;
         })
+      },
+
+      acceptSolicitude (id) {
+        this.$socket.emit('acceptSolicitude', {
+          id:id
+        });
+        // ChatServices.deleteSolicitude({
+        //   id: id
+        // }).then((response) => {
+        //   console.log('solicitude deleted');
+        // })
       },
 
       deleteSolicitude (id) {

@@ -53,6 +53,12 @@ io.on('connection', function(socket) {
     })
   });
 
+  socket.on('acceptSolicitude', (data) => {
+    solicitudeController.acceptSocket(data, (err) => {
+      io.to(socket.id).emit('solicitudeAccepted', {data:data, ok:!err,err:err});
+    })
+  });
+
 	socket.on('addMessage', (data) => {
 		messageController.createSocket(data, (message, err) => {
 			io.emit('messageAdded', {data:message,ok:!err,err:err});
