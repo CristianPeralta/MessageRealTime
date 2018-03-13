@@ -10,6 +10,7 @@ var app = express();
 var server = require('http').Server(app);
 global.io = require('socket.io')(server);
 var messageController = require('./controllers/messageController');
+var solicitudeController = require('./controllers/solicitudeController');
 
 var usersOnline = [];
 
@@ -35,6 +36,15 @@ io.on('connection', function(socket) {
 	socket.on('SignUp', function(data){
 		console.log('sending registration');
 		console.log(data);
+	});
+
+  socket.on('addSolicitude', (data) => {
+		solicitudeController.createSocket(data, (solicitude, err) => {
+      console.log('adding');
+      console.log(solicitude);
+      io.to(data.friend.id).emit('solicitudeAdded', {data:solicitude, ok:!err,err:err});
+      io.to(socket.id).emit('solicitudeAdded', {data:solicitude, ok:!err,err:err});
+		})
 	});
 
 	socket.on('addMessage', (data) => {

@@ -179,6 +179,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           console.log(response.err);
         }
       },
+      solicitudeAdded (response) {
+        if (response.ok) {
+          console.log(response.data);
+          this.user.solicitudes.push(response.data);
+        } else {
+          console.log(response.err);
+        }
+      },
       addMessagePrivated (response) {
         console.log('received');
         if (response.ok) {
@@ -299,14 +307,19 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
 
       addFriend (friend) {
-        ChatServices.addFriend({
+        console.log(friend);
+        this.$socket.emit('addSolicitude', {
           user: this.user,
-          friend: friend.user
-        }).then((response) => {
-          console.log('Solicitude sent');
-          console.log(response.data);
-          this.user = response.data;
-        })
+          friend: friend
+        });
+        // ChatServices.addFriend({
+        //   user: this.user,
+        //   friend: friend.user
+        // }).then((response) => {
+        //   console.log('Solicitude sent');
+        //   console.log(response.data);
+        //   this.user = response.data;
+        // })
       },
 
       deleteFriend (friend) {

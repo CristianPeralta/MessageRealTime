@@ -78,6 +78,72 @@ module.exports.create = function (req, res) {
     });
 }
 
+module.exports.createSocket = function (data, cb) {
+  console.log(data);
+  console.log('solicitudes');
+  let solicitude = new Solicitude();
+  solicitude.from = mongoose.Types.ObjectId(data.user._id);
+  solicitude.to = mongoose.Types.ObjectId(data.friend.user._id);
+
+  solicitude.save(function (err, solicitude) {
+        if(err){
+          return cb(solicitude, err);
+        }
+        console.log(solicitude);
+        User.findOne({_id:solicitude.from}).then((user, err) => {
+          if(err){
+            return cb(solicitude, err);
+          }
+          user.solicitudes.push(mongoose.Types.ObjectId(solicitude._id));
+          user.save((err, user) => {
+            if(err){
+              return cb(solicitude, err);
+            }
+            User.findOne({_id:user._id}).populate({
+              path: 'friends',
+              populate: {path: 'friends'}
+            }).populate({
+              path: 'solicitudes',
+              populate: [
+                {path: 'from'},
+                {path: 'to'}
+              ],
+            }).then((user, err) => {
+              if(err){
+                return cb(solicitude, err);
+              }
+              User.findOne({_id:data.friend.user._id}).populate({
+                path: 'friends',
+                populate: {path: 'friends'}
+              }).populate({
+                path: 'solicitudes',
+                populate: [
+                  {path: 'from'},
+                  {path: 'to'}
+                ],
+              }).then((friend, err) => {
+                if(err){
+                  return cb(solicitude, err);
+                }
+                friend.solicitudes.push(mongoose.Types.ObjectId(solicitude._id));
+                friend.save((err, friend) => {
+                  if(err){
+                    return cb(solicitude, err);
+                  }
+                  Solicitude.findOne({_id:solicitude._id}).populate('to').populate('from').then((solicitude, err) => {
+                    if (err) {
+                      return cb(solicitude, err);
+                    }
+                    return cb(solicitude, err);
+                  })
+                })
+              })
+            })
+          })
+        })
+    });
+}
+
 module.exports.getSolicitudeSent = function (req,res) {
   let data= req.query.id;
   Solicitude.find({from:data, status:'Sent'}).populate('to').then( (solicitudes, err) => {
