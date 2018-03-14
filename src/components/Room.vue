@@ -74,7 +74,7 @@
               </p>
             </template>
             <p>Solicitudes Enviadas</p>
-            <template v-for="(solicitud, index) in user.solicitudes">
+            <template v-for="(solicitud, index) in user.solicitudes" v-if="(solicitud.to._id!=user._id)">
               <p>
                 <small>
                   <a>{{solicitud.to.username}}</a>
@@ -85,7 +85,7 @@
               </p>
             </template>
             <p>Solicitudes Recibidas</p>
-            <template v-for="(solicitud, index) in solicitudes">
+            <template v-for="(solicitud, index) in solicitudes" v-if="(solicitud.from._id!=user._id) && (solicitud.status!='Accept')">
               <p>
                 <small>
                   <a>{{solicitud.from.username}}</a>
@@ -93,7 +93,7 @@
                 <a @click="acceptSolicitude(solicitud._id)">
                   <i class="fa fa-user-plus"></i>
                 </a>
-                <a @click="deleteFriend(friend)">
+                <a @click="declineSolicitud(solicitud._id)">
                   <i class="fa fa-user-times"></i>
                 </a>
               </p>
@@ -192,9 +192,12 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       solicitudeAccepted (response) {
         if (response.ok) {
-          console.log(response.data);
-          let index = this.user.solicitudes.indexOf(response.data._id);
-          this.user.solicitudes.splice(index, 1);
+          // console.log(response.data);
+          // let index = this.user.solicitudes.indexOf(response.data._id);
+          // this.user.solicitudes.splice(index, 1);
+
+          this.user = response.data;
+          this.solicitudes = response.data.solicitudes;
         } else {
           console.log(response.err);
         }

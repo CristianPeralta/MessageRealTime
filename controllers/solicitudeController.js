@@ -187,13 +187,49 @@ module.exports.acceptSolicitude = function (req,res) {
 
 
 module.exports.acceptSocket = function (data, cb) {
-  Solicitude.findOne({_id:data.id}).then( (solicitude, err) => {
+  Solicitude.findOne({_id:data.id}).populate('from').populate('to').then( (solicitude, err) => {
       if (err) {
         console.log(err);
         return cb(solicitude, err)
       }
       solicitude.status = 'Accept';
       solicitude.save(function (err, solicitude) {
+        User.findOne({_id:solicitude.to._id}).then((user, err) => {
+          if(err){
+            return cb(solicitude, err)
+          }
+          User.findOne({_id:solicitude.from._id}).then((friend, err) => {
+            if(err){
+              return cb(solicitude, err)
+            }
+            if (user.friends.indexOf(mongoose.Types.ObjectId(friend._id)) == -1) {
+              user.friends.push(mongoose.Types.ObjectId(friend._id));
+              user.save(function (err,user) {
+                if(err){
+                  return cb(solicitude, err)
+                }
+                User.findOne({_id:user._id}).populate({
+                  path: 'friends',
+                  populate: {path: 'friends'}
+                }).populate({
+                  path: 'solicitudes',
+                  populate: [
+                    {path: 'from'},
+                    {path: 'to'}
+                  ],
+                }).then((user, err) => {
+                  if(err){
+                    console.log(err);
+                    return res.sendStatus(503)
+                  }
+                  return cb(user, err)
+                })
+              });
+            }
+
+          })
+
+        })
           return cb(solicitude, err)
         });
     });
