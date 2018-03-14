@@ -74,7 +74,7 @@
               </p>
             </template>
             <p>Solicitudes Enviadas</p>
-            <template v-for="(solicitud, index) in user.solicitudes" v-if="(solicitud.to._id!=user._id)">
+            <template v-for="(solicitud, index) in user.solicitudes" v-if="(solicitud.to._id!=user._id) && (solicitud.status!='Accept')">
               <p>
                 <small>
                   <a>{{solicitud.to.username}}</a>
