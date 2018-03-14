@@ -66,7 +66,7 @@
 
                 <span v-if="isOnline(friend)" class="circle"></span>
                 <small>
-                  <a @click="addPrivateUser(friend)">{{friend.username}}</a>
+                  <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
                 </small>
                 <a @click="deleteFriend(friend)">
                   <i class="fa fa-user-times"></i>
