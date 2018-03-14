@@ -206,24 +206,30 @@ module.exports.acceptSocket = function (data, cb) {
               user.friends.push(mongoose.Types.ObjectId(friend._id));
               user.save(function (err,user) {
                 if(err){
-                  return cb(solicitude, err)
-                }
-                User.findOne({_id:user._id}).populate({
-                  path: 'friends',
-                  populate: {path: 'friends'}
-                }).populate({
-                  path: 'solicitudes',
-                  populate: [
-                    {path: 'from'},
-                    {path: 'to'}
-                  ],
-                }).then((user, err) => {
-                  if(err){
-                    console.log(err);
-                    return res.sendStatus(503)
-                  }
+                  console.log(err);
                   return cb(user, err)
+                }
+                User.findOne({_id:solicitude.from._id}).then((userfrom, err) => {
+                  userfrom.friends.push(mongoose.Types.ObjectId(user._id));
+                  userfrom.save(function (err,userfrom) {
+                    User.findOne({_id:user._id}).populate({
+                      path: 'friends',
+                      populate: {path: 'friends'}
+                    }).populate({
+                      path: 'solicitudes',
+                      populate: [
+                        {path: 'from'},
+                        {path: 'to'}
+                      ],
+                    }).then((user, err) => {
+                      if (err) {
+                        console.log(err);
+                      }
+                      return cb(user, err)
+                    })
+                  })
                 })
+
               });
             }
 
