@@ -66,7 +66,7 @@
 
                 <span v-if="isOnline(friend)" class="circle"></span>
                 <small>
-                  <a @click="addPrivateUser(userC)">{{friend.username}}</a>
+                  <a @click="addPrivateUser(friend)">{{friend.username}}</a>
                 </small>
                 <a @click="deleteFriend(friend)">
                   <i class="fa fa-user-times"></i>
@@ -321,6 +321,15 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         this.userPrivated = to;
         this.inboxs.push(this.userPrivated);
         this.getHistorial(this.user._id, to.user._id);
+      },
+
+      addPrivateFriend (to) {
+        this.userPrivated = {
+          user: to,
+          to: 'undefined'
+        };
+        this.inboxs.push(this.userPrivated);
+        this.getHistorial(this.user._id, to._id);
       },
       getHistorial(user, to) {
         console.log('dot dot');
