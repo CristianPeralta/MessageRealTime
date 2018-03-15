@@ -104,24 +104,37 @@ module.exports.deleteFriend = function (req,res) {
           console.log(err);
           return res.sendStatus(503)
         }
-        User.findOne({_id:user._id}).populate({
-          path: 'friends',
-          populate: {path: 'friends'}
-        }).populate({
-          path: 'solicitudes',
-          populate: [
-            {path: 'from'},
-            {path: 'to'}
-          ],
-        }).then((user, err) => {
+        User.findOne({_id:data.friend._id}).then((friend, err) => {
           if(err){
             console.log(err);
             return res.sendStatus(503)
           }
-          req.session.user = user;
-          let currentUser = req.session.user;
-          return res.json(currentUser);
+          idx = friend.friends.indexOf(mongoose.Types.ObjectId(data.user._id));
+          if (idx != -1) {
+            friend.friends.splice(idx, 1);
+            friend.save(function (err,friend) {
+              User.findOne({_id:user._id}).populate({
+                path: 'friends',
+                populate: {path: 'friends'}
+              }).populate({
+                path: 'solicitudes',
+                populate: [
+                  {path: 'from'},
+                  {path: 'to'}
+                ],
+              }).then((user, err) => {
+                if(err){
+                  console.log(err);
+                  return res.sendStatus(503)
+                }
+                req.session.user = user;
+                let currentUser = req.session.user;
+                return res.json(currentUser);
+              })
+            })
+          }
         })
+
       });
     }
 
