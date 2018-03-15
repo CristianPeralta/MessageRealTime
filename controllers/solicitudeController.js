@@ -190,28 +190,26 @@ module.exports.acceptSocket = function (data, cb) {
   Solicitude.findOne({_id:data.id}).populate('from').populate('to').then( (solicitude, err) => {
       if (err) {
         console.log(err);
-        return cb(solicitude, err)
       }
       solicitude.status = 'Accept';
       solicitude.save(function (err, solicitude) {
         User.findOne({_id:solicitude.to._id}).then((user, err) => {
           if(err){
-            return cb(solicitude, err)
+            console.log(err);
           }
           User.findOne({_id:solicitude.from._id}).then((friend, err) => {
             if(err){
-              return cb(solicitude, err)
+              console.log(err);
             }
             if (user.friends.indexOf(mongoose.Types.ObjectId(friend._id)) == -1) {
               user.friends.push(mongoose.Types.ObjectId(friend._id));
               user.save(function (err,user) {
                 if(err){
                   console.log(err);
-                  return cb(user, err)
                 }
                 User.findOne({_id:solicitude.from._id}).then((userfrom, err) => {
                   userfrom.friends.push(mongoose.Types.ObjectId(user._id));
-                  userfrom.save(function (err,userfrom) {
+                  userfrom.save(function (err, userfrom) {
                     User.findOne({_id:user._id}).populate({
                       path: 'friends',
                       populate: {path: 'friends'}
@@ -225,7 +223,9 @@ module.exports.acceptSocket = function (data, cb) {
                       if (err) {
                         console.log(err);
                       }
-                      return cb(user, err)
+                      console.log('this is friend');
+                      console.log(userfrom);
+                      return cb(user, userfrom, err)
                     })
                   })
                 })
@@ -236,7 +236,6 @@ module.exports.acceptSocket = function (data, cb) {
           })
 
         })
-          return cb(solicitude, err)
         });
     });
 }

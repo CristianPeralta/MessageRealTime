@@ -54,8 +54,23 @@ io.on('connection', function(socket) {
   });
 
   socket.on('acceptSolicitude', (data) => {
-    solicitudeController.acceptSocket(data, (user, err) => {
+    solicitudeController.acceptSocket(data, (user, friend, err) => {
+      console.log('¿friend');
+      console.log(friend);
       io.to(socket.id).emit('solicitudeAccepted', {data:user, ok:!err,err:err});
+      isOnline(friend._id, (el) => {
+        if (el) {
+          io.to(el.id).emit('solicitudeAccepted', {data:friend, ok:!err,err:err});
+        }
+      })
+    })
+  });
+
+  socket.on('getUserSocket', (id) => {
+    console.log('getting socket');
+    console.log(id);
+    isOnline(id, (el) => {
+      io.to(socket.id).emit('userFound', {data:el});
     })
   });
 
@@ -122,6 +137,32 @@ function addUserinRoom(data, cb) {
     }
     usersOnline = usersOnline.filter(function(n){ return n != undefined })
     cb();
+  }
+}
+
+function isOnline(data, cb) {
+  if (data!=null) {
+    let exist=false;
+    if (usersOnline.length!=0) {
+      exist = usersOnline.find((element) =>{
+        return (element.user._id == data);
+      });
+    }
+    cb(exist);
+  }
+}
+
+
+function getUserById(id, cb) {
+  if (id!=null) {
+    if (usersOnline.length!=0) {
+      let idx = usersOnline.map( (val, key) => {
+        if (val.user._id == id) {
+          return key;
+        }
+      })
+      cb(idx);
+    }
   }
 }
 app.use(session({

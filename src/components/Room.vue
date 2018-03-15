@@ -192,6 +192,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         }
       },
       solicitudeAccepted (response) {
+        console.log('new friend');
         if (response.ok) {
           // console.log(response.data);
           // let index = this.user.solicitudes.indexOf(response.data._id);
@@ -202,6 +203,10 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         } else {
           console.log(response.err);
         }
+      },
+      userFound (response) {
+        console.log('ususario encontrado');
+        console.log(response.data);
       },
       solicitudeDeleted (response) {
         if (response.ok) {
@@ -345,6 +350,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           user: this.user,
           friend: friend
         });
+        // this.$socket.emit('getUserSocket', friend.user._id);
         // ChatServices.addFriend({
         //   user: this.user,
         //   friend: friend.user
