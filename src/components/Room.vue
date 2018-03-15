@@ -193,6 +193,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       solicitudeAccepted (response) {
         console.log('new friend');
+        console.log(response.data);
         if (response.ok) {
           // console.log(response.data);
           // let index = this.user.solicitudes.indexOf(response.data._id);

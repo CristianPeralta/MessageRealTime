@@ -60,6 +60,8 @@ io.on('connection', function(socket) {
       io.to(socket.id).emit('solicitudeAccepted', {data:user, ok:!err,err:err});
       isOnline(friend._id, (el) => {
         if (el) {
+          console.log('goo job');
+          console.log(el);
           io.to(el.id).emit('solicitudeAccepted', {data:friend, ok:!err,err:err});
         }
       })

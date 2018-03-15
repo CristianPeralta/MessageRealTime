@@ -223,9 +223,23 @@ module.exports.acceptSocket = function (data, cb) {
                       if (err) {
                         console.log(err);
                       }
-                      console.log('this is friend');
-                      console.log(userfrom);
-                      return cb(user, userfrom, err)
+                      User.findOne({_id:userfrom._id}).populate({
+                        path: 'friends',
+                        populate: {path: 'friends'}
+                      }).populate({
+                        path: 'solicitudes',
+                        populate: [
+                          {path: 'from'},
+                          {path: 'to'}
+                        ],
+                      }).then((newfriend, err) => {
+                        if (err) {
+                          console.log(err);
+                        }
+                        console.log('this is friend');
+                        console.log(newfriend);
+                        return cb(user, newfriend, err)
+                      })
                     })
                   })
                 })
