@@ -41,7 +41,7 @@ io.on('connection', function(socket) {
   socket.on('addSolicitude', (data) => {
 		solicitudeController.createSocket(data, (solicitude, err) => {
       console.log('adding');
-      console.log(solicitude);
+      console.log(data.friend.id);
       io.to(data.friend.id).emit('solicitudeAdded', {data:solicitude, ok:!err,err:err});
       io.to(socket.id).emit('solicitudeAdded', {data:solicitude, ok:!err,err:err});
 		})

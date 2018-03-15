@@ -183,6 +183,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         }
       },
       solicitudeAdded (response) {
+        console.log('new solicitude');
         if (response.ok) {
           console.log(response.data);
           this.user.solicitudes.push(response.data);
