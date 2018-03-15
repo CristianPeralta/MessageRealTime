@@ -139,7 +139,7 @@ module.exports.getHistorialSpecificUser = function (req,res) {
   let user = req.params.user;
   let to = req.params.to;
   console.log('messages charAt');
-  Message.find({user:user,to:to}).populate('user').populate('to').limit(10).then( (messages, err) => {
+  Message.find({$or:[{user:user,to:to},{user:to,to:user}]}).populate('user').populate('to').limit(10).then( (messages, err) => {
       if (err) {
         console.log(err);
         res.sendStatus(500)
