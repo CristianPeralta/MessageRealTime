@@ -60,11 +60,15 @@
                 </p>
               </template>
             </template>
-            <p>Friends ({{friend | count}})</p>
+            <p>Friends </p>
             <template v-for="(friend, index) in friends">
               <p>
-
-                <span v-if="isOnline(friend)" class="circle"></span>
+                <template  v-if="!isOnline(friend)">
+                  <span class="circle"></span>
+                </template>
+                <template  v-else>
+                  <br>
+                </template>
                 <small>
                   <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
                 </small>
