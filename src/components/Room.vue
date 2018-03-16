@@ -60,7 +60,7 @@
                 </p>
               </template>
             </template>
-            <p>Friends</p>
+            <p>Friends ({{friends.length}})</p>
             <template v-for="(friend, index) in friends">
               <p>
 
@@ -102,7 +102,6 @@
         </div>
       </div>
     </section>
-
     <Inbox v-if="inboxs.length!=0" v-for="(inbox, index) in inboxs" :user="inbox" :key="index">
       <template v-for="(mprivate,index) in messageprivated">
         <Message :user="mprivate.user">
@@ -457,5 +456,23 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
   content: ' \25CF';
   font-size: 20px;
   color:#23d160;
+}
+
+.containerinbox {
+    background-color: rgba(255, 0, 255, 0.2);
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: calc(100% - 200px);
+    height: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.iteminbox {
+    background-color: rgba(255, 0, 0, 0.2);
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 </style>
