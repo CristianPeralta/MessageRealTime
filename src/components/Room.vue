@@ -60,7 +60,7 @@
                 </p>
               </template>
             </template>
-            <p>Friends </p>
+            <p>Friends ({{friend | count}})</p>
             <template v-for="(friend, index) in friends">
               <p>
 
@@ -73,7 +73,7 @@
                 </a>
               </p>
             </template>
-            <p>Solicitudes Enviadas</p>
+            <p>Solicitudes Enviadas ({{user.solicitudes.length}})</p>
             <template v-for="(solicitud, index) in user.solicitudes" v-if="(solicitud.to._id!=user._id) && (solicitud.status!='Accept')">
               <p>
                 <small>
