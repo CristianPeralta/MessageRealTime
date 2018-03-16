@@ -21,6 +21,7 @@ router.get('/user', userController.getUser);
 router.get('/profile', userController.getProfile);
 
 router.get('/messages', messageController.getAll);
+router.get('/messages/privates', messageController.getAllPrivate);
 router.post('/message', messageController.create);
 router.post('/upload', messageController.upload);
 router.get('/message/delete', messageController.delete);

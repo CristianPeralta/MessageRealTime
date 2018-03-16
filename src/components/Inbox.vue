@@ -65,6 +65,7 @@ export default {
   props: ['user'],
   methods: {
 		addMessage () {
+			console.log('isdsa');
 			console.log({
 				to: this.user,
 				user: this.$parent.user,

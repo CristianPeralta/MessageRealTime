@@ -78,6 +78,7 @@ io.on('connection', function(socket) {
 
 	socket.on('addMessage', (data) => {
 		messageController.createSocket(data, (message, err) => {
+      console.log('new message');
 			io.emit('messageAdded', {data:message,ok:!err,err:err});
 		})
 	});

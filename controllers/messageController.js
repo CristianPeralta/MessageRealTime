@@ -45,9 +45,8 @@ module.exports.createSocket = function (data, cb) {
     console.log(data);
     message.type = 'general';
     if (data.to) {
-      console.log('here');
       message.type = 'private';
-      message.to = mongoose.Types.ObjectId(data.to._id);
+      message.to = mongoose.Types.ObjectId(data.to.user._id);
     }
     message.user = mongoose.Types.ObjectId(user._id);
     message.room = data.room;
@@ -144,7 +143,6 @@ module.exports.getHistorialSpecificUser = function (req,res) {
         console.log(err);
         res.sendStatus(500)
       }
-      console.log(messages);
       return res.json(messages);
     });
 }
@@ -154,6 +152,12 @@ module.exports.getAllSocket = function (room, cb) {
   console.log(room);
   Message.find({room: room}).populate('user').then( (messages, err) => {
       return cb(messages, err);
+    });
+}
+
+module.exports.getAllPrivate = function (req, res) {
+  Message.find({type: 'private'}).then( (messages, err) => {
+      return res.json(messages);
     });
 }
 
