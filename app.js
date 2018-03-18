@@ -79,13 +79,11 @@ io.on('connection', function(socket) {
 
   socket.on('getFriends', (data) => {
     console.log(data);
-    let friendsOnline;
     userController.getFriendsSocket(data, (friends, err) => {
-      friendsOnline(friends, (friendsOnline) => {
-        socket.emit('friendsGetted', {data:friendsOnline, ok:!err, err:err});
+      friendsOnline(friends, (friendsOn) => {
+        socket.emit('friendsGetted', {data:friendsOn, ok:!err, err:err});
       })
 		})
-
   });
 
 	socket.on('addMessage', (data) => {
@@ -169,17 +167,22 @@ function isOnline(data, cb) {
 
 
 function friendsOnline(friends, cb) {
-  if (friends!=null) {
-    let friendsOnline;
+    let friendsOn;
+    console.log('function friends');
+    let ids = friends.map((friend) => {
+      return friend._id;
+    })
+    console.log(ids);
     if (usersOnline.length!=0) {
-      friendsOnline = friends.map((friend) => {
+      friendsOn = friends.map((friend) => {
         isOnline(friend._id, (el) => {
           return el;
         })
       })
-      cb(friendsOnline);
+      console.log('getting friends');
+      console.log(friendsOn);
+      cb(friendsOn);
     }
-  }
 }
 
 
