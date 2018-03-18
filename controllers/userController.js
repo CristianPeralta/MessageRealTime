@@ -162,6 +162,22 @@ module.exports.getFriends = function (req,res) {
   })
 }
 
+
+module.exports.getFriendsSocket = function (data, cb) {
+  User.findOne({_id:data._id}).populate({
+    path: 'friends',
+    populate: {path: 'friends'}
+  }).populate({
+    path: 'solicitudes',
+    populate: [
+      {path: 'from'},
+      {path: 'to'}
+    ],
+  }).then((user, err) => {
+    return cb(user.friends, err);
+  })
+}
+
 module.exports.getUser = function (req,res) {
     let user = req.session.user;
     console.log('usuariasb');

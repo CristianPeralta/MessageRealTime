@@ -63,12 +63,7 @@
             <p>Friends </p>
             <template v-for="(friend, index) in friends">
               <p>
-                <template  v-if="isOnline(friend)">
-                  <span class="circle"></span>
-                </template>
-                <template  v-else>
-                  <br>
-                </template>
+                <span class="circle"></span>
                 <small>
                   <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
                 </small>
@@ -147,6 +142,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         solicitudes: [],
         photo: {},
         inboxs:[],
+        friends: [],
         isLoad : false
       }
     },
@@ -229,6 +225,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           console.log(response.err);
         }
       },
+      friendsGetted (response) {
+        console.log('received');
+        if (response.ok) {
+          this.friends = response.data;
+        } else {
+          console.log(response.err);
+        }
+      },
       messagesGetted (response) {
         if (response.ok) {
           this.messages = response.data;
@@ -262,9 +266,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       }
     },
     computed: {
-      friends () {
-        return this.user.friends
-      },
       async usersUnk () {
         let friends = await this.user.friends.map((user) => {
           return user._id
@@ -416,6 +417,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
               room: this.room.slug
             });
           }
+          this.$socket.emit('getFriends', {
+            _id:this.user._id
+          });
           cb();
         });
       },

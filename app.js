@@ -77,15 +77,12 @@ io.on('connection', function(socket) {
     })
   });
 
-  socket.on('getFriends', (id) => {
-    console.log('getting socket');
-    console.log(id);
-    let friendsOnline = [];
+  socket.on('getFriends', (data) => {
+    console.log(data);
+    let friendsOnline;
     userController.getFriendsSocket(data, (friends, err) => {
-      friendsOnline = friends.map((friend) => {
-        isOnline(friend._id, (el) => {
-          return el;
-        })
+      friendsOnline(friends, (friendsOnline) => {
+        socket.emit('friendsGetted', {data:friendsOnline, ok:!err, err:err});
       })
 		})
 
@@ -167,6 +164,21 @@ function isOnline(data, cb) {
       });
     }
     cb(exist);
+  }
+}
+
+
+function friendsOnline(friends, cb) {
+  if (friends!=null) {
+    let friendsOnline;
+    if (usersOnline.length!=0) {
+      friendsOnline = friends.map((friend) => {
+        isOnline(friend._id, (el) => {
+          return el;
+        })
+      })
+      cb(friendsOnline);
+    }
   }
 }
 
