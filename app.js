@@ -11,6 +11,7 @@ var server = require('http').Server(app);
 global.io = require('socket.io')(server);
 var messageController = require('./controllers/messageController');
 var solicitudeController = require('./controllers/solicitudeController');
+var userController = require('./controllers/userController');
 
 var usersOnline = [];
 
@@ -74,6 +75,20 @@ io.on('connection', function(socket) {
     isOnline(id, (el) => {
       io.to(socket.id).emit('userFound', {data:el});
     })
+  });
+
+  socket.on('getFriends', (id) => {
+    console.log('getting socket');
+    console.log(id);
+    let friendsOnline = [];
+    userController.getFriendsSocket(data, (friends, err) => {
+      friendsOnline = friends.map((friend) => {
+        isOnline(friend._id, (el) => {
+          return el;
+        })
+      })
+		})
+
   });
 
 	socket.on('addMessage', (data) => {

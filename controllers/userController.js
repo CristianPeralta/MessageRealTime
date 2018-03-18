@@ -141,10 +141,10 @@ module.exports.deleteFriend = function (req,res) {
   })
 }
 
-module.exports.geFriends = function (req,res) {
+module.exports.getFriends = function (req,res) {
   let data = req.body;
   console.log(data);
-  User.findOne({_id:data.user._id}).populate({
+  User.findOne({_id:data._id}).populate({
     path: 'friends',
     populate: {path: 'friends'}
   }).populate({
@@ -158,7 +158,6 @@ module.exports.geFriends = function (req,res) {
       console.log(err);
       return res.sendStatus(503)
     }
-    req.session.user = user;
     return res.json(user);
   })
 }
