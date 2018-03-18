@@ -167,22 +167,27 @@ module.exports.getUser = function (req,res) {
     let user = req.session.user;
     console.log('usuariasb');
     console.log(req.session.user);
-    User.findOne({_id:user._id}).populate({
-      path: 'friends',
-      populate: {path: 'friends'}
-    }).populate({
-      path: 'solicitudes',
-      populate: [
-        {path: 'from'},
-        {path: 'to'}
-      ],
-    }).then((user, err) => {
-      if (err) {
-        console.log(err);
-        return res.sendStatus(503);
-      }
-      return res.json(user);
-    })
+    if (user) {
+      User.findOne({_id:user._id}).populate({
+        path: 'friends',
+        populate: {path: 'friends'}
+      }).populate({
+        path: 'solicitudes',
+        populate: [
+          {path: 'from'},
+          {path: 'to'}
+        ],
+      }).then((user, err) => {
+        if (err) {
+          console.log(err);
+          return res.sendStatus(503);
+        }
+        return res.json(user);
+      })
+    } else {
+      return res.json({});
+    }
+
 }
 
 module.exports.getProfile = function (req,res) {

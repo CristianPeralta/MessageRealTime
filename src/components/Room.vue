@@ -63,7 +63,7 @@
             <p>Friends </p>
             <template v-for="(friend, index) in friends">
               <p>
-                <template  v-if="!isOnline(friend)">
+                <template  v-if="isOnline(friend)">
                   <span class="circle"></span>
                 </template>
                 <template  v-else>
