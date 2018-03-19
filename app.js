@@ -163,8 +163,9 @@ function isOnline(data, cb) {
         return (element.user._id == data);
       });
     }
-    friendsOn = friendsOn.filter(function(n){ return n != undefined })
-    cb(exist);
+    if (exist != null) {
+      cb(exist);
+    }
   }
 }
 
