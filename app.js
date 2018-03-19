@@ -81,6 +81,7 @@ io.on('connection', function(socket) {
     console.log(data);
     userController.getFriendsSocket(data, (friends, err) => {
       friendsOnline(friends, (friendsOn) => {
+        console.log(friendsOn);
         socket.emit('friendsGetted', {data:friendsOn, ok:!err, err:err});
       })
 		})
@@ -167,20 +168,19 @@ function isOnline(data, cb) {
 
 
 function friendsOnline(friends, cb) {
-    let friendsOn;
+    let friendsOn = [];
     console.log('function friends');
     let ids = friends.map((friend) => {
       return friend._id;
     })
     console.log(ids);
     if (usersOnline.length!=0) {
-      friendsOn = friends.map((friend) => {
+      friends.map((friend) => {
         isOnline(friend._id, (el) => {
-          return el;
-        })
+          friendsOn.push(el);
+        });
       })
       console.log('getting friends');
-      console.log(friendsOn);
       cb(friendsOn);
     }
 }

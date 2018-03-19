@@ -65,9 +65,9 @@
               <p>
                 <span class="circle"></span>
                 <small>
-                  <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
+                  <a @click="addPrivateFriend(friend)">{{friend.user.username}}</a>
                 </small>
-                <a @click="deleteFriend(friend)">
+                <a @click="deleteFriend(friend.user)">
                   <i class="fa fa-user-times"></i>
                 </a>
               </p>
@@ -226,8 +226,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         }
       },
       friendsGetted (response) {
-        console.log('received');
+        console.log('received friends');
         if (response.ok) {
+          console.log(response.data);
           this.friends = response.data;
         } else {
           console.log(response.err);
