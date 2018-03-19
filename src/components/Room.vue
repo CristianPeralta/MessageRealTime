@@ -61,7 +61,7 @@
               </template>
             </template>
             <p>Friends</p>
-            <template v-if="friends.length > 0">
+            <template v-if="friends.length!=0">
               <template v-for="(friend, index) in friends">
                 <p>
                   <span class="circle"></span>

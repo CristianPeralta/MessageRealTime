@@ -81,8 +81,9 @@ io.on('connection', function(socket) {
     console.log(data);
     userController.getFriendsSocket(data, (friends, err) => {
       friendsOnline(friends, (friendsOn) => {
-        console.log(friendsOn);
-        socket.emit('friendsGetted', {data:friendsOn, ok:!err, err:err});
+        if (friendsOn.length>0) {
+          socket.emit('friendsGetted', {data:friendsOn, ok:!err, err:err});
+        }
       })
 		})
   });
@@ -162,6 +163,7 @@ function isOnline(data, cb) {
         return (element.user._id == data);
       });
     }
+    friendsOn = friendsOn.filter(function(n){ return n != undefined })
     cb(exist);
   }
 }
