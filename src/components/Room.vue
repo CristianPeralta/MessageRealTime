@@ -60,17 +60,19 @@
                 </p>
               </template>
             </template>
-            <p>Friends </p>
-            <template v-for="(friend, index) in friends">
-              <p>
-                <span class="circle"></span>
-                <small>
-                  <a @click="addPrivateFriend(friend)">{{friend.user.username}}</a>
-                </small>
-                <a @click="deleteFriend(friend.user)">
-                  <i class="fa fa-user-times"></i>
-                </a>
-              </p>
+            <p>Friends</p>
+            <template v-if="friends.length > 0">
+              <template v-for="(friend, index) in friends">
+                <p>
+                  <span class="circle"></span>
+                  <small>
+                    <a @click="addPrivateFriend(friend)">{{friend.user.username}}</a>
+                  </small>
+                  <a @click="deleteFriend(friend.user)">
+                    <i class="fa fa-user-times"></i>
+                  </a>
+                </p>
+              </template>
             </template>
             <p>Solicitudes Enviadas</p>
             <template v-for="(solicitud, index) in user.solicitudes" v-if="(solicitud.to._id!=user._id) && (solicitud.status!='Accept')">
