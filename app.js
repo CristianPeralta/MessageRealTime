@@ -30,14 +30,18 @@ io.on('connection', function(socket) {
       console.log(data);
       addUserinRoom(data, () => {
         console.log(usersOnline);
+        io.emit('usersConnected', {data:usersOnline});
         friendsOnline(data.user.friends, (friendsOn) => {
           if (friendsOn.length>0) {
             friendsOn.map((el) => {
+              console.log('el -> id : ' + el.id);
+              console.log(el);
               io.to(el.id).emit('friendConnected', {data:data});
+              io.to(el.id).emit('userFound', {data:el});
+              io.to(socket.id).emit('friendConnected', {data:el});
             })
           }
         })
-        io.emit('usersConnected', {data:usersOnline});
       })
 	});
 
@@ -191,7 +195,6 @@ function friendsOnline(friends, cb) {
           friendsOn.push(el);
         });
       })
-      console.log('getting friends');
       cb(friendsOn);
     }
 }

@@ -171,8 +171,28 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
               return element
             }
           })
-          usersRoom = usersRoom.filter(function(n){ return n != undefined })
+          usersRoom = usersRoom.filter(function(n){ return n != undefined });
           this.users = usersRoom;
+          // let myfriends = this.user.friends.map((el) => {
+          //   return el.user._id
+          // })
+          // this.users.map((el) => {
+          //   if (myfriends.indexOf(el.user._id)>=0) {
+          //     this.friends.push(el);
+          //   }
+          // })
+      },
+      friendConnected (response) {
+        console.log('friendOn sock');
+        response.data.user.username = response.data.user.username + 'Sck';
+        let friendsIds = this.friends.map((el) => {
+          return el.user._id
+        })
+        console.log(friendsIds);
+        if (friendsIds.indexOf(response.data.user._id)==-1) {
+          console.log(response.data);
+          this.friends.push(response.data);
+        }
       },
       messageAdded (response) {
         if (response.ok) {
@@ -196,10 +216,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log('new friend');
         console.log(response.data);
         if (response.ok) {
-          // console.log(response.data);
-          // let index = this.user.solicitudes.indexOf(response.data._id);
-          // this.user.solicitudes.splice(index, 1);
-
           this.user = response.data;
           this.solicitudes = response.data.solicitudes;
         } else {
@@ -231,7 +247,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log('received friends');
         if (response.ok) {
           console.log(response.data);
-          this.friends = response.data;
+          response.data.map((el) => {
+            this.friends.push(el);
+          })
         } else {
           console.log(response.err);
         }
