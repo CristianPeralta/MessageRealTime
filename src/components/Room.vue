@@ -62,7 +62,7 @@
             </template>
             <p>Friends</p>
             <template v-if="friends.length!=0">
-              <template v-for="(friend, index) in friends">
+              <template v-for="(friend, index) in friends" v-if="friend.user._id!=user._id">
                 <p>
                   <span class="circle"></span>
                   <small>
@@ -184,7 +184,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       friendConnected (response) {
         console.log('friendOn sock');
-        response.data.user.username = response.data.user.username + 'Sck';
         let friendsIds = this.friends.map((el) => {
           return el.user._id
         })

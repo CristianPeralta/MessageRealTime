@@ -36,9 +36,10 @@ io.on('connection', function(socket) {
             friendsOn.map((el) => {
               console.log('el -> id : ' + el.id);
               console.log(el);
+              console.log('sending to ' + el.id + ' -> ' + el.user.username);
               io.to(el.id).emit('friendConnected', {data:data});
-              io.to(el.id).emit('userFound', {data:el});
-              io.to(socket.id).emit('friendConnected', {data:el});
+              io.to(socket.id).emit('friendConnected', {data:data});
+              //io.emit('friendConnected', {data:data});
             })
           }
         })
