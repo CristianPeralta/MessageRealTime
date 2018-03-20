@@ -29,6 +29,7 @@ io.on('connection', function(socket) {
       console.log('user conneasd');
       console.log(data);
       addUserinRoom(data, () => {
+        socket.join(data.room);
         console.log(usersOnline);
         io.emit('usersConnected', {data:usersOnline});
         friendsOnline(data.user.friends, (friendsOn) => {
@@ -38,6 +39,7 @@ io.on('connection', function(socket) {
               console.log(el);
               console.log('sending to ' + el.id + ' -> ' + el.user.username);
               io.to(el.id).emit('friendConnected', {data:data});
+              socket.to(el.id).emit('im') ;
               io.to(socket.id).emit('friendConnected', {data:data});
               //io.emit('friendConnected', {data:data});
             })

@@ -164,6 +164,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       connect () {
         console.log('socket connected')
       },
+      im () {
+        console.log('im here')
+      },
       usersConnected (response) {
           console.log(response.data);
           let usersRoom = response.data.map((element) => {
