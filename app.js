@@ -30,6 +30,12 @@ io.on('connection', function(socket) {
       console.log(data);
       addUserinRoom(data, () => {
         socket.join(data.room);
+        console.log('this is the room');
+        io.of('/home').adapter.clients((err, clients) => {
+          console.log('clients');
+          console.log(clients); // an array containing all connected socket ids
+        });
+
         console.log(usersOnline);
         io.emit('usersConnected', {data:usersOnline});
         friendsOnline(data.user.friends, (friendsOn) => {
