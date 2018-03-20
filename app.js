@@ -26,9 +26,17 @@ io.on('connection', function(socket) {
   console.log(socket.id);
 	socket.on('userConnected', (data) => {
       data.id = socket.id;
+      console.log('user conneasd');
       console.log(data);
       addUserinRoom(data, () => {
         console.log(usersOnline);
+        friendsOnline(data.user.friends, (friendsOn) => {
+          if (friendsOn.length>0) {
+            friendsOn.map((el) => {
+              io.to(el.id).emit('friendConnected', {data:data});
+            })
+          }
+        })
         io.emit('usersConnected', {data:usersOnline});
       })
 	});
