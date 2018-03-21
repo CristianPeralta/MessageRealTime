@@ -74,15 +74,18 @@
                 </p>
               </template>
             </template>
-            <template v-for="(friend, index) in this.user.friends" v-if="!isFriendOnline(friend)">
-              <p>
-                <small>
-                  <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
-                </small>
-                <a @click="deleteFriend(friend)">
-                  <i class="fa fa-user-times"></i>
-                </a>
-              </p>
+            <p@click="isActive()" :class="{'is-active':menu}">Offline</p>
+            <template v-if="menu">
+              <template v-for="(friend, index) in this.user.friends" v-if="!isFriendOnline(friend)">
+                <p>
+                  <small>
+                    <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
+                  </small>
+                  <a @click="deleteFriend(friend)">
+                    <i class="fa fa-user-times"></i>
+                  </a>
+                </p>
+              </template>
             </template>
             <p>Solicitudes Enviadas</p>
             <template v-for="(solicitud, index) in user.solicitudes" v-if="(solicitud.to._id!=user._id) && (solicitud.status!='Accept')">
@@ -155,6 +158,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         photo: {},
         inboxs:[],
         friends: [],
+        menu: true,
         isLoad : false
       }
     },
@@ -364,6 +368,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         ChatServices.upload(form).then((response) => {
               console.log('success upload');
             })
+      },
+      isActive() {
+        this.menu = !this.menu;
       },
       getFriendsOffline (list, cb) {
         let listOffline = this.user.friends.map((val) => {
