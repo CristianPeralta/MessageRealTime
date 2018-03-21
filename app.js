@@ -143,7 +143,7 @@ io.on('connection', function(socket) {
         if (friendsOn.length>0) {
           friendsOn.map((el) => {
             console.log('sending to ' + el.id + ' -> ' + el.user.username);
-            io.to(el.id).emit('friendConnected', {data:data});
+            io.to(el.id).emit('friendDisConnected', {data:data.user._id});
           })
         }
       })

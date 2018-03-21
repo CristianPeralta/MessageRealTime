@@ -196,6 +196,14 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           this.friends.push(response.data);
         }
       },
+      friendDisConnected (response) {
+        console.log('friendOn get out');
+        this.friends.map((val, idx) => {
+          if (val.user._id == response.data) {
+            this.friends.splice(this.friends[idx], 1);
+          }
+        })
+      },
       messageAdded (response) {
         if (response.ok) {
           this.messages.push(response.data);
