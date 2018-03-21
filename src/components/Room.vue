@@ -286,6 +286,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       user (val) {
         this.user = val
+      },
+      users (val) {
+
       }
     },
     computed: {
@@ -312,6 +315,12 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           }
         })
         return data;
+      },
+      async usersId () {
+        let ids = this.users.map((val) => {
+          return val.user._id
+        })
+        return await ids;
       }
     },
     methods: {

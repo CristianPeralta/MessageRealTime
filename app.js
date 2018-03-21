@@ -41,13 +41,8 @@ io.on('connection', function(socket) {
         friendsOnline(data.user.friends, (friendsOn) => {
           if (friendsOn.length>0) {
             friendsOn.map((el) => {
-              console.log('el -> id : ' + el.id);
-              console.log(el);
               console.log('sending to ' + el.id + ' -> ' + el.user.username);
               io.to(el.id).emit('friendConnected', {data:data});
-              socket.to(el.id).emit('im') ;
-              io.to(socket.id).emit('friendConnected', {data:data});
-              //io.emit('friendConnected', {data:data});
             })
           }
         })
@@ -133,8 +128,10 @@ io.on('connection', function(socket) {
 	});
 
   socket.on('userDisconnect', function(data) {
+    let friendList = [];
       usersOnline.map((element, idx) => {
         if (element.user._id == data.user._id) {
+          friendList = element.user.friends;
           usersOnline.splice(idx,1);
         }
       });
@@ -142,6 +139,14 @@ io.on('connection', function(socket) {
       console.log(io.eio.clients);
       usersOnline = usersOnline.filter(function(n){ return n != undefined })
       io.emit('usersConnected', {data:usersOnline});
+      friendsOnline(friendList, (friendsOn) => {
+        if (friendsOn.length>0) {
+          friendsOn.map((el) => {
+            console.log('sending to ' + el.id + ' -> ' + el.user.username);
+            io.to(el.id).emit('friendConnected', {data:data});
+          })
+        }
+      })
    });
 
 	socket.on('disconnect', function() {
