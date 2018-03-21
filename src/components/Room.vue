@@ -74,6 +74,16 @@
                 </p>
               </template>
             </template>
+            <template v-for="(friend, index) in this.user.friends" v-if="!isFriendOnline(friend)">
+              <p>
+                <small>
+                  <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
+                </small>
+                <a @click="deleteFriend(friend)">
+                  <i class="fa fa-user-times"></i>
+                </a>
+              </p>
+            </template>
             <p>Solicitudes Enviadas</p>
             <template v-for="(solicitud, index) in user.solicitudes" v-if="(solicitud.to._id!=user._id) && (solicitud.status!='Accept')">
               <p>
@@ -329,6 +339,19 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           return val.user._id
         })
         return await ids;
+      },
+      friendsId () {
+        let ids = this.friends.map((val) => {
+          return val.user._id
+        })
+        return ids;
+      },
+      friendsOffline () {
+        this.getUsersId((list) => {
+          this.getFriendsOffline(list, (listOffline) => {
+            return listOffline;
+          })
+        })
       }
     },
     methods: {
@@ -341,6 +364,20 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         ChatServices.upload(form).then((response) => {
               console.log('success upload');
             })
+      },
+      getFriendsOffline (list, cb) {
+        let listOffline = this.user.friends.map((val) => {
+          if (list.indexOf(val._id)>=0) {
+            return val
+          }
+        })
+        cb(listOffline);
+      },
+      getUsersId(cb) {
+        let ids = this.users.map((val) => {
+          return val.user._id
+        })
+        cb(ids);
       },
       saveRoom (message, user, check) {
         ChatServices.room(this.initialRoom).then((response) => {
@@ -443,6 +480,10 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         })
         console.log(users.indexOf(user._id)>=0);
         return (users.indexOf(user._id)>=0)
+      },
+      isFriendOnline (user) {
+        console.log(this.friendsId.indexOf(user._id)>=0);
+        return (this.friendsId.indexOf(user._id)>=0)
       },
       getUser (cb) {
         ChatServices.user().then((response) => {
