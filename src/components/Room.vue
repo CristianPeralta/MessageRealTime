@@ -46,21 +46,21 @@
         </div>
         <div class="column is-2">
           <div class="box content">
-            <p>Users  ({{users | count}})</p>
+            <p>Users  Online ({{users | count}})</p>
             <template v-if="users.length!=0">
-              <template v-if="userC.user._id!=user._id" v-for="(userC,index) in users">
+              <template v-for="(userC,index) in users">
                 <p>
                   <span class="circle"></span>
                   <small>
                     <a @click="addPrivateUser(userC)">{{userC.user.username}}</a>
-                    <a @click="addFriend(userC)">
+                    <a @click="addFriend(userC)" v-if="userC.user._id!=user._id">
                       <i class="fa fa-user-plus"></i>
                     </a>
                   </small>
                 </p>
               </template>
             </template>
-            <p @click="isActive('friendsOnline')" :class="{'is-active':menu.friendsOnline}">Friends</p>
+            <p @click="isActive('friendsOnline')" :class="{'is-active':menu.friendsOnline}">Friends Online ({{friends | count}})</p>
             <template v-if="(friends.length!=0) && (menu.friendsOnline)">
               <template v-for="(friend, index) in friends" v-if="friend.user._id!=user._id">
                 <p>
@@ -74,7 +74,7 @@
                 </p>
               </template>
             </template>
-            <p @click="isActive('friendsOffline')" :class="{'is-active':menu.friendsOffline}">Offline</p>
+            <p @click="isActive('friendsOffline')" :class="{'is-active':menu.friendsOffline}">Friends Offline</p>
             <template v-if="menu.friendsOffline">
               <template v-for="(friend, index) in this.user.friends" v-if="!isFriendOnline(friend)">
                 <p>
@@ -298,7 +298,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
     },
     filters: {
       count (users) {
-        return users.length - 1;
+        return users.length;
       }
     },
     watch: {
