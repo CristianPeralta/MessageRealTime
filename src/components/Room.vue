@@ -194,25 +194,16 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           })
           usersRoom = usersRoom.filter(function(n){ return n != undefined });
           this.users = usersRoom;
-          // let myfriends = this.user.friends.map((el) => {
-          //   return el.user._id
-          // })
-          // this.users.map((el) => {
-          //   if (myfriends.indexOf(el.user._id)>=0) {
-          //     this.friends.push(el);
-          //   }
-          // })
+
       },
       friendConnected (response) {
         console.log('friendOn sock');
-        let friendsIds = this.friends.map((el) => {
-          return el.user._id
+        this.friendsId.then((friendsId) => {
+          if (friendsId.indexOf(response.data.user._id)==-1) {
+            console.log(response.data);
+            this.friends.push(response.data);
+          }
         })
-        console.log(friendsIds);
-        if (friendsIds.indexOf(response.data.user._id)==-1) {
-          console.log(response.data);
-          this.friends.push(response.data);
-        }
       },
       friendDisConnected (response) {
         console.log('friendOn get out');
@@ -276,7 +267,11 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         if (response.ok) {
           console.log(response.data);
           response.data.map((el) => {
-            this.friends.push(el);
+            this.friendsId.then((friendsId) => {
+              if (friendsId.indexOf(el.user._id)==-1) {
+                this.friends.push(el);
+              }
+            })
           })
         } else {
           console.log(response.err);
@@ -349,10 +344,12 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         return await ids;
       },
       friendsId () {
-        let ids = this.friends.map((val) => {
-          return val.user._id
+        return new Promise((resolve) => {
+          let ids = this.friends.map((val) => {
+            return val.user._id
+          })
+          resolve(ids)
         })
-        return ids;
       },
       friendsOffline () {
         this.getUsersId((list) => {
@@ -496,8 +493,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         return (users.indexOf(user._id)>=0)
       },
       isFriendOnline (user) {
-        console.log(this.friendsId.indexOf(user._id)>=0);
-        return (this.friendsId.indexOf(user._id)>=0)
+        this.friendsId.then((friendsId) => {
+          return (friendsId.indexOf(user._id)>=0)
+        })
       },
       getUser (cb) {
         ChatServices.user().then((response) => {

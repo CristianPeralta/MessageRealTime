@@ -19,7 +19,7 @@ var index = require('./routes/index');
 
 mongoose.connect('mongodb://localhost:27017/messageDb', function(err, res) {
   if(err) throw err;
-  console.log('Conectado con éxito a la BD');
+  console.log('DB Connected successfully');
 });
 io.on('connection', function(socket) {
 	console.log('A client has connected');
@@ -274,9 +274,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 server.listen(5000, function() {
-	console.log('Servidor corriendo en http://localhost:3000');
+	console.log('Server running http://localhost:3000');
 });
-
-module.exports = {
-	io:'hola'
-};
