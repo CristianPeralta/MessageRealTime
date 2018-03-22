@@ -76,8 +76,8 @@
               </template>
             </template>
             <p @click="isActive('friendsOffline')" :class="{'is-active':menu.friendsOffline}">Offline</p>
-            <template v-if="menu.friendsOffline">
-              <template v-for="(friend, index) in this.user.friends" v-if="!isFriendOnline(friend)">
+            <template v-if="(friendsOffline.length >0) && (menu.friendsOffline)">
+              <template v-for="(friend, index) in friendsOffline" >
                 <p>
                   <small>
                     <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
@@ -188,15 +188,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log('im here')
       },
       usersConnected (response) {
-          console.log(response.data);
-          let usersRoom = response.data.map((element) => {
-            if (element.room == this.room.slug) {
-              return element
-            }
-          })
-          usersRoom = usersRoom.filter(function(n){ return n != undefined });
-          this.users = usersRoom;
-
+        this.loadUsers(response).then(()=>{
+          this.getListfriendsOffline();
+        })
       },
       friendConnected (response) {
         console.log('friendOn sock');
@@ -365,16 +359,25 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
               console.log('success upload');
             })
       },
-      getListfriendsOffline (friends) {
+      loadUsers (response) {
+        return new Promise ((resolve) => {
+          let usersRoom = response.data.map((element) => {
+            if (element.room == this.room.slug) {
+              return element
+            }
+          })
+          usersRoom = usersRoom.filter(function(n){ return n != undefined });
+          this.users = usersRoom;
+          resolve()
+        })
+      },
+      getListfriendsOffline () {
         console.log('getting frien');
-        console.log(friends);
         this.getUsersId().then((list) => {
           console.log('list');
           console.log(list);
-          this.getFriendsOffline(list, friends).then((listOffline) => {
-            console.log('list off');
-            console.log(listOffline);
-            return listOffline;
+          this.getFriendsOffline(list).then(() => {
+            console.log('success');
           })
         })
       },
@@ -384,14 +387,16 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log(this.menu[val]);
         this.menu[val] = !this.menu[val];
       },
-      getFriendsOffline (list, friends) {
+      getFriendsOffline (list) {
         return new Promise ((resolve) => {
-          let listOffline = friends.map((val) => {
-            if (list.indexOf(val._id)>=0) {
-              return val
+          this.user.friends.map((val, idx) => {
+            if (list.indexOf(val._id)==-1) {
+              this.friendsOffline.push(val);
+            }else {
+              console.log('something wrong');
             }
           })
-          resolve(listOffline)
+          resolve();
         })
       },
       getUsersId () {
@@ -526,7 +531,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
             _id:this.user._id
           });
           cb();
-          this.friendsOffline = this.getListfriendsOffline(this.user.friends);
         });
       },
       getMessages () {
