@@ -75,7 +75,7 @@
                 </p>
               </template>
             </template>
-            <p @click="isActive('friendsOffline')" :class="{'is-active':menu.friendsOffline}">Offline</p>
+            <p @click="isActive('friendsOffline')" :class="{'is-active':menu.friendsOffline}">Offline ({{friendsOffline | count}})</p>
             <template v-if="(friendsOffline.length >0) && (menu.friendsOffline)">
               <template v-for="(friend, index) in friendsOffline" >
                 <p>
@@ -387,11 +387,23 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         console.log(this.menu[val]);
         this.menu[val] = !this.menu[val];
       },
+      friendsOfflineId () {
+          return new Promise ((resolve) => {
+            let ids = this.friendsOffline.map((val) => {
+              return val._id
+            })
+            resolve(ids);
+          })
+      },
       getFriendsOffline (list) {
         return new Promise ((resolve) => {
           this.user.friends.map((val, idx) => {
             if (list.indexOf(val._id)==-1) {
-              this.friendsOffline.push(val);
+              this.friendsOfflineId().then((ids) => {
+                if (ids.indexOf(val._id)==-1) {
+                  this.friendsOffline.push(val);
+                }
+              })
             }else {
               console.log('something wrong');
             }
