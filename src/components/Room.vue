@@ -46,8 +46,8 @@
         </div>
         <div class="column is-2">
           <div class="box content">
-            <p>Users  Online ({{users | count}})</p>
-            <template v-if="users.length!=0">
+            <p @click="isActive('usersOnline')" :class="{'is-active':menu.usersOnline}">Users  Online ({{users | count}})</p>
+            <template v-if="(users.length!=0) && (menu.usersOnline)">
               <template v-for="(userC,index) in users">
                 <p>
                   <span class="circle"></span>
@@ -60,7 +60,8 @@
                 </p>
               </template>
             </template>
-            <p @click="isActive('friendsOnline')" :class="{'is-active':menu.friendsOnline}">Friends Online ({{friends | count}})</p>
+            <p>Friends</p>
+            <p @click="isActive('friendsOnline')" :class="{'is-active':menu.friendsOnline}">Online ({{friends | count}})</p>
             <template v-if="(friends.length!=0) && (menu.friendsOnline)">
               <template v-for="(friend, index) in friends" v-if="friend.user._id!=user._id">
                 <p>
@@ -74,7 +75,7 @@
                 </p>
               </template>
             </template>
-            <p @click="isActive('friendsOffline')" :class="{'is-active':menu.friendsOffline}">Friends Offline</p>
+            <p @click="isActive('friendsOffline')" :class="{'is-active':menu.friendsOffline}">Offline</p>
             <template v-if="menu.friendsOffline">
               <template v-for="(friend, index) in this.user.friends" v-if="!isFriendOnline(friend)">
                 <p>
@@ -158,6 +159,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         photo: {},
         inboxs:[],
         friends: [],
+        friendsOffline: [],
         menu: {
           friendsOnline: true,
           friendsOffline: true,
@@ -306,7 +308,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         this.saveRoom(this.getMessagesSocket, this.getUser, this.checkUser);
       },
       user (val) {
-        this.user = val
+        this.user = val;
       },
       users (val) {
 
@@ -350,13 +352,6 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
           })
           resolve(ids)
         })
-      },
-      friendsOffline () {
-        this.getUsersId((list) => {
-          this.getFriendsOffline(list, (listOffline) => {
-            return listOffline;
-          })
-        })
       }
     },
     methods: {
@@ -370,25 +365,42 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
               console.log('success upload');
             })
       },
+      getListfriendsOffline (friends) {
+        console.log('getting frien');
+        console.log(friends);
+        this.getUsersId().then((list) => {
+          console.log('list');
+          console.log(list);
+          this.getFriendsOffline(list, friends).then((listOffline) => {
+            console.log('list off');
+            console.log(listOffline);
+            return listOffline;
+          })
+        })
+      },
       isActive(val) {
         console.log('acti');
         console.log(val);
         console.log(this.menu[val]);
         this.menu[val] = !this.menu[val];
       },
-      getFriendsOffline (list, cb) {
-        let listOffline = this.user.friends.map((val) => {
-          if (list.indexOf(val._id)>=0) {
-            return val
-          }
+      getFriendsOffline (list, friends) {
+        return new Promise ((resolve) => {
+          let listOffline = friends.map((val) => {
+            if (list.indexOf(val._id)>=0) {
+              return val
+            }
+          })
+          resolve(listOffline)
         })
-        cb(listOffline);
       },
-      getUsersId(cb) {
-        let ids = this.users.map((val) => {
-          return val.user._id
+      getUsersId () {
+        return new Promise ((resolve) => {
+          let ids = this.users.map((val) => {
+            return val.user._id
+          })
+          resolve(ids);
         })
-        cb(ids);
       },
       saveRoom (message, user, check) {
         ChatServices.room(this.initialRoom).then((response) => {
@@ -494,6 +506,9 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
       isFriendOnline (user) {
         this.friendsId.then((friendsId) => {
+          console.log(friendsId);
+          console.log(`user ${user.username}`);
+          console.log(friendsId.indexOf(user._id)>=0);
           return (friendsId.indexOf(user._id)>=0)
         })
       },
@@ -511,6 +526,7 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
             _id:this.user._id
           });
           cb();
+          this.friendsOffline = this.getListfriendsOffline(this.user.friends);
         });
       },
       getMessages () {
