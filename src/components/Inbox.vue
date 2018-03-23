@@ -65,17 +65,12 @@ export default {
   props: ['user'],
   methods: {
 		addMessage () {
-			console.log('isdsa');
-			console.log({
-				to: this.user,
-				user: this.$parent.user,
-				text: this.text
-			});
 			this.$parent.$socket.emit('addMessagePrivated', {
 				to: this.user,
 				user: this.$parent.user,
 				text: this.text
 			});
+			this.text = '';
 		},
     minimize () {
       this.slideToggle(this.$refs.chat);

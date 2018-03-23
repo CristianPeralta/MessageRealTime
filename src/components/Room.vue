@@ -446,24 +446,21 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
       },
 
       addPrivateUser (to) {
-        this.userPrivated = to;
-        this.inboxs.push(this.userPrivated);
+        this.inboxs.push(to);
         this.getHistorial(this.user._id, to.user._id);
       },
 
       addPrivateFriend (to) {
-        this.userPrivated = to;
-        this.inboxs.push(this.userPrivated);
+        this.inboxs.push(to);
         this.getHistorial(this.user._id, to.user._id);
       },
 
       addPrivateFriendOffline (to) {
-        this.userPrivated = {
+        this.inboxs.push({
           user: to,
           room: this.room.slug,
           id: undefined
-        }
-        this.inboxs.push(this.userPrivated);
+        });
         this.getHistorial(this.user._id, to._id);
       },
       getHistorial(user, to) {
