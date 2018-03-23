@@ -80,7 +80,7 @@
               <template v-for="(friend, index) in friendsOffline" >
                 <p>
                   <small>
-                    <a @click="addPrivateFriend(friend)">{{friend.username}}</a>
+                    <a @click="addPrivateFriendOffline(friend)">{{friend.username}}</a>
                   </small>
                   <a @click="deleteFriend(friend)">
                     <i class="fa fa-user-times"></i>
@@ -455,6 +455,16 @@ Vue.use(VueSocketio, 'ws://localhost:5000')
         this.userPrivated = to;
         this.inboxs.push(this.userPrivated);
         this.getHistorial(this.user._id, to.user._id);
+      },
+
+      addPrivateFriendOffline (to) {
+        this.userPrivated = {
+          user: to,
+          room: this.room.slug,
+          id: undefined
+        }
+        this.inboxs.push(this.userPrivated);
+        this.getHistorial(this.user._id, to._id);
       },
       getHistorial(user, to) {
         console.log('dot dot');
