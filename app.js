@@ -17,10 +17,17 @@ var usersOnline = [];
 
 var index = require('./routes/index');
 
-mongoose.connect('mongodb://localhost:27017/messageDb', function(err, res) {
-  if(err) throw err;
-  console.log('DB Connected successfully');
+mongoose.connect('mongodb://localhost:27017/messageDb', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'Error de conexión:'));
+db.once('open', function() {
+  console.log('Conexión exitosa a la base de datos.');
+});
+
 io.on('connection', function(socket) {
 	console.log('A client has connected');
   console.log(socket.id);
