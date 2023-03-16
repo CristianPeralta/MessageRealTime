@@ -3,7 +3,7 @@ var router = express.Router();
 var userController = require('../controllers/userController');
 var messageController = require('../controllers/messageController');
 var solicitudeController = require('../controllers/solicitudeController');
-var roomController = require('../controllers/roomController');
+var roomController = require('../controllers/RoomController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
