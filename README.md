@@ -31,7 +31,7 @@ And for the client:
 ```bash
 npm run watch
 ```
-The client will start on port 5000
+The client will start on port 3000
 ## Technologies Used
   - Node.js [8.17]
   - Express [4.16.2]
