@@ -6,6 +6,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var ejs = require("ejs").__express;
 
+require('dotenv').config()
+
 var app = express();
 var server = require('http').Server(app);
 global.io = require('socket.io')(server);
@@ -16,8 +18,8 @@ var userController = require('./controllers/userController');
 var usersOnline = [];
 
 var index = require('./routes/index');
-
-mongoose.connect('mongodb://localhost:27017/messageDb', {
+console.log(process.env.MONGODB_CONNECTION_STRING);
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
