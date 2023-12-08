@@ -62,3 +62,6 @@ public
 
 #vscode local config
 .vscode/
+
+# data
+/data
