@@ -14,7 +14,7 @@
     }
   }
 </script>
-<style lang="scss">
+<style lang="">
   .notification{
     background: yellow;
   }
