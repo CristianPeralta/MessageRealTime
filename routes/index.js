@@ -6,7 +6,7 @@ var solicitudeController = require('../controllers/solicitudeController');
 var roomController = require('../controllers/RoomController');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('index');
 });
 
@@ -27,9 +27,9 @@ router.post('/upload', messageController.upload);
 router.get('/message/delete', messageController.delete);
 router.get('/historial/:user/:to', messageController.getHistorialSpecificUser);
 
-router.get('/room',roomController.getAll);
-router.post('/room',roomController.create);
-router.get('/room/delete',roomController.delete);
+router.get('/room', roomController.getAll);
+router.post('/room', roomController.create);
+router.get('/room/delete', roomController.delete);
 
 router.post('/solicitude', solicitudeController.create);
 router.post('/solicitude/delete', solicitudeController.delete);
