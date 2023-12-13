@@ -1,4 +1,14 @@
-# MessageRealTime
+<div align="center">
+   <h1>MessageRealTime Application </h1>
+  <img src="https://img.shields.io/badge/Node.js-43853D" alt="Node.js">
+  <img src="https://img.shields.io/badge/Express.js-F7DF1E" alt="Express">
+  <img src="https://img.shields.io/badge/-MongoDB-white" alt="MongoDB">
+  <img src="https://img.shields.io/badge/Vue.js-35495E" alt="Vue.js">
+  <img src="https://img.shields.io/badge/Sockets-21af90" alt="Sockets">
+  <img src="https://img.shields.io/badge/-CRUD_Operations-red" alt="CRUD Operations">
+  <img src="https://img.shields.io/badge/-Docker-blue" alt="Docker">
+</div>
+<br>
 
 This project is a web application built with Node.js, Express, MongoDB, and Vue.js. The application provides a login system, group chat, direct messages, contacts, and user profile.
 
